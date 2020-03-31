@@ -298,7 +298,7 @@ public class Farming {
 				if (player.energy <= 5) {
 					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				} if(player.numOfPumpkinSeed == 0){
+				} if(player.amountPumpkinSeed == 0){
 					JOptionPane.showMessageDialog(null, "호박씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}else {
@@ -307,7 +307,7 @@ public class Farming {
 					plantsNametext[numOfField].setText("이름 : 호박");
 					timeLeftText[numOfField].setText("남은 일 수 : 4일");
 
-					player.numOfPumpkinSeed--;
+					player.amountPumpkinSeed--;
 					daysRemaining[numOfField] = 4;
 					player.energy = player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + player.energy);
@@ -321,7 +321,7 @@ public class Farming {
 				if (player.energy <= 5) {
 					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				} if(player.numOfOnionSeed == 0){
+				} if(player.amountOnionSeed == 0){
 					JOptionPane.showMessageDialog(null, "양파씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -329,7 +329,7 @@ public class Farming {
 					plantsNametext[numOfField].setText("이름 : 양파");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
-					player.numOfOnionSeed--;
+					player.amountOnionSeed--;
 					daysRemaining[numOfField] = 2;
 					player.energy = player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + player.energy);
@@ -343,7 +343,7 @@ public class Farming {
 				if (player.energy <= 5) {
 					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				}if(player.numOfCabbageSeed == 0){
+				}if(player.amountCabbageSeed == 0){
 					JOptionPane.showMessageDialog(null, "양배추씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -351,7 +351,7 @@ public class Farming {
 					plantsNametext[numOfField].setText("이름 : 양배추");
 					timeLeftText[numOfField].setText("남은 일 수 : 3일");
 
-					player.numOfCabbageSeed--;
+					player.amountCabbageSeed--;
 					daysRemaining[numOfField] = 3;
 					player.energy = player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + player.energy);
@@ -365,7 +365,7 @@ public class Farming {
 				if (player.energy <= 5) {
 					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				}if(player.numOfCarrotSeed == 0){
+				}if(player.amountCarrotSeed == 0){
 					JOptionPane.showMessageDialog(null, "당근씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}  else {
@@ -373,7 +373,7 @@ public class Farming {
 					plantsNametext[numOfField].setText("이름 : 당근");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
-					player.numOfCarrotSeed--;
+					player.amountCarrotSeed--;
 					daysRemaining[numOfField] = 2;
 					player.energy = player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + player.energy);
@@ -502,8 +502,8 @@ public class Farming {
 		rapidGrowthButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(player.numOfBone >= 1) {
-					player.numOfBone--;
+				if(player.amountBone >= 1) {
+					player.amountBone--;
 					
 					if(statusOfField.get(numOfField).equals("seeded field")
 							|| statusOfField.get(numOfField).equals("need Water field")
@@ -558,16 +558,16 @@ public class Farming {
 					if(statusOfField.get(numOfField).equals("fullGrown field")) {
 						
 						if(plantsNametext[numOfField].getText().equals("이름 : 호박")) {
-							player.numOfPumpkin++;
+							player.amountPumpkin++;
 							
 						}else if(plantsNametext[numOfField].getText().equals("이름 : 양파")) {
-							player.numOfOnion++;
+							player.amountOnion++;
 							
 						}else if(plantsNametext[numOfField].getText().equals("이름 : 양배추")) {
-							player.numOfCabbage++;
+							player.amountCabbage++;
 							
 						}else if(plantsNametext[numOfField].getText().equals("이름 : 당근")) {
-							player.numOfCarrot++;
+							player.amountCarrot++;
 						}
 					}
 					//다 자라지 않은 농작물을 수확한다면 농작물은 얻을 수 없으며 빈땅으로 되돌아간다
@@ -972,15 +972,16 @@ public class Farming {
 					playerImage.setVisible(true);
 
 				} else {
-					numberOfItemsText[0].setText("X " + player.numOfPumpkinSeed);
-					numberOfItemsText[1].setText("X " + player.numOfOnionSeed);
-					numberOfItemsText[2].setText("X " + player.numOfCabbageSeed);
-					numberOfItemsText[3].setText("X " + player.numOfCarrotSeed);
-					numberOfItemsText[4].setText("X " + player.numOfPumpkin);
-					numberOfItemsText[5].setText("X " + player.numOfOnion);
-					numberOfItemsText[6].setText("X " + player.numOfCabbage);
-					numberOfItemsText[7].setText("X " + player.numOfCarrot);
-
+					numberOfItemsText[0].setText("X " + player.amountPumpkinSeed);
+					numberOfItemsText[1].setText("X " + player.amountOnionSeed);
+					numberOfItemsText[2].setText("X " + player.amountCabbageSeed);
+					numberOfItemsText[3].setText("X " + player.amountCarrotSeed);
+					numberOfItemsText[4].setText("X " + player.amountPumpkin);
+					numberOfItemsText[5].setText("X " + player.amountOnion);
+					numberOfItemsText[6].setText("X " + player.amountCabbage);
+					numberOfItemsText[7].setText("X " + player.amountCarrot);
+					
+					
 					inventoryWindow.setVisible(true);
 					playerImage.setVisible(false);
 				}
