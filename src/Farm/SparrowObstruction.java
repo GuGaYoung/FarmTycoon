@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class SparrowObstruction extends Thread{
-	//Âü»õ°¡ ¹æÇØÇÏ´Â Å¬·¡½º - ¶¥ÀÌ ³ĞÀ»¼ö·Ï (¸¹ÀÌ ¾¾¾ÑÀ» ½É¾î³õÀ» ¼ö·Ï Âü»õ°¡ ³ª¿Ã È®·üÀÌ ³ô¾ÆÁø´Ù)
+	//ì°¸ìƒˆê°€ ë°©í•´í•˜ëŠ” í´ë˜ìŠ¤ - ë•…ì´ ë„“ì„ìˆ˜ë¡ (ë§ì´ ì”¨ì•—ì„ ì‹¬ì–´ë†“ì„ ìˆ˜ë¡ ì°¸ìƒˆê°€ ë‚˜ì˜¬ í™•ë¥ ì´ ë†’ì•„ì§„ë‹¤)
 	
 	Random random = new Random();
 	
@@ -21,13 +21,14 @@ public class SparrowObstruction extends Thread{
 				
 				randomField = random.nextInt(18);
 					
-				// ·£´ıÀ¸·Î ¼±ÅÃÇÑ ¹çÀÌ ºó ¹çÀÌ ¾Æ´Ò¶§ Âü»õ°¡ ³ªÅ¸³­´Ù
+				// ëœë¤ìœ¼ë¡œ ì„ íƒí•œ ë°­ì´ ë¹ˆ ë°­ì´ ì•„ë‹ë•Œ ì°¸ìƒˆê°€ ë‚˜íƒ€ë‚œë‹¤
 				if (!Farming.statusOfField.get(randomField).equals("empty Field")) {
 					Farming.sparrowImage.setLocation(Farming.fieldImages[randomField].getX(),Farming.fieldImages[randomField].getY());
 					Farming.statusOfField.set(randomField, "empty Field");
-					Farming.fieldImages[randomField].setIcon(new ImageIcon("C:\\Users\\dayou\\OneDrive\\¹ÙÅÁ È­¸é\\ÆÀ³ë¹Ù\\java_teamProject\\basicsFieldImage.png"));
+					Farming.fieldImages[randomField].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
+					Farming.emergencyMarkingImages[randomField].setVisible(false);
 					 
-					//Âü»õ°¡ ³ªÅ¸³­ 1ÃÊ ÈÄ Âü»õ´Â ´Ù½Ã ³¯¶ó°£´Ù
+					//ì°¸ìƒˆê°€ ë‚˜íƒ€ë‚œ 1ì´ˆ í›„ ì°¸ìƒˆëŠ” ë‹¤ì‹œ ë‚ ë¼ê°„ë‹¤
 					Thread.sleep(1000);
 					Farming.sparrowImage.setLocation(-100,-100);
 				}

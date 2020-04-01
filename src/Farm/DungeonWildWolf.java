@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-public class DungeonWildBear extends JPanel {
+public class DungeonWildWolf extends JPanel {
 
 	public static Object textArea;
 	private JPanel contentPane;
@@ -25,50 +25,44 @@ public class DungeonWildBear extends JPanel {
 	private JButton runAwayButton;
 	private JButton attackButton;
 
-	
-	//int energy = 100;
-	//static int wildBearHp = 100;
-
 	static int randomMushroom;	
-	static int randomItem;	//·£´ıÀ¸·Î ¹ŞÀ» ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÇ ¹øÈ£
-	static int numOfRun;	//µµ¸ÁÄ¥ ¼ö ÀÖ´Â ·£´ı ¹øÈ£
-
-	//static int wildBearHp = 110;
+	static int randomItem;	//ëœë¤ìœ¼ë¡œ ë°›ì„ ìˆ˜ ìˆëŠ” ì•„ì´í…œì˜ ë²ˆí˜¸
+	static int numOfRun;	//ë„ë§ì¹  ìˆ˜ ìˆëŠ” ëœë¤ ë²ˆí˜¸
 
 	static Random randomMushroomSelect = new Random();
 	static Random randomItemSelect = new Random();
 	static Random randomRun = new Random();
 
-	// º¹ºÒº¹¹ö¼¸ ¼±ÅÃÇÏ´Â ·£´ıÇÔ¼ö
+	// ë³µë¶ˆë³µë²„ì„¯ ì„ íƒí•˜ëŠ” ëœë¤í•¨ìˆ˜
 	public static void randomMushroomSelect() {
 		randomMushroom = randomMushroomSelect.nextInt(2);
 	}
 
-	// ·£´ı ¾ÆÀÌÅÛ ¼±ÅÃÇÏ´Â ·£´ıÇÔ¼ö
+	// ëœë¤ ì•„ì´í…œ ì„ íƒí•˜ëŠ” ëœë¤í•¨ìˆ˜
 	public static void randomItemSelect() {
 		randomItem = randomItemSelect.nextInt(5);
 	}
 
-	// µµ¸Á°¥ ¼ö ÀÖ´Â ¹øÈ£¸¦ Á¤ÇØÁÖ´Â ·£´ıÇÔ¼ö
+	// ë„ë§ê°ˆ ìˆ˜ ìˆëŠ” ë²ˆí˜¸ë¥¼ ì •í•´ì£¼ëŠ” ëœë¤í•¨ìˆ˜
 	public static void randomRun() {
 		numOfRun = randomRun.nextInt(5);
 	}
 
-	public DungeonWildBear() {
-		//System.out.println("¿À´ÃÀº " + Main.day + "ÀÏÀÔ´Ï´Ù. ÇÃ·¹ÀÌ¾î Ã¼·ÂÀº " + Main.energy + "ÀÔ´Ï´Ù.");
-		//System.out.println("°õ Ã¼·Â"+wildBearHp);
+	public DungeonWildWolf() {
+		//System.out.println("ì˜¤ëŠ˜ì€ " + Main.day + "ì¼ì…ë‹ˆë‹¤. í”Œë ˆì´ì–´ ì²´ë ¥ì€ " + Main.energy + "ì…ë‹ˆë‹¤.");
+		//System.out.println("ëŠ‘ëŒ€ ì²´ë ¥"+wildBearHp);
 		setLayout(null);
 		setBounds(0, 0, 800, 600);
 		setBackground(Color.black);
 		
-		WildAnimal wildBear = new WildAnimal("¾ß»ı°õ", 100, 15, true);
+		WildAnimal wildWolf = new WildAnimal("ì•¼ìƒëŠ‘ëŒ€", 100, 10, true);
 		
 		
-		JLabel wildBearImage = new JLabel();
-		wildBearImage.setHorizontalAlignment(SwingConstants.CENTER);
-		wildBearImage.setIcon(new ImageIcon("./images/wildBear.png"));
-		wildBearImage.setBounds(292, 10, 224, 170);
-		add(wildBearImage);
+		JLabel wildWolfImage = new JLabel();
+		wildWolfImage.setHorizontalAlignment(SwingConstants.CENTER);
+		wildWolfImage.setIcon(new ImageIcon("./images/wildWolf.png"));
+		wildWolfImage.setBounds(292, 10, 224, 170);
+		add(wildWolfImage);
 
 		JScrollPane scrollBar = new JScrollPane();
 		scrollBar.setBounds(68, 201, 662, 186);
@@ -78,7 +72,7 @@ public class DungeonWildBear extends JPanel {
 		JTextArea textArea = new JTextArea();
 		scrollBar.setViewportView(textArea);
 		textArea.setEnabled(true);
-		textArea.setFont((new Font("±¼¸²Ã¼", Font.BOLD, 15)));
+		textArea.setFont((new Font("êµ´ë¦¼ì²´", Font.BOLD, 15)));
 		
 		JPanel itemPanel = new JPanel();
 		itemPanel.setBounds(273, 397, 252, 58);
@@ -86,7 +80,7 @@ public class DungeonWildBear extends JPanel {
 		itemPanel.setVisible(false);
 		add(itemPanel);
 		
-		// ¾ß»ı°õ ÀÚµ¿ µ¿°İ ¾²·¹µå
+		// ì•¼ìƒëŠ‘ëŒ€ ìë™ ë™ê²© ì“°ë ˆë“œ
 		new Thread(new Runnable() {
 			public void run() {
 				try {
@@ -94,34 +88,33 @@ public class DungeonWildBear extends JPanel {
 					do {
 						Thread.sleep(1000);
 						wildBearAttack();
-						//System.out.println("°ø°İÁß");
-					} while (Player.hp > 0 && wildBear.hp > 0);
+						//System.out.println("ê³µê²©ì¤‘");
+					} while (Player.hp > 0 && wildWolf.hp > 0);
 				} catch (Exception ie) {
 					ie.printStackTrace();
 				}
 			}
 		private void wildBearAttack() {
 			{
-				if (wildBear.hp > 0) {
-					Player.hp = Player.hp - wildBear.power;
-					textArea.append("¾ß»ı°õÀÌ °ø°İÇÏ¿´½À´Ï´Ù! (ÇÃ·¹ÀÌ¾îÀÇ ³²Àº ÇÇ: " + Player.hp + ")\n");
+				if (wildWolf.hp > 0) {
+					Player.hp = Player.hp - wildWolf.power;
+					textArea.append("ì•¼ìƒëŠ‘ëŒ€ê°€ ê³µê²©í•˜ì˜€ìŠµë‹ˆë‹¤! (í”Œë ˆì´ì–´ì˜ ë‚¨ì€ í”¼: " + Player.hp + ")\n");
 					scrollBar.getVerticalScrollBar().setValue(scrollBar.getVerticalScrollBar().getMaximum());
 
-					// °ÔÀÓ¿¡ Áö¸é ´ÙÀ½³¯·Î ¹Ù²î°í, ÇÃ·¹ÀÌ¾îÀÇ Ã¼·ÂÀÌ 50À¸·Î ½ÃÀÛÇÑ´Ù.
+					// ê²Œì„ì— ì§€ë©´ ë‹¤ìŒë‚ ë¡œ ë°”ë€Œê³ , í”Œë ˆì´ì–´ì˜ ì²´ë ¥ì´ 50ìœ¼ë¡œ ì‹œì‘í•œë‹¤.
 					if (Player.hp <= 0) {
 						Farming.day ++;
 						Player.energy = 50;
-						//System.out.println("¿À´ÃÀº " + Main.day + "ÀÏÀÔ´Ï´Ù. ÇÃ·¹ÀÌ¾î Ã¼·ÂÀº " + Main.energy + "ÀÔ´Ï´Ù.");
-						Farming.daysText.setText(Farming.day + "ÀÏÂ÷");
-						Farming.EnergyText.setText("³²Àº ¿¡³ÊÁö : " + Player.energy);
-						
+						//System.out.println("ì˜¤ëŠ˜ì€ " + Main.day + "ì¼ì…ë‹ˆë‹¤. í”Œë ˆì´ì–´ ì²´ë ¥ì€ " + Main.energy + "ì…ë‹ˆë‹¤.");
+						Farming.daysText.setText(Farming.day + "ì¼ì°¨");
+						Farming.EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + Player.energy);
 							textArea.selectAll();
 							textArea.replaceSelection("");
 							setVisible(false);
 							//interrupt();
 							//Main.btnNewButton.setVisible(true);
 							Farming.farmingScene.setVisible(true);
-							JOptionPane.showMessageDialog(null, "¾ß»ı°õÇÑÅ× ´çÇÏ°í ¸»¾Ò½À´Ï´Ù.", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì•¼ìƒëŠ‘ëŒ€í•œí…Œ ë‹¹í•˜ê³  ë§ì•˜ìŠµë‹ˆë‹¤.", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
 
 					}
 				}
@@ -129,42 +122,42 @@ public class DungeonWildBear extends JPanel {
 		}
 		}).start();
 
-		attackButton = new JButton("°ø°İÇÏ±â");
+		attackButton = new JButton("ê³µê²©í•˜ê¸°");
 		attackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (Player.hp > 0) {
 
-					if (wildBear.hp > 0) {
+					if (wildWolf.hp > 0) {
 						Player.attackPower = Player.randomPower.nextInt(11) + 10;
-						textArea.append("ÇÃ·¹ÀÌ¾î´Â ¾ß»ı°õ¿¡°Ô " + Player.attackPower + " ÀÇ µ¥¹ÌÁö¸¦ ÀÔÇû½À´Ï´Ù! ");
-						wildBear.hp = wildBear.hp - Player.attackPower;
+						textArea.append("í”Œë ˆì´ì–´ëŠ” ì•¼ìƒëŠ‘ëŒ€ì—ê²Œ " + Player.attackPower + " ì˜ ë°ë¯¸ì§€ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤! ");
+						wildWolf.hp = wildWolf.hp - Player.attackPower;
 
-						if (wildBear.hp > 0) {
-							textArea.append("(³²Àº ¾ß»ı°õÀÇ Ã¼·ÂÀº " + wildBear.hp + " ÀÔ´Ï´Ù!) \n");
-						} else if (wildBear.hp <= 0) {
-							textArea.append("¾ß»ı °õÀÌ Á×¾ú½À´Ï´Ù! \n");
+						if (wildWolf.hp > 0) {
+							textArea.append("(ë‚¨ì€ ì•¼ìƒëŠ‘ëŒ€ì˜ ì²´ë ¥ì€ " + wildWolf.hp + " ì…ë‹ˆë‹¤!) \n");
+						} else if (wildWolf.hp <= 0) {
+							textArea.append("ì•¼ìƒ ëŠ‘ëŒ€ê°€ ì£½ì—ˆìŠµë‹ˆë‹¤! \n");
 
 							randomItemSelect();
 
-							//º¹ºÒº¹ ¹ö¼¸ ¹ŞÀ½
+							//ë³µë¶ˆë³µ ë²„ì„¯ ë°›ìŒ
 							if (randomItem == 0) {
-								//textArea.append("SYSTEM: º¹ºÒº¹ ¹ö¼¸À» ¹Ş¾Ò½À´Ï´Ù! \n");
+								//textArea.append("SYSTEM: ë³µë¶ˆë³µ ë²„ì„¯ì„ ë°›ì•˜ìŠµë‹ˆë‹¤! \n");
 								Player.amountRandomMushroom++;
 								textArea.selectAll();
 								textArea.replaceSelection("");
 								setVisible(false);
 								
-								System.out.println("º¹ºÒº¹¹ö¼¸ ¹ŞÀº ÈÄ °¹¼ö: " +Player.amountRandomMushroom);
+								System.out.println("ë³µë¶ˆë³µë²„ì„¯ ë°›ì€ í›„ ê°¯ìˆ˜: " +Player.amountRandomMushroom);
 								
 								Farming.farmingScene.setVisible(true);
-								//AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "º¹ºÒº¹¹ö¼¸À» ¹Ş¾Ò½À´Ï´Ù", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "ë³µë¶ˆë³µë²„ì„¯ì„ ë°›ì•˜ìŠµë‹ˆë‹¤", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+								// AppearanceOfAnimals.running = true;
 								//Main.btnNewButton.setVisible(true);
 							} 
-							//µ· ¹ŞÀ½
+							//ëˆ ë°›ìŒ
 							else if (randomItem == 1) {
-								//textArea.append("SYSTEM: µ·À» ¹Ş¾Ò½À´Ï´Ù! \n");
+								//textArea.append("SYSTEM: ëˆì„ ë°›ì•˜ìŠµë‹ˆë‹¤! \n");
 								Player.money = Player.money + 2000;
 								textArea.selectAll();
 								textArea.replaceSelection("");
@@ -172,23 +165,23 @@ public class DungeonWildBear extends JPanel {
 								
 								//Main.btnNewButton.setVisible(true);
 								Farming.farmingScene.setVisible(true);
-								Farming.moneyText.setText("µ· : " + Player.money);
+								Farming.moneyText.setText("ëˆ : " + Player.money);
 								//AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "µ·À» ¹Ş¾Ò½À´Ï´Ù", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "ëˆì„ ë°›ì•˜ìŠµë‹ˆë‹¤", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
 							}
-							//»Ä°¡·ç ¹ŞÀ½
+							//ë¼›ê°€ë£¨ ë°›ìŒ
 							else if (randomItem >= 2) {
-								//textArea.append("SYSTEM: »Ä°¡·ç¸¦ ¹Ş¾Ò½À´Ï´Ù! \n");
-								Player.amountBone = Player.amountBone+3;
+								//textArea.append("SYSTEM: ë¼›ê°€ë£¨ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤! \n");
+								Player.amountBone = Player.amountBone+2;
 								textArea.selectAll();
 								textArea.replaceSelection("");
 								setVisible(false);
 								
 								//Main.btnNewButton.setVisible(true);
 								Farming.farmingScene.setVisible(true);
-								//AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "»Ä°¡·ç¸¦ ¹Ş¾Ò½À´Ï´Ù", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
-								//System.out.println("»Ä°¡·ç ¹ŞÀº ÈÄ °¹¼ö: " +numOfBone);
+								// AppearanceOfAnimals.running = true;
+								JOptionPane.showMessageDialog(null, "ë¼›ê°€ë£¨ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+								//System.out.println("ë¼›ê°€ë£¨ ë°›ì€ í›„ ê°¯ìˆ˜: " +numOfBone);
 							} 
 						}
 
@@ -200,7 +193,7 @@ public class DungeonWildBear extends JPanel {
 		attackButton.setBounds(68, 465, 168, 47);
 		add(attackButton);
 		
-		useItemButton = new JButton("¾ÆÀÌÅÛ »ç¿ë");
+		useItemButton = new JButton("ì•„ì´í…œ ì‚¬ìš©");
 		useItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				itemPanel.setVisible(true);
@@ -208,32 +201,32 @@ public class DungeonWildBear extends JPanel {
 		});
 		
 		//JButton useRandomMushroomButton = new JButton(new ImageIcon("img/btLogin.png"));
-		JButton useRandomMushroomButton = new JButton("¹ö¼¸");
+		JButton useRandomMushroomButton = new JButton("ë²„ì„¯");
 		useRandomMushroomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("º¹ºÒº¹¹ö¼¸ »ç¿ë Àü °¹¼ö: " + Player.amountRandomMushroom);
+				System.out.println("ë³µë¶ˆë³µë²„ì„¯ ì‚¬ìš© ì „ ê°¯ìˆ˜: " + Player.amountRandomMushroom);
 
 				if (Player.hp > 0) {
-					if (wildBear.hp > 0) {
+					if (wildWolf.hp > 0) {
 						if (Player.amountRandomMushroom > 0) {
 							Player.amountRandomMushroom--;
-							// System.out.println("º¹ºÒº¹¹ö¼¸ »ç¿ë ÈÄ ³²Àº °¹¼ö: " +numOfRandomMushroom);
+							// System.out.println("ë³µë¶ˆë³µë²„ì„¯ ì‚¬ìš© í›„ ë‚¨ì€ ê°¯ìˆ˜: " +numOfRandomMushroom);
 							randomMushroomSelect();
-							// System.out.println("º¹ºÒº¹¹ö¼¸ ¼±ÅÃ¹øÈ£: "randomMushroom);
+							// System.out.println("ë³µë¶ˆë³µë²„ì„¯ ì„ íƒë²ˆí˜¸: "randomMushroom);
 
 							if (randomMushroom == 0) {
 								Player.hp = Player.hp + 100;
 								if (Player.hp > 100) {
 									Player.hp = 100;
 								}
-								textArea.append("º¹ºÒº¹¹ö¼¸ÀÇ È¿°ú·Î ÇÃ·¹ÀÌ¾îÀÇ ÇÇ Áõ°¡! Ã¼·Â:" + Player.hp + "\n");
+								textArea.append("ë³µë¶ˆë³µë²„ì„¯ì˜ íš¨ê³¼ë¡œ í”Œë ˆì´ì–´ì˜ í”¼ ì¦ê°€! ì²´ë ¥:" + Player.hp + "\n");
 								itemPanel.setVisible(false);
 							}
 
 							if (randomMushroom == 1) {
 								Player.hp = Player.hp - 100;
-								textArea.append("º¹ºÒº¹¹ö¼¸ÀÇ È¿°ú·Î ÇÃ·¹ÀÌ¾îÀÇ ÇÇ °¨¼Ò! Ã¼·Â: " + Player.hp + "\n");
+								textArea.append("ë³µë¶ˆë³µë²„ì„¯ì˜ íš¨ê³¼ë¡œ í”Œë ˆì´ì–´ì˜ í”¼ ê°ì†Œ! ì²´ë ¥: " + Player.hp + "\n");
 								
 								if (Player.hp <= 0) {
 									Player.hp = 0;
@@ -247,38 +240,39 @@ public class DungeonWildBear extends JPanel {
 									//Main.btnNewButton.setVisible(true);
 									Farming.farmingScene.setVisible(true);
 									//AppearanceOfAnimals.running = true;
-									JOptionPane.showMessageDialog(null, "º¹ºÒº¹¹ö¼¸ÀÇ È¿°ú·Î Á×°í¸»¾Ò¾î¿ä.", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(null, "ë³µë¶ˆë³µë²„ì„¯ì˜ íš¨ê³¼ë¡œ ì£½ê³ ë§ì•˜ì–´ìš”.", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+									// AppearanceOfAnimals.running = true;
 									//}catch(Exception ie) {
 									//	ie.printStackTrace();
 									//}
 								}		
 							}
 						} else {
-							textArea.append("º¹ºÒº¹¹ö¼¸ÀÌ ¾ø¾î¼­ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
+							textArea.append("ë³µë¶ˆë³µë²„ì„¯ì´ ì—†ì–´ì„œ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 						}
 					}
 				}
 			}
 		});
-		//btnNewButton.setFont(new Font("±¼¸²Ã¼", Font.PLAIN, 7));
+		//btnNewButton.setFont(new Font("êµ´ë¦¼ì²´", Font.PLAIN, 7));
 		useRandomMushroomButton.setBounds(12, 10, 68, 37);
 		itemPanel.add(useRandomMushroomButton);
 		
-		JButton usePotionHpOf30_Button = new JButton("Ã¼·Â 30% Æ÷¼Ç");
+		JButton usePotionHpOf30_Button = new JButton("ì²´ë ¥ 30% í¬ì…˜");
 		usePotionHpOf30_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Player.hp > 0) {
-					if (wildBear.hp > 0) {
+					if (wildWolf.hp > 0) {
 						if(Player.amountPotionHp_30 >0) {
 							Player.amountPotionHp_30--;
 							Player.hp = Player.hp +30;
 							if(Player.hp > 100) {
 								Player.hp = 100;
 							}
-							textArea.append("Ã¼·Â 30% Ãß°¡ Æ÷¼ÇÀ» »ç¿ëÇß½À´Ï´Ù!. Ã¼·Â UP+30! \n");
+							textArea.append("ì²´ë ¥ 30% ì¶”ê°€ í¬ì…˜ì„ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤!. ì²´ë ¥ UP+30! \n");
 							itemPanel.setVisible(false);
 						}else {
-							textArea.append("Ã¼·Â 30% Ãß°¡ Æ÷¼ÇÀÌ ¾ø¾î¼­ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù. \n");
+							textArea.append("ì²´ë ¥ 30% ì¶”ê°€ í¬ì…˜ì´ ì—†ì–´ì„œ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. \n");
 							itemPanel.setVisible(false);
 						}
 					}
@@ -288,21 +282,21 @@ public class DungeonWildBear extends JPanel {
 		usePotionHpOf30_Button.setBounds(92, 10, 68, 37);
 		itemPanel.add(usePotionHpOf30_Button);
 		
-		JButton usePotionHpOf50_Button = new JButton("Ã¼·Â 50% Æ÷¼Ç");
+		JButton usePotionHpOf50_Button = new JButton("ì²´ë ¥ 50% í¬ì…˜");
 		usePotionHpOf50_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Player.hp > 0) {
-					if (wildBear.hp > 0) {
+					if (wildWolf.hp > 0) {
 						if(Player.amountPotionHp_50 >0) {
 							Player.amountPotionHp_50--;
 							Player.hp = Player.hp +50;
 							if(Player.hp > 100) {
 								Player.hp = 100;
 							}
-							textArea.append("Ã¼·Â 50% Ãß°¡ Æ÷¼ÇÀ» »ç¿ëÇß½À´Ï´Ù!. Ã¼·Â UP+50! \n");
+							textArea.append("ì²´ë ¥ 50% ì¶”ê°€ í¬ì…˜ì„ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤!. ì²´ë ¥ UP+50! \n");
 							itemPanel.setVisible(false);
 						}else {
-							textArea.append("Ã¼·Â 50% Ãß°¡ Æ÷¼ÇÀÌ ¾ø¾î¼­ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù. \n");
+							textArea.append("ì²´ë ¥ 50% ì¶”ê°€ í¬ì…˜ì´ ì—†ì–´ì„œ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. \n");
 							itemPanel.setVisible(false);
 						}
 					}
@@ -315,26 +309,26 @@ public class DungeonWildBear extends JPanel {
 		useItemButton.setBounds(317, 465, 168, 47);
 		add(useItemButton);
 
-		runAwayButton = new JButton("µµ¸ÁÄ¡±â");
+		runAwayButton = new JButton("ë„ë§ì¹˜ê¸°");
 		runAwayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (Player.hp > 0) {
-					if (wildBear.hp > 0) {
+					if (wildWolf.hp > 0) {
 						randomRun();
 
 						if (numOfRun == 0) {
 							//wildBear.hp = wildBear.hp-wildBear.hp ;
-							wildBear.hp = 0;						
-							System.out.println("µµ¸Á°¥¶§ °õ Ã¼·Â: "+wildBear.hp);
+							wildWolf.hp = 0;						
+							System.out.println("ë„ë§ê°ˆë•Œ ëŠ‘ëŒ€ ì²´ë ¥: "+wildWolf.hp);
 							textArea.selectAll();
 							textArea.replaceSelection("");
 							setVisible(false);
 							//Main.btnNewButton.setVisible(true);
 							Farming.farmingScene.setVisible(true);
-
+							//AppearanceOfAnimals.running = true;
 							//System.out.println(AppearanceOfAnimals.running);
-							JOptionPane.showMessageDialog(null, "µµ¸ÁÃÆ½À´Ï´Ù!", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ë„ë§ì³¤ìŠµë‹ˆë‹¤!", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
 							AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 							appearanceOfAnimals.start();
 							AppearanceOfAnimals.running = true;
@@ -342,7 +336,7 @@ public class DungeonWildBear extends JPanel {
 							//Player.hp  = 100;
 							//wildBear.hp = 100;
 						} else {
-							textArea.append("µµ¸Á°¡±â¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù! \n");
+							textArea.append("ë„ë§ê°€ê¸°ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤! \n");
 						}
 					}
 				}

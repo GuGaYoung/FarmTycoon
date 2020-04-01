@@ -6,15 +6,15 @@ import javax.swing.ImageIcon;
 
 public class RotCrops extends Thread{
 
-	//½âÀº ³óÀå¹°À» ¸¸µå´Â ¾²·¹µå
+	//ì©ì€ ë†ì¥ë¬¼ì„ ë§Œë“œëŠ” ì“°ë ˆë“œ
 	
 	Random random = new Random();
 	
 	int numOfField = 0;
 	int minTime = 10000;
 	int maxTime = 15000;
-	int randomShortageTime = 0;//¹°ÀÌ ºÎÁ·ÇÏ±â ±îÁö ³²Àº ½Ã°£
-	int randomRotTime = 0; //³óÀÛ¹°ÀÌ ½â±â±îÁö ³²Àº ½Ã°£
+	int randomShortageTime = 0;//ë¬¼ì´ ë¶€ì¡±í•˜ê¸° ê¹Œì§€ ë‚¨ì€ ì‹œê°„
+	int randomRotTime = 0; //ë†ì‘ë¬¼ì´ ì©ê¸°ê¹Œì§€ ë‚¨ì€ ì‹œê°„
 	boolean running = true;
 	
 	RotCrops(int numOfField){
@@ -25,8 +25,8 @@ public class RotCrops extends Thread{
 	public synchronized void run() {
 		while (running) {
 			try {
-				// ¾¾¾ÑÀÌ ½É°ÜÁø ¹çÀÌ¶ó¸é -> ÀÏ ¼ö°¡ Áö³ª¸é ÀÚ¶ó°ÔÇÏ±â ->Áı¿¡ µµÂøÇÏ¸é ÆÇ´ÜÇÏ±â ¾²·¹µå¿¡¼­ ¸»°í 
-				//¿©±â¿¡¼± ³óÀÛ¹°½â´Â °Å Ç¥ÇöÇÏ±â ·£´ı½Ã°£ ´ë·Î 
+				// ì”¨ì•—ì´ ì‹¬ê²¨ì§„ ë°­ì´ë¼ë©´ -> ì¼ ìˆ˜ê°€ ì§€ë‚˜ë©´ ìë¼ê²Œí•˜ê¸° ->ì§‘ì— ë„ì°©í•˜ë©´ íŒë‹¨í•˜ê¸° ì“°ë ˆë“œì—ì„œ ë§ê³  
+				//ì—¬ê¸°ì—ì„  ë†ì‘ë¬¼ì©ëŠ” ê±° í‘œí˜„í•˜ê¸° ëœë¤ì‹œê°„ ëŒ€ë¡œ 
 				
 				if (Farming.statusOfField.get(numOfField).equals("seeded field")) {
 					randomShortageTime = random.nextInt(maxTime - minTime + 1) + minTime;
@@ -37,10 +37,10 @@ public class RotCrops extends Thread{
 						
 						Farming.emergencyMarkingImages[numOfField].setVisible(true);
 						Farming.statusOfField.set(numOfField, "need Water field");
-						Farming.amountOfWater[numOfField].setText("¹°ÀÇ ¾ç : ¸Å¿ìºÎÁ·");
+						Farming.amountOfWater[numOfField].setText("ë¬¼ì˜ ì–‘ : ë§¤ìš°ë¶€ì¡±");
 					}
 
-					//¿À·§µ¿¾È ¹°À» ÁÖÁö ¾ÊÀ¸¸é ½â±â 
+					//ì˜¤ë«ë™ì•ˆ ë¬¼ì„ ì£¼ì§€ ì•Šìœ¼ë©´ ì©ê¸° 
 				}else if(Farming.statusOfField.get(numOfField).equals("need Water field")) {
 					randomRotTime = random.nextInt(maxTime - minTime + 1) + minTime;
 					Thread.sleep(randomRotTime);

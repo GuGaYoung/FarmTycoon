@@ -1,19 +1,28 @@
 package Farm;
 
+import java.util.Random;
+
 public class Player {
 
 	public int speed = 5;
-	public int energy = 100;
-	public int money = 0;
+	public static int energy = 100;
+	public static int money = 0;
 	
-	public int amountPumpkinSeed = 10; //°¡Áö°í ÀÖ´Â È£¹Ú¾¾ÀÇ ¼ö
-	public int amountOnionSeed = 10; //°¡Áö°í ÀÖ´Â ¾çÆÄ¾¾ÀÇ ¼ö 
-	public int amountCabbageSeed = 10; //°¡Áö°í ÀÖ´Â ¾ç¹èÃß¾¾ÀÇ ¼ö
-	public int amountCarrotSeed = 10; //°¡Áö°í ÀÖ´Â ´ç±Ù¾¾ÀÇ ¼ö
-	public int amountPumpkin = 0; //°¡Áö°í ÀÖ´Â È£¹ÚÀÇ ¼ö
-	public int amountOnion = 0; //°¡Áö°í ÀÖ´Â ¾çÆÄÀÇ ¼ö 
-	public int amountCabbage = 0; //°¡Áö°í ÀÖ´Â ¾ç¹èÃßÀÇ ¼ö
-	public int amountCarrot = 0; //°¡Áö°í ÀÖ´Â ´ç±ÙÀÇ ¼ö
+	public int amountPumpkinSeed = 10; //ê°€ì§€ê³  ìˆëŠ” í˜¸ë°•ì”¨ì˜ ìˆ˜
+	public int amountOnionSeed = 10; //ê°€ì§€ê³  ìˆëŠ” ì–‘íŒŒì”¨ì˜ ìˆ˜ 
+	public int amountCabbageSeed = 10; //ê°€ì§€ê³  ìˆëŠ” ì–‘ë°°ì¶”ì”¨ì˜ ìˆ˜
+	public int amountCarrotSeed = 10; //ê°€ì§€ê³  ìˆëŠ” ë‹¹ê·¼ì”¨ì˜ ìˆ˜
+	public int amountPumpkin = 0; //ê°€ì§€ê³  ìˆëŠ” í˜¸ë°•ì˜ ìˆ˜
+	public int amountOnion = 0; //ê°€ì§€ê³  ìˆëŠ” ì–‘íŒŒì˜ ìˆ˜ 
+	public int amountCabbage = 0; //ê°€ì§€ê³  ìˆëŠ” ì–‘ë°°ì¶”ì˜ ìˆ˜
+	public int amountCarrot = 0; //ê°€ì§€ê³  ìˆëŠ” ë‹¹ê·¼ì˜ ìˆ˜
 	
-	public int amountBone = 2;//°¡Áö°í ÀÖ´Â »ÀÀÇ ¼ö
+	public static int amountBone = 2;//ê°€ì§€ê³  ìˆëŠ” ë¼ˆì˜ ìˆ˜
+	
+	static Random randomPower = new Random();
+	static int hp = 100;
+	static int attackPower; 
+	static int amountRandomMushroom = 2;
+	static int amountPotionHp_30 = 3;
+	static int amountPotionHp_50 = 3;
 }
