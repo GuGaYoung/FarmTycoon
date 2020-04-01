@@ -118,6 +118,7 @@ public class Farming {
 	int fieldHorizontalLength = 90;
 	int fieldVerticalLength = 50;
 	int fieldInterval = 100;
+	String fieldPhase = "";
 	
 	//인벤토리 
 	int inventoryHorizontalLength = 5;
@@ -397,8 +398,20 @@ public class Farming {
 					}
 					
 					//씨앗을 선택할때 보이지 않게 해 놓았던 것을 다시 보이게 했다
-					for (int j = 0; j < fieldImages.length; j++) {
-						fieldImages[j].setEnabled(true);
+					if (fieldPhase.equals("basic farm")) {
+						for (int i = 12; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("first upgraded farm")) {
+						for (int i = 6; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("second upgraded farm")) {
+						for (int i = 0; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
 					}
 					playerImage.setVisible(true);
 					seedPlantingWindow.setVisible(false);
@@ -411,9 +424,22 @@ public class Farming {
 			public void actionPerformed(ActionEvent e) {
 				
 				playerImage.setVisible(true);
-				seedPlantingWindow.setVisible(false);	
-				for (int i = 0; i < fieldImages.length; i++) {
-					fieldImages[i].setEnabled(true);
+				seedPlantingWindow.setVisible(false);				
+
+				if (fieldPhase.equals("basic farm")) {
+					for (int i = 12; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("first upgraded farm")) {
+					for (int i = 6; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("second upgraded farm")) {
+					for (int i = 0; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
 				}
 			}
 		});
@@ -484,13 +510,25 @@ public class Farming {
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				for (int i = 0; i < fieldImages.length; i++) {
-					fieldImages[i].setEnabled(true);
-					
-					plantsImage[numOfField].setVisible(false);
-					plantsNametext[numOfField].setVisible(false);
-					timeLeftText[numOfField].setVisible(false);
-					amountOfWater[numOfField].setVisible(false);
+				plantsImage[numOfField].setVisible(false);
+				plantsNametext[numOfField].setVisible(false);
+				timeLeftText[numOfField].setVisible(false);
+				amountOfWater[numOfField].setVisible(false);			
+
+				if (fieldPhase.equals("basic farm")) {
+					for (int i = 12; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("first upgraded farm")) {
+					for (int i = 6; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("second upgraded farm")) {
+					for (int i = 0; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
 				}
 			}
 		});
@@ -532,13 +570,25 @@ public class Farming {
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				for (int i = 0; i < fieldImages.length; i++) {
-					fieldImages[i].setEnabled(true);
-					
-					plantsImage[numOfField].setVisible(false);
-					plantsNametext[numOfField].setVisible(false);
-					timeLeftText[numOfField].setVisible(false);
-					amountOfWater[numOfField].setVisible(false);
+				plantsImage[numOfField].setVisible(false);
+				plantsNametext[numOfField].setVisible(false);
+				timeLeftText[numOfField].setVisible(false);
+				amountOfWater[numOfField].setVisible(false);			
+
+				if (fieldPhase.equals("basic farm")) {
+					for (int i = 12; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("first upgraded farm")) {
+					for (int i = 6; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("second upgraded farm")) {
+					for (int i = 0; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
 				}
 			}
 		});
@@ -577,16 +627,29 @@ public class Farming {
 					player.energy  = player.energy - 7;
 					EnergyText.setText("남은 에너지 : " + player.energy);
 				}
-				
-				plantStateWindow.setVisible(false);	
+
+				plantStateWindow.setVisible(false);
 				playerImage.setVisible(true);
-				for (int i = 0; i < fieldImages.length; i++) {
-					fieldImages[i].setEnabled(true);
-					
-					plantsImage[numOfField].setVisible(false);
-					plantsNametext[numOfField].setVisible(false);
-					timeLeftText[numOfField].setVisible(false);
-					amountOfWater[numOfField].setVisible(false);
+				
+				plantsImage[numOfField].setVisible(false);
+				plantsNametext[numOfField].setVisible(false);
+				timeLeftText[numOfField].setVisible(false);
+				amountOfWater[numOfField].setVisible(false);			
+
+				if (fieldPhase.equals("basic farm")) {
+					for (int i = 12; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("first upgraded farm")) {
+					for (int i = 6; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("second upgraded farm")) {
+					for (int i = 0; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
 				}
 			}
 		});
@@ -600,13 +663,26 @@ public class Farming {
 				
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
-				for (int i = 0; i < fieldImages.length; i++) {
-					fieldImages[i].setEnabled(true);
-					
-					plantsImage[numOfField].setVisible(false);
-					plantsNametext[numOfField].setVisible(false);
-					timeLeftText[numOfField].setVisible(false);
-					amountOfWater[numOfField].setVisible(false);
+
+				plantsImage[numOfField].setVisible(false);
+				plantsNametext[numOfField].setVisible(false);
+				timeLeftText[numOfField].setVisible(false);
+				amountOfWater[numOfField].setVisible(false);
+
+				if (fieldPhase.equals("basic farm")) {
+					for (int i = 12; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("first upgraded farm")) {
+					for (int i = 6; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
+
+				} else if (fieldPhase.equals("second upgraded farm")) {
+					for (int i = 0; i < fieldImages.length; i++) {
+						fieldImages[i].setEnabled(true);
+					}
 				}
 			}
 		});
@@ -650,6 +726,24 @@ public class Farming {
 			rotCrops.start();
 		
 		}
+		//밭의 단계 - "basic farm"
+		fieldPhase = "basic farm";
+		for(int i = 0; i < 12; i++) {
+			fieldImages[i].setEnabled(false);
+			//fieldImages[i].setVisible(false);
+		}
+		
+		//밭의 단계 - first upgraded farm 
+		//fieldPhase = "first upgraded farm";
+		//for(int i = 6; i < 12; i++) {
+		//	fieldImages[i].setEnabled(true);
+		//}
+		
+		//밭의 단계 - second upgraded farm 
+		//fieldPhase = "second upgraded farm";
+		//for(int i = 0; i < 6; i++) {
+		//	fieldImages[i].setEnabled(true);
+		//}
 		
 		gameSuccess.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(gameSuccess);
@@ -767,8 +861,8 @@ public class Farming {
 				
 			case KeyEvent.VK_SPACE:
 				
-				System.out.println(playerImage.getX());
-				System.out.println(playerImage.getY());
+				//System.out.println(playerImage.getX());
+				//System.out.println(playerImage.getY());
 				
 				//밭안(밭 앞)에서 스페이스바를 할 경우 씨앗 선택창또는  식물상태창 볼 수 있다.
 				//상점, 집안(앞)에서 스페이스 바를 할 경우 상점에 들어가거나 하루를 지나가게 할 수 있다.
@@ -861,6 +955,7 @@ public class Farming {
 						}
 
 					}
+				
 					
 					//밭의 앞에서 스페이스바를 눌렀을 때
 					for (int i = 0; i < fieldImages.length; i++) {
@@ -996,40 +1091,121 @@ public class Farming {
 		}
 	}
 	
-	public void information(){
-		
-		//비어있는 땅이라면 씨앗심기창을 보여준다
-		if (statusOfField.get(numOfField).equals("empty Field")) {
-			seedPlantingWindow.setVisible(true);
-			
-			for (int j = 0; j < fieldImages.length; j++) {
-				fieldImages[j].setEnabled(false);
+	public void information() {
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if (fieldPhase.equals("basic farm")) {
+			if (numOfField >= 12) {
+
+				// 비어있는 땅이라면 씨앗심기창을 보여준다
+				if (statusOfField.get(numOfField).equals("empty Field")) {
+					seedPlantingWindow.setVisible(true);
+
+					for (int j = 0; j < fieldImages.length; j++) {
+						fieldImages[j].setEnabled(false);
+					}
+					playerImage.setVisible(false);
+
+					// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
+				} else {
+					plantStateWindow.setVisible(true);
+
+					plantsImage[numOfField].setVisible(true);
+					plantsNametext[numOfField].setVisible(true);
+					timeLeftText[numOfField].setVisible(true);
+					amountOfWater[numOfField].setVisible(true);
+
+					// 만약 썩은 땅이라면
+					if (statusOfField.get(numOfField).equals("rotten field")) {
+						// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
+						waterThePlantsButton.setEnabled(false);
+						rapidGrowthButton.setEnabled(false);
+					} else {
+						waterThePlantsButton.setEnabled(true);
+						rapidGrowthButton.setEnabled(true);
+					}
+
+					for (int j = 0; j < fieldImages.length; j++) {
+						fieldImages[j].setEnabled(false);
+					}
+					playerImage.setVisible(false);
+				}
 			}
-			playerImage.setVisible(false);
-			
-			//씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
-		}else {
-			plantStateWindow.setVisible(true);
-			
-			plantsImage[numOfField].setVisible(true);
-			plantsNametext[numOfField].setVisible(true);
-			timeLeftText[numOfField].setVisible(true);
-			amountOfWater[numOfField].setVisible(true);
-			
-			//만약 썩은 땅이라면 
-			if(statusOfField.get(numOfField).equals("rotten field")){
-				//물주기버튼과, 급속성장버튼을 누르지 못하게 한다
-				waterThePlantsButton.setEnabled(false);
-				rapidGrowthButton.setEnabled(false);
-			}else {
-				waterThePlantsButton.setEnabled(true);
-				rapidGrowthButton.setEnabled(true);
+
+		} else if (fieldPhase.equals("first upgraded farm")) {
+
+			if (numOfField >= 6) {
+				// 비어있는 땅이라면 씨앗심기창을 보여준다
+				if (statusOfField.get(numOfField).equals("empty Field")) {
+					seedPlantingWindow.setVisible(true);
+
+					for (int j = 0; j < fieldImages.length; j++) {
+						fieldImages[j].setEnabled(false);
+					}
+					playerImage.setVisible(false);
+
+					// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
+				} else {
+					plantStateWindow.setVisible(true);
+
+					plantsImage[numOfField].setVisible(true);
+					plantsNametext[numOfField].setVisible(true);
+					timeLeftText[numOfField].setVisible(true);
+					amountOfWater[numOfField].setVisible(true);
+
+					// 만약 썩은 땅이라면
+					if (statusOfField.get(numOfField).equals("rotten field")) {
+						// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
+						waterThePlantsButton.setEnabled(false);
+						rapidGrowthButton.setEnabled(false);
+					} else {
+						waterThePlantsButton.setEnabled(true);
+						rapidGrowthButton.setEnabled(true);
+					}
+
+					for (int j = 0; j < fieldImages.length; j++) {
+						fieldImages[j].setEnabled(false);
+					}
+					playerImage.setVisible(false);
+				}
 			}
-			
-			for (int j = 0; j < fieldImages.length; j++) {
-				fieldImages[j].setEnabled(false);
+
+		} else if (fieldPhase.equals("second upgraded farm")) {
+
+			// 비어있는 땅이라면 씨앗심기창을 보여준다
+			if (statusOfField.get(numOfField).equals("empty Field")) {
+				seedPlantingWindow.setVisible(true);
+
+				for (int j = 0; j < fieldImages.length; j++) {
+					fieldImages[j].setEnabled(false);
+				}
+				playerImage.setVisible(false);
+
+				// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
+			} else {
+				plantStateWindow.setVisible(true);
+
+				plantsImage[numOfField].setVisible(true);
+				plantsNametext[numOfField].setVisible(true);
+				timeLeftText[numOfField].setVisible(true);
+				amountOfWater[numOfField].setVisible(true);
+
+				// 만약 썩은 땅이라면
+				if (statusOfField.get(numOfField).equals("rotten field")) {
+					// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
+					waterThePlantsButton.setEnabled(false);
+					rapidGrowthButton.setEnabled(false);
+				} else {
+					waterThePlantsButton.setEnabled(true);
+					rapidGrowthButton.setEnabled(true);
+				}
+
+				for (int j = 0; j < fieldImages.length; j++) {
+					fieldImages[j].setEnabled(false);
+				}
+				playerImage.setVisible(false);
 			}
-			playerImage.setVisible(false);
+
 		}
 	}
+
 }
