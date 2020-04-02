@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Farming {
-/////////////////////////////////////////////////////////
+
 	Random random = new Random();
 	
 	private JFrame frame;
@@ -68,7 +68,7 @@ public class Farming {
 	};
 	
 	JPanel seedPlantingWindow = new JPanel();
-	JPanel plantStateWindow = new JPanel();
+	JPanel cropStateWindow = new JPanel();
 	
 	static JLabel[] fieldImages = new JLabel[18];
 	static JLabel[] emergencyMarkingImages = new JLabel[18]; //물이 부족하다는 긴급표시 image
@@ -85,8 +85,8 @@ public class Farming {
 	
 	//식물 상태 창
 	static JLabel[] amountOfWater = new JLabel[18]; //밭의 물의 상태가 어떠한지 text
-	JLabel[] plantsImage = new JLabel[18];
-	JLabel[] plantsNametext = new JLabel[18];
+	JLabel[] cropsImage = new JLabel[18];
+	JLabel[] cropsNametext = new JLabel[18];
 	JLabel[] timeLeftText = new JLabel[18];
 	
 	//인벤토리
@@ -100,25 +100,25 @@ public class Farming {
 	
 	//씨앗 선택 창 
 	JButton[] chooseSeedImage = new JButton[4];
-	JButton chooseSeedCanelButton = new JButton();
+	JButton chooseSeedCancelButton = new JButton();
 	
 	//식물 상태 창 
-	JButton waterThePlantsButton = new JButton(); //물주기 button
+	JButton waterTheCropsButton = new JButton(); //물주기 button
 	JButton rapidGrowthButton = new JButton(); //급속성장 button
 	JButton harvestingButton = new JButton(); //수확하기 button
-	JButton statusCheckCanelButton = new JButton(); 
+	JButton statusCheckCancelButton = new JButton(); 
 
 	//미니게임	
 	JPanel diceGameScene = new JPanel();
-	JPanel minigameChooseScene = new JPanel();
+	JPanel diceGameChooseScene = new JPanel();
 	
 	JLabel[] gameCompartment = new JLabel[30]; //게임 칸
-	JLabel departureText = new JLabel();
-	JLabel diceNumgerText = new JLabel();
+	JLabel departureText = new JLabel(); //출발
+	JLabel diceNumberText = new JLabel();
 	JLabel gameResultsText = new JLabel();
 	JLabel bettingAmountText = new JLabel();
 	JLabel finalAmountText = new JLabel();
-	JLabel gameDescriptionImage = new JLabel();
+	JLabel gameDescriptionImage = new JLabel(); //게임 설명
 	JLabel diceGameButton = new JLabel();
 	JLabel amountBetText = new JLabel();
 	JButton startButton = new JButton();
@@ -135,8 +135,8 @@ public class Farming {
 	int fieldHeight = 80;
 	int fieldHorizontalLength = 90;
 	int fieldVerticalLength = 50;
-	int fieldInterval = 100;
-	String fieldPhase = "";
+	int fieldInterval = 100;//밭의 간격
+	static String fieldPhase = "";
 	
 	//인벤토리 
 	int inventoryHorizontalLength = 5;
@@ -322,15 +322,15 @@ public class Farming {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} if(player.amountPumpkinSeed == 0){
-					JOptionPane.showMessageDialog(null, "호박씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "호박씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}else {
 					//선택한 밭의 정보가 호박으로 바뀐다
-					plantsImage[numOfField].setIcon(new ImageIcon("./images/PumkinFieldImage.png"));
-					plantsNametext[numOfField].setText("이름 : 호박");
+					cropsImage[numOfField].setIcon(new ImageIcon("./images/PumkinFieldImage.png"));
+					cropsNametext[numOfField].setText("이름 : 호박");
 					timeLeftText[numOfField].setText("남은 일 수 : 4일");
 
 					player.amountPumpkinSeed--;
@@ -340,19 +340,19 @@ public class Farming {
 				}
 			}
 		});
-		
+		//양파을 선택했을 때 
 		chooseSeedImage[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} if(player.amountOnionSeed == 0){
-					JOptionPane.showMessageDialog(null, "양파씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "양파씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
-					plantsImage[numOfField].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
-					plantsNametext[numOfField].setText("이름 : 양파");
+					cropsImage[numOfField].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
+					cropsNametext[numOfField].setText("이름 : 양파");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
 					player.amountOnionSeed--;
@@ -362,19 +362,19 @@ public class Farming {
 				}
 			}
 		});
-		
+		//양배추를 선택했을 때 
 		chooseSeedImage[2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}if(player.amountCabbageSeed == 0){
-					JOptionPane.showMessageDialog(null, "양배추씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "양배추씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
-					plantsImage[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
-					plantsNametext[numOfField].setText("이름 : 양배추");
+					cropsImage[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
+					cropsNametext[numOfField].setText("이름 : 양배추");
 					timeLeftText[numOfField].setText("남은 일 수 : 3일");
 
 					player.amountCabbageSeed--;
@@ -384,19 +384,19 @@ public class Farming {
 				}
 			}
 		});
-		
+		//당근을 선택했을 때 
 		chooseSeedImage[3].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}if(player.amountCarrotSeed == 0){
-					JOptionPane.showMessageDialog(null, "당근씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "당근씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}  else {
-					plantsImage[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
-					plantsNametext[numOfField].setText("이름 : 당근");
+					cropsImage[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
+					cropsNametext[numOfField].setText("이름 : 당근");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
 					player.amountCarrotSeed--;
@@ -422,7 +422,7 @@ public class Farming {
 						}
 					}
 					
-					//씨앗을 선택할때 보이지 않게 해 놓았던 것을 다시 보이게 했다
+					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
 					if (fieldPhase.equals("basic farm")) {
 						for (int i = 12; i < fieldImages.length; i++) {
 							fieldImages[i].setEnabled(true);
@@ -444,11 +444,11 @@ public class Farming {
 			});
 		}
 		
-		chooseSeedCanelButton.setText("취소하기");
-		chooseSeedCanelButton.addActionListener(new ActionListener() {
+		chooseSeedCancelButton.setText("취소하기");
+		chooseSeedCancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-	
+				//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
 				if (fieldPhase.equals("basic farm")) {
 					for (int i = 12; i < fieldImages.length; i++) {
 						fieldImages[i].setEnabled(true);
@@ -468,30 +468,30 @@ public class Farming {
 				seedPlantingWindow.setVisible(false);
 			}
 		});
-		chooseSeedCanelButton.setBounds(200, 270, 120, 20);
-		seedPlantingWindow.add(chooseSeedCanelButton);
+		chooseSeedCancelButton.setBounds(200, 270, 120, 20);
+		seedPlantingWindow.add(chooseSeedCancelButton);
 		
 		
-		//씨앗 상태 창
-		plantStateWindow.setBackground(Color.WHITE);
-		plantStateWindow.setBounds(150, 100, 500, 300);
-		plantStateWindow.setLayout(null);
-		plantStateWindow.setVisible(false);
-		farmingScene.add(plantStateWindow);
+		//농작물 상태 창
+		cropStateWindow.setBackground(Color.WHITE);
+		cropStateWindow.setBounds(150, 100, 500, 300);
+		cropStateWindow.setLayout(null);
+		cropStateWindow.setVisible(false);
+		farmingScene.add(cropStateWindow);
 
 		//농작물의 이름, 남은 일 수, 자라는데 필요한 물의 양 text를 초기화
 		for (int i = 0; i < fieldImages.length; i++) {
 			
-			plantStateWindow.add(plantsImage[i] = new JLabel());
-			plantStateWindow.add(plantsNametext[i] = new JLabel());
-			plantStateWindow.add(timeLeftText[i] = new JLabel());
-			plantStateWindow.add(amountOfWater[i] = new JLabel());
+			cropStateWindow.add(cropsImage[i] = new JLabel());
+			cropStateWindow.add(cropsNametext[i] = new JLabel());
+			cropStateWindow.add(timeLeftText[i] = new JLabel());
+			cropStateWindow.add(amountOfWater[i] = new JLabel());
 			
-			plantsImage[i].setBounds(30,60, 80, 80);
+			cropsImage[i].setBounds(30,60, 80, 80);
 			
-			plantsNametext[i].setText("이름 : ");
-			plantsNametext[i].setFont(new Font("굴림", Font.BOLD, 15));
-			plantsNametext[i].setBounds(150, 0, 150, 150);
+			cropsNametext[i].setText("이름 : ");
+			cropsNametext[i].setFont(new Font("굴림", Font.BOLD, 15));
+			cropsNametext[i].setBounds(150, 0, 150, 150);
 			
 			timeLeftText[i].setText("남은 일 수 : ");
 			timeLeftText[i].setFont(new Font("굴림", Font.BOLD, 15));
@@ -501,18 +501,18 @@ public class Farming {
 			amountOfWater[i].setFont(new Font("굴림", Font.BOLD, 15));
 			amountOfWater[i].setBounds(150, 60, 150, 150);
 			
-			plantsImage[i].setVisible(false);
-			plantsNametext[i].setVisible(false);
+			cropsImage[i].setVisible(false);
+			cropsNametext[i].setVisible(false);
 			timeLeftText[i].setVisible(false);
 			amountOfWater[i].setVisible(false);
 		}
 		
-		waterThePlantsButton.setText("물주기");
-		waterThePlantsButton.addActionListener(new ActionListener() {
+		waterTheCropsButton.setText("물주기");
+		waterTheCropsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(player.energy <= 3) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 
 					// 씨앗만 뿌려진 상태라면
@@ -532,11 +532,11 @@ public class Farming {
 				}
 				
 				//씨앗 상태창을 선택할때 보이지 않게 해 놓았던 것을 다시 보이게 했다
-				plantStateWindow.setVisible(false);	
+				cropStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				plantsImage[numOfField].setVisible(false);
-				plantsNametext[numOfField].setVisible(false);
+				cropsImage[numOfField].setVisible(false);
+				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
 				amountOfWater[numOfField].setVisible(false);			
 
@@ -557,9 +557,9 @@ public class Farming {
 				}
 			}
 		});
-		waterThePlantsButton.setFont(new Font("굴림", Font.BOLD, 15));
-		waterThePlantsButton.setBounds(15, 180, 120, 80);
-		plantStateWindow.add(waterThePlantsButton);
+		waterTheCropsButton.setFont(new Font("굴림", Font.BOLD, 15));
+		waterTheCropsButton.setBounds(15, 180, 120, 80);
+		cropStateWindow.add(waterTheCropsButton);
 		
 		rapidGrowthButton.setText("급속성장");
 		rapidGrowthButton.addActionListener(new ActionListener() {
@@ -572,32 +572,32 @@ public class Farming {
 							|| statusOfField.get(numOfField).equals("need Water field")
 							|| statusOfField.get(numOfField).equals("Proper field")) {
 						
-						//급속성할 밭이 썩은 밭이나 빈 밭이 아니랄면 해당 밭을 성장시킨다.
+						//급속성장할 밭이 썩은 밭이나 빈 밭이 아니라면 해당 밭을 성장시킨다.
 						statusOfField.set(numOfField, "fullGrown field");
 						
-						if (plantsNametext[numOfField].getText().equals("이름 : 호박")) {
+						if (cropsNametext[numOfField].getText().equals("이름 : 호박")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/PumKinFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("이름 : 양파")) {
+						} else if (cropsNametext[numOfField].getText().equals("이름 : 양파")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("이름 : 당근")) {
+						} else if (cropsNametext[numOfField].getText().equals("이름 : 당근")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("이름 : 양배추")) {
+						} else if (cropsNametext[numOfField].getText().equals("이름 : 양배추")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
 
 						}
 					}
 					emergencyMarkingImages[numOfField].setVisible(false);
 				}else {
-					JOptionPane.showMessageDialog(null, "뼈의 개수가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "뼈의 개수가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}
-				plantStateWindow.setVisible(false);	
+				cropStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				plantsImage[numOfField].setVisible(false);
-				plantsNametext[numOfField].setVisible(false);
+				cropsImage[numOfField].setVisible(false);
+				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
 				amountOfWater[numOfField].setVisible(false);			
 
@@ -620,29 +620,29 @@ public class Farming {
 		});
 		rapidGrowthButton.setFont(new Font("굴림", Font.BOLD, 15));
 		rapidGrowthButton.setBounds(190, 180, 120, 80);
-		plantStateWindow.add(rapidGrowthButton);
+		cropStateWindow.add(rapidGrowthButton);
 		
 		harvestingButton.setText("수확하기");
 		harvestingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(player.energy <= 7) {
-					JOptionPane.showMessageDialog(null, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					
 					//다 자란 농작물을 수확한다면 해당 농작물을 얻는다.
 					if(statusOfField.get(numOfField).equals("fullGrown field")) {
 						
-						if(plantsNametext[numOfField].getText().equals("이름 : 호박")) {
+						if(cropsNametext[numOfField].getText().equals("이름 : 호박")) {
 							player.amountPumpkin++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("이름 : 양파")) {
+						}else if(cropsNametext[numOfField].getText().equals("이름 : 양파")) {
 							player.amountOnion++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("이름 : 양배추")) {
+						}else if(cropsNametext[numOfField].getText().equals("이름 : 양배추")) {
 							player.amountCabbage++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("이름 : 당근")) {
+						}else if(cropsNametext[numOfField].getText().equals("이름 : 당근")) {
 							player.amountCarrot++;
 						}
 					}
@@ -655,11 +655,11 @@ public class Farming {
 					EnergyText.setText("남은 에너지 : " + player.energy);
 				}
 				
-				plantStateWindow.setVisible(false);	
+				cropStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				plantsImage[numOfField].setVisible(false);
-				plantsNametext[numOfField].setVisible(false);
+				cropsImage[numOfField].setVisible(false);
+				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
 				amountOfWater[numOfField].setVisible(false);			
 
@@ -682,17 +682,17 @@ public class Farming {
 		});
 		harvestingButton.setFont(new Font("굴림", Font.BOLD, 15));
 		harvestingButton.setBounds(370, 180, 120, 80);
-		plantStateWindow.add(harvestingButton);
+		cropStateWindow.add(harvestingButton);
 		
-		statusCheckCanelButton.setText("취소하기");
-		statusCheckCanelButton.addActionListener(new ActionListener() {
+		statusCheckCancelButton.setText("취소하기");
+		statusCheckCancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				plantStateWindow.setVisible(false);	
+				cropStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
-				plantsImage[numOfField].setVisible(false);
-				plantsNametext[numOfField].setVisible(false);
+				cropsImage[numOfField].setVisible(false);
+				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
 				amountOfWater[numOfField].setVisible(false);			
 
@@ -713,8 +713,8 @@ public class Farming {
 				}
 			}
 		});
-		statusCheckCanelButton.setBounds(190, 270, 120, 20);
-		plantStateWindow.add(statusCheckCanelButton);
+		statusCheckCancelButton.setBounds(190, 270, 120, 20);
+		cropStateWindow.add(statusCheckCancelButton);
 		
 		//밭
 		for (int i = 0; i < fieldImages.length; i++) {
@@ -752,7 +752,7 @@ public class Farming {
 			RotCrops rotCrops = new RotCrops(i);
 			rotCrops.start();
 		
-		}////////////////////////////////////////////////////////////////////////////////////////////////////
+		}///////////////////////////////////////////////////////////////////////////////
 		//밭의 단계 - "basic farm"
 		fieldPhase = "basic farm";
 		for(int i = 0; i < 12; i++) {
@@ -760,11 +760,11 @@ public class Farming {
 			//fieldImages[i].setVisible(false);
 		}
 
-		//밭의 단계 - first upgraded farm 
-		//fieldPhase = "first upgraded farm";
-		//for(int i = 6; i < 12; i++) {
-		//	fieldImages[i].setEnabled(true);
-		//}
+		/*//밭의 단계 - first upgraded farm 
+		fieldPhase = "first upgraded farm";
+		for(int i = 6; i < 12; i++) {
+			fieldImages[i].setEnabled(true);
+		}*/
 
 		//밭의 단계 - second upgraded farm 
 		//fieldPhase = "second upgraded farm";
@@ -807,28 +807,28 @@ public class Farming {
 		gameFail.add(failmoneyEarned);
 		
 		//미니게임
-		minigameChooseScene.setBounds(0, 0, 796, 572);
-		frame.getContentPane().add(minigameChooseScene);
-		minigameChooseScene.setLayout(null);
-		minigameChooseScene.setVisible(false);
+		diceGameChooseScene.setBounds(0, 0, 796, 572);
+		frame.getContentPane().add(diceGameChooseScene);
+		diceGameChooseScene.setLayout(null);
+		diceGameChooseScene.setVisible(false);
 		
 		diceGameButton.setText("주사위게임");
 		diceGameButton.setFont(new Font("굴림", Font.BOLD, 30));
 		diceGameButton.setBounds(30, 150, 200, 100);
-		minigameChooseScene.add(diceGameButton);
+		diceGameChooseScene.add(diceGameButton);
 		
 		gameDescriptionImage.setIcon(new ImageIcon("./images/DiceGameDescriptionImage.png"));
 		gameDescriptionImage.setBounds(250, 100, 500, 400);
-		minigameChooseScene.add(gameDescriptionImage);
+		diceGameChooseScene.add(gameDescriptionImage);
 		
 		amountBetText.setText("배팅할 금액 ");
 		amountBetText.setFont(new Font("굴림", Font.BOLD, 20));
 		amountBetText.setBounds(50, 250, 200, 100);
-		minigameChooseScene.add(amountBetText);
+		diceGameChooseScene.add(amountBetText);
 		
 		amountBetField = new JTextField();
 		amountBetField.setBounds(10, 335, 200, 36);
-		minigameChooseScene.add(amountBetField);
+		diceGameChooseScene.add(amountBetField);
 		
 		startButton.setText("게임 시작");
 		startButton.setBounds(60, 400, 100, 50);
@@ -841,7 +841,7 @@ public class Farming {
 					if(bettingAmount <= player.money) {
 						
 						player.money = player.money - bettingAmount;
-						minigameChooseScene.setVisible(false);
+						diceGameChooseScene.setVisible(false);
 						diceGameScene.setVisible(true);
 						
 						bettingAmountText.setText("베팅한 금액 : " + bettingAmount + "원");
@@ -871,22 +871,22 @@ public class Farming {
 						gameCompartment[0].setIcon(new ImageIcon("./images/playerBelongsCompartment.png"));
 						
 					}else {
-						JOptionPane.showMessageDialog(null, "소지한 금액보다 많은 돈을 걸었습니다!!", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "소지한 금액보다 많은 돈을 걸었습니다!!", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 				} catch (NumberFormatException f) {
-					JOptionPane.showMessageDialog(null, "숫자만 적어주세요", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "숫자만 적어주세요", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		minigameChooseScene.add(startButton);
+		diceGameChooseScene.add(startButton);
 		
 		diceGameScene.setBounds(0, 0, 796, 572);
 		frame.getContentPane().add(diceGameScene);
 		diceGameScene.setLayout(null);
 		diceGameScene.setVisible(false);
 		
-		
+		//게임 보드 위치 초기화
 		for (int i = 0; i < gameCompartment.length; i++) {
 			diceGameScene.add(gameCompartment[i] = new JLabel());
 
@@ -910,7 +910,7 @@ public class Farming {
 			if((i + 1) % 6 == 0) {
 					gameCompartment[i].setIcon(new ImageIcon("./images/failCompartment.png"));	
 			}
-			
+			//10의 배수이면  보드판 배열의  줄바꿈 
 			if((i + 1) % 10 == 0) {
 				compartmentHorizontalLength = 110;
 			}
@@ -933,10 +933,10 @@ public class Farming {
 		departureText.setBounds(50, 40, 80, 80);
 		diceGameScene.add(departureText);
 		
-		diceNumgerText.setText("주사위 수 : 0");
-		diceNumgerText.setFont(new Font("굴림", Font.BOLD, 15));
-		diceNumgerText.setBounds(330, 300, 150, 60);
-		diceGameScene.add(diceNumgerText);
+		diceNumberText.setText("주사위 수 : 0");
+		diceNumberText.setFont(new Font("굴림", Font.BOLD, 15));
+		diceNumberText.setBounds(330, 300, 150, 60);
+		diceGameScene.add(diceNumberText);
 		
 		bettingAmountText.setText("베팅한 금액 : 0원");
 		bettingAmountText.setFont(new Font("굴림", Font.BOLD, 15));
@@ -962,9 +962,9 @@ public class Farming {
 
 				// 랜덤으로 나온 수가 주사위의 수가 된다.
 				playerDiceNumber = random.nextInt(6) + 1;
-				diceNumgerText.setText("주사위 수 : " + playerDiceNumber);
+				diceNumberText.setText("주사위 수 : " + playerDiceNumber);
 
-				//플레이어가 속했던 자리의 이미지를 없앤다 (새로운 자리로 ケ瘦 위해)
+				//플레이어가 속했던 자리의 이미지를 없앤다 (새로운 자리로 이동위해)
 				for (int i = 0; i < gameCompartment.length; i++) {
 					if (gameCompartment[i].getIcon().toString().equals("./images/playerBelongsCompartment.png")) {
 
@@ -1006,6 +1006,7 @@ public class Farming {
 		stopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				//종료시점에 플레이어의 위치에 따라 배팅한 금액의 X배수만큼 돈을 얻게 된다.
 				if((playerSeat + 1) <= 5) {
 					bettingAmount = (int) (bettingAmount * 1.0);
 					gameResultsText.setText("!!!! 1.0배 !!!!!");
@@ -1051,34 +1052,7 @@ public class Farming {
 		});
 		diceGameScene.add(diceExitButton);
 		
-		//마우스로 집이나 밭을 클릭했을 때 플레이어가 자동으로 집이나 밭으로 이동한다.
-		//오류가 있어 보류했다.
-/*		
-		for (int i = 0; i < fieldImages.length; i++) {
-			fieldImages[i].addMouseListener(new MouseAdapter() {
-		            @Override
-		            public void mouseClicked(MouseEvent e) {
-		            	for (int i = 0; i < fieldImages.length; i++) {
-							if (e.getSource() == fieldImages[i]) {
-								numOfField = i;
-								
-								PlayerOutoMove playerOutoMove = new PlayerOutoMove(numOfField, "fields");
-								playerOutoMove.start();
-								frame.requestFocus();
-							}
-						}
-		            }          
-		        });
-		}
-		
-		houseImage.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	PlayerOutoMove playerOutoMove = new PlayerOutoMove(0, "house");
-				playerOutoMove.start();
-            }          
-        });
-*/
+
 		//던전 화면
 		dungeonScene.setBounds(0,0,800,600);
 		frame.getContentPane().add(dungeonScene);
@@ -1088,7 +1062,6 @@ public class Farming {
 		appearanceOfAnimals.start();
 		frame.addKeyListener(new key());
 		frame.setFocusable(true);
-		
 
 	}
 
@@ -1138,10 +1111,7 @@ public class Farming {
 			
 				
 			case KeyEvent.VK_SPACE:
-				
-				//System.out.println(playerImage.getX());
-				//System.out.println(playerImage.getY());
-				
+
 				//밭안(밭 앞)에서 스페이스바를 할 경우 씨앗 선택창또는  식물상태창 볼 수 있다.
 				//상점, 집안(앞)에서 스페이스 바를 할 경우 상점에 들어가거나 하루를 지나가게 할 수 있다.
 
@@ -1151,27 +1121,27 @@ public class Farming {
 
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
 							numOfField = 0;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 170 && playerImage.getX() <= 220) {
 							numOfField = 1;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 270 && playerImage.getX() <= 320) {
 							numOfField = 2;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 370 && playerImage.getX() <= 420) {
 							numOfField = 3;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 470 && playerImage.getX() <= 520) {
 							numOfField = 4;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 570 && playerImage.getX() <= 620) {
 							numOfField = 5;
-							information();
+							fieldInformation();
 
 						}
 						// 밭의 두번째 줄
@@ -1180,27 +1150,27 @@ public class Farming {
 						// 첫번째 칸
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
 							numOfField = 6;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 170 && playerImage.getX() <= 220) {
 							numOfField = 7;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 270 && playerImage.getX() <= 320) {
 							numOfField = 8;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 370 && playerImage.getX() <= 420) {
 							numOfField = 9;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 470 && playerImage.getX() <= 520) {
 							numOfField = 10;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 570 && playerImage.getX() <= 620) {
 							numOfField = 11;
-							information();
+							fieldInformation();
 
 						}
 						//3번째 줄
@@ -1208,46 +1178,38 @@ public class Farming {
 
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
 							numOfField = 12;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 170 && playerImage.getX() <= 220) {
 							numOfField = 13;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 270 && playerImage.getX() <= 320) {
 							numOfField = 14;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 370 && playerImage.getX() <= 420) {
 							numOfField = 15;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 470 && playerImage.getX() <= 520) {
 							numOfField = 16;
-							information();
+							fieldInformation();
 
 						} else if (playerImage.getX() >= 570 && playerImage.getX() <= 620) {
 							numOfField = 17;
-							information();
+							fieldInformation();
 							
 						}
 
 					}
 					
-					//밭의 앞에서 스페이스바를 눌렀을 때
-					for (int i = 0; i < fieldImages.length; i++) {
-					if(playerImage.getX() == fieldImages[i].getX() && playerImage.getY() == fieldImages[i].getY() + 10) {
-						information();
-					}
-				}
-				
-				
 					//집안에서 스페이스바를 눌렀을 때
 				if (playerImage.getY() >= 330 && playerImage.getY() <= 475) {
 					if (playerImage.getX() >= 600 && playerImage.getX() <= 720) {
 
 						//하루가 지나간다
-						JOptionPane.showMessageDialog(null, "하루가 지나갑니다", " ", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "하루가 지나갑니다", " ", JOptionPane.INFORMATION_MESSAGE);
 						player.energy = 100;
 						EnergyText.setText("남은 에너지 : " + player.energy);
 						day++;
@@ -1281,16 +1243,16 @@ public class Farming {
 									if (daysRemaining[i] == 0) {
 										statusOfField.set(i, "fullGrown field");
 
-										if (plantsNametext[i].getText().equals("이름 : 호박")) {
+										if (cropsNametext[i].getText().equals("이름 : 호박")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/PumKinFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("이름 : 양파")) {
+										} else if (cropsNametext[i].getText().equals("이름 : 양파")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("이름 : 당근")) {
+										} else if (cropsNametext[i].getText().equals("이름 : 당근")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("이름 : 양배추")) {
+										} else if (cropsNametext[i].getText().equals("이름 : 양배추")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
 
 										}
@@ -1330,13 +1292,38 @@ public class Farming {
 				if (playerImage.getY() >= 328 && playerImage.getY() <= 473) {
 					if (playerImage.getX() >= 0 && playerImage.getX() <= 120) {
 						System.out.println("상점으로 들어갑니다");
-						//moneyText.setText("돈 : " + player.money);
 						
-						minigameChooseScene.setVisible(true);
-						farmingScene.setVisible(false);
+						Market market = new Market();
+						System.out.println("상점 입점");
+						
+						//moneyText.setText("돈 : " + player.money);
+						/*
+						diceGameChooseScene.setVisible(true);
+						farmingScene.setVisible(false);*/
 					}
 				}
 				break;
+				
+			 case KeyEvent.VK_G:
+
+		            //밭위에서만 게임을 할 수 있도록 설정해 놓았다.
+		            if (Farming.playerImage.getY() >= -20 && Farming.playerImage.getY() <= 235
+		                  && Farming.playerImage.getX() >= 65 && Farming.playerImage.getX() <= 620) {
+		               //이미 게임 창이 떠있는 경우에 또 G키를 누르면 
+		               if (diceGameChooseScene.isVisible() == true) {
+		                  diceGameChooseScene.setVisible(false);
+		                  farmingScene.setVisible(true);
+
+		               } else {
+		                  amountBetField.setText("");
+		                  diceGameChooseScene.setVisible(true);
+		                  farmingScene.setVisible(false);
+		               }
+		               
+		            }else {
+		               JOptionPane.showMessageDialog(frame, "밭에서만 게임이 가능합니다!", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+		            }
+		            break;
 				
 			case KeyEvent.VK_E:
 				
@@ -1355,10 +1342,10 @@ public class Farming {
 					numberOfItemsText[5].setText("X " + player.amountOnion);
 					numberOfItemsText[6].setText("X " + player.amountCabbage);
 					numberOfItemsText[7].setText("X " + player.amountCarrot);
-					numberOfItemsText[8].setText("X " + Player.amountPotionHp_30);
-					numberOfItemsText[9].setText("X " + Player.amountPotionHp_50);
-					numberOfItemsText[12].setText("X " + Player.amountRandomMushroom);
-					numberOfItemsText[13].setText("X " + Player.amountBone);
+					numberOfItemsText[8].setText("X " + player.amountPotionHp_30);
+					numberOfItemsText[9].setText("X " + player.amountPotionHp_50);
+					numberOfItemsText[12].setText("X " + player.amountRandomMushroom);
+					numberOfItemsText[13].setText("X " + player.amountBone);
 					
 					
 					inventoryWindow.setVisible(true);
@@ -1375,7 +1362,7 @@ public class Farming {
 		}
 	}
 	
-	public void information() {
+	public void fieldInformation() {
 
 		if (fieldPhase.equals("basic farm")) {
 			if (numOfField >= 12) {
@@ -1391,20 +1378,20 @@ public class Farming {
 
 					// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
 				} else {
-					plantStateWindow.setVisible(true);
+					cropStateWindow.setVisible(true);
 
-					plantsImage[numOfField].setVisible(true);
-					plantsNametext[numOfField].setVisible(true);
+					cropsImage[numOfField].setVisible(true);
+					cropsNametext[numOfField].setVisible(true);
 					timeLeftText[numOfField].setVisible(true);
 					amountOfWater[numOfField].setVisible(true);
 
 					// 만약 썩은 땅이라면
 					if (statusOfField.get(numOfField).equals("rotten field")) {
 						// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
-						waterThePlantsButton.setEnabled(false);
+						waterTheCropsButton.setEnabled(false);
 						rapidGrowthButton.setEnabled(false);
 					} else {
-						waterThePlantsButton.setEnabled(true);
+						waterTheCropsButton.setEnabled(true);
 						rapidGrowthButton.setEnabled(true);
 					}
 
@@ -1428,20 +1415,20 @@ public class Farming {
 
 					// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
 				} else {
-					plantStateWindow.setVisible(true);
+					cropStateWindow.setVisible(true);
 
-					plantsImage[numOfField].setVisible(true);
-					plantsNametext[numOfField].setVisible(true);
+					cropsImage[numOfField].setVisible(true);
+					cropsNametext[numOfField].setVisible(true);
 					timeLeftText[numOfField].setVisible(true);
 					amountOfWater[numOfField].setVisible(true);
 
 					// 만약 썩은 땅이라면
 					if (statusOfField.get(numOfField).equals("rotten field")) {
 						// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
-						waterThePlantsButton.setEnabled(false);
+						waterTheCropsButton.setEnabled(false);
 						rapidGrowthButton.setEnabled(false);
 					} else {
-						waterThePlantsButton.setEnabled(true);
+						waterTheCropsButton.setEnabled(true);
 						rapidGrowthButton.setEnabled(true);
 					}
 
@@ -1464,20 +1451,20 @@ public class Farming {
 
 				// 씨앗이 심겨있는 밭이라면 농작물상태 창을 보여준다
 			} else {
-				plantStateWindow.setVisible(true);
+				cropStateWindow.setVisible(true);
 
-				plantsImage[numOfField].setVisible(true);
-				plantsNametext[numOfField].setVisible(true);
+				cropsImage[numOfField].setVisible(true);
+				cropsNametext[numOfField].setVisible(true);
 				timeLeftText[numOfField].setVisible(true);
 				amountOfWater[numOfField].setVisible(true);
 
 				// 만약 썩은 땅이라면
 				if (statusOfField.get(numOfField).equals("rotten field")) {
 					// 물주기버튼과, 급속성장버튼을 누르지 못하게 한다
-					waterThePlantsButton.setEnabled(false);
+					waterTheCropsButton.setEnabled(false);
 					rapidGrowthButton.setEnabled(false);
 				} else {
-					waterThePlantsButton.setEnabled(true);
+					waterTheCropsButton.setEnabled(true);
 					rapidGrowthButton.setEnabled(true);
 				}
 
