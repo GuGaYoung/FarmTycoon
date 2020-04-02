@@ -25,9 +25,8 @@ public class RotCrops extends Thread{
 	public synchronized void run() {
 		while (running) {
 			try {
-				// 씨앗이 심겨진 밭이라면 -> 일 수가 지나면 자라게하기 ->집에 도착하면 판단하기 쓰레드에서 말고 
-				//여기에선 농작물썩는 거 표현하기 랜덤시간 대로 
-				
+				// 씨앗이 심겨졌거나 하루가 지났을 때  -> 물을 주지 않았다면 -> 랜덤시간 후 밭의 물양이 부족 -> 그후 또 물을 주지 않았다면 랜덤시간후 농장물 썩음
+
 				if (Farming.statusOfField.get(numOfField).equals("seeded field")) {
 					randomShortageTime = random.nextInt(maxTime - minTime + 1) + minTime;
 					
@@ -40,7 +39,6 @@ public class RotCrops extends Thread{
 						Farming.amountOfWater[numOfField].setText("물의 양 : 매우부족");
 					}
 
-					//오랫동안 물을 주지 않으면 썩기 
 				}else if(Farming.statusOfField.get(numOfField).equals("need Water field")) {
 					randomRotTime = random.nextInt(maxTime - minTime + 1) + minTime;
 					Thread.sleep(randomRotTime);
