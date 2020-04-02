@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +19,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Farming {
-
+/////////////////////////////////////////////////////////
+	Random random = new Random();
+	
 	private JFrame frame;
 
 	public static void main(String[] args) {
@@ -40,16 +45,11 @@ public class Farming {
 	}
 
 	Player player = new Player();
-	SparrowObstruction sparrowObstruction = new SparrowObstruction(); //Âü»õ ¹æÇØ ¾²·¹µå 
-	AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals(); //µ¿¹° ÃâÇö ¾²·¹µå
+	SparrowObstruction sparrowObstruction = new SparrowObstruction(); //ì°¸ìƒˆ ë°©í•´ ì“°ë ˆë“œ 
+	AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals(); //ë™ë¬¼ ì¶œí˜„ ì“°ë ˆë“œ
 	
-	static JPanel farmingScene = new JPanel() {
-		//public void paintComponent(Graphics g) {
-		//	Dimension d = getSize();
-		//	ImageIcon image = new ImageIcon("./images/backGround.jpg");
-		//	g.drawImage(image.getImage(), 0, 0, d.width, d.height, this);
-		//}
-	};
+	static JPanel farmingScene = new JPanel();
+	static JPanel dungeonScene = new JPanel() ;
 	
 	JPanel gameSuccess = new JPanel() {
 		public void paintComponent(Graphics g) {
@@ -69,48 +69,66 @@ public class Farming {
 	
 	JPanel seedPlantingWindow = new JPanel();
 	JPanel plantStateWindow = new JPanel();
-
-	
 	
 	static JLabel[] fieldImages = new JLabel[18];
-	static JLabel[] emergencyMarkingImages = new JLabel[18]; //¹°ÀÌ ºÎÁ·ÇÏ´Ù´Â ±ä±ŞÇ¥½Ã image
+	static JLabel[] emergencyMarkingImages = new JLabel[18]; //ë¬¼ì´ ë¶€ì¡±í•˜ë‹¤ëŠ” ê¸´ê¸‰í‘œì‹œ image
 	static JLabel playerImage = new JLabel();
 	static JLabel houseImage = new JLabel();
 	JLabel storeImage = new JLabel();
-	JLabel EnergyText = new JLabel();
-	JLabel daysText = new JLabel();
-	JLabel moneyText = new JLabel();
+	static JLabel EnergyText = new JLabel();
+	static JLabel daysText = new JLabel();
+	static JLabel moneyText = new JLabel();
 	JLabel successText = new JLabel();
 	JLabel failText = new JLabel();
-	JLabel successmoneyEarned = new JLabel(); //ÀÌ°åÀ» ¶§ ³²Àº µ·ÀÌ ¾ó¸¶ÀÎÁö ³ªÅ¸³»ÁÖ´Â text
-	JLabel failmoneyEarned = new JLabel(); //Á³À» ¶§ ³²Àº µ·ÀÌ ¾ó¸¶ÀÎÁö ³ªÅ¸³»ÁÖ´Â text
+	JLabel successmoneyEarned = new JLabel(); //ì´ê²¼ì„ ë•Œ ë‚¨ì€ ëˆì´ ì–¼ë§ˆì¸ì§€ ë‚˜íƒ€ë‚´ì£¼ëŠ” text
+	JLabel failmoneyEarned = new JLabel(); //ì¡Œì„ ë•Œ ë‚¨ì€ ëˆì´ ì–¼ë§ˆì¸ì§€ ë‚˜íƒ€ë‚´ì£¼ëŠ” text
 	
-	//½Ä¹° »óÅÂ Ã¢
-	static JLabel[] amountOfWater = new JLabel[18]; //¹çÀÇ ¹°ÀÇ »óÅÂ°¡ ¾î¶°ÇÑÁö text
+	//ì‹ë¬¼ ìƒíƒœ ì°½
+	static JLabel[] amountOfWater = new JLabel[18]; //ë°­ì˜ ë¬¼ì˜ ìƒíƒœê°€ ì–´ë– í•œì§€ text
 	JLabel[] plantsImage = new JLabel[18];
 	JLabel[] plantsNametext = new JLabel[18];
 	JLabel[] timeLeftText = new JLabel[18];
 	
-	//ÀÎº¥Åä¸®
+	//ì¸ë²¤í† ë¦¬
 	JLabel inventoryWindow = new JLabel();
-	JLabel[] inventoryCompartment = new JLabel[16]; //ÀÎº¥Åä¸® Ä­
-	JLabel[] numberOfItemsText = new JLabel[16]; //¹°Ç°ÀÌ ¸î°³ÀÖÁö text
-	JLabel[] inventoryDescriptionText = new JLabel[4]; //ÀÎº¥Åä¸® ¼³¸í (¾î¶² Ä­ÀÎÁö)
+	JLabel[] inventoryCompartment = new JLabel[16]; //ì¸ë²¤í† ë¦¬ ì¹¸
+	JLabel[] numberOfItemsText = new JLabel[16]; //ë¬¼í’ˆì´ ëª‡ê°œìˆì§€ text
+	JLabel[] inventoryDescriptionText = new JLabel[4]; //ì¸ë²¤í† ë¦¬ ì„¤ëª… (ì–´ë–¤ ì¹¸ì¸ì§€)
 	
-	//Âü»õ
+	//ì°¸ìƒˆ
 	static JLabel sparrowImage = new JLabel();
 	
-	//¾¾¾Ñ ¼±ÅÃ Ã¢ 
+	//ì”¨ì•— ì„ íƒ ì°½ 
 	JButton[] chooseSeedImage = new JButton[4];
 	JButton chooseSeedCanelButton = new JButton();
 	
-	//½Ä¹° »óÅÂ Ã¢ 
-	JButton waterThePlantsButton = new JButton(); //¹°ÁÖ±â button
-	JButton rapidGrowthButton = new JButton(); //±Ş¼Ó¼ºÀå button
-	JButton harvestingButton = new JButton(); //¼öÈ®ÇÏ±â button
+	//ì‹ë¬¼ ìƒíƒœ ì°½ 
+	JButton waterThePlantsButton = new JButton(); //ë¬¼ì£¼ê¸° button
+	JButton rapidGrowthButton = new JButton(); //ê¸‰ì†ì„±ì¥ button
+	JButton harvestingButton = new JButton(); //ìˆ˜í™•í•˜ê¸° button
 	JButton statusCheckCanelButton = new JButton(); 
 
-	//¹ç
+	//ë¯¸ë‹ˆê²Œì„	
+	JPanel diceGameScene = new JPanel();
+	JPanel minigameChooseScene = new JPanel();
+	
+	JLabel[] gameCompartment = new JLabel[30]; //ê²Œì„ ì¹¸
+	JLabel departureText = new JLabel();
+	JLabel diceNumgerText = new JLabel();
+	JLabel gameResultsText = new JLabel();
+	JLabel bettingAmountText = new JLabel();
+	JLabel finalAmountText = new JLabel();
+	JLabel gameDescriptionImage = new JLabel();
+	JLabel diceGameButton = new JLabel();
+	JLabel amountBetText = new JLabel();
+	JButton startButton = new JButton();
+	JButton rollOfDiceButton = new JButton();
+	JButton stopButton = new JButton();
+	JButton diceExitButton = new JButton();
+	JButton againButton = new JButton();
+	JTextField amountBetField;
+	
+	//ë°­
 	static ArrayList<String> statusOfField = new ArrayList<>();
 	int numOfField = 0;
 	int fieldWidth = 80;
@@ -120,7 +138,7 @@ public class Farming {
 	int fieldInterval = 100;
 	String fieldPhase = "";
 	
-	//ÀÎº¥Åä¸® 
+	//ì¸ë²¤í† ë¦¬ 
 	int inventoryHorizontalLength = 5;
 	int inventoryVerticalLength = 0;
 	int inventoryInterval = 126;
@@ -128,19 +146,26 @@ public class Farming {
 	int inventoryHeight = 60;
 	int inventoryDescriptionlength = 0;
 	
-	//º®
+	//ë²½
 	int rightWall = 725;
 	int leftWall = -10;
 	int bottomWall = 488;
 	int upperWall = -7;
 	
-	//¾¾¾Ñ ¼±ÅÃ
-	int chooseSeedBoxLength = 10;//¾¾¾Ñ ¼±ÅÃ ¹Ú½ºÀÇ °¡·Î À§Ä¡ 
-	int[] daysRemaining = new int[18]; //³óÀÛ¹°ÀÌ ÀÚ¶ó±â±îÁö ³²Àº ÀÏ¼ö 
+	//ì”¨ì•— ì„ íƒ
+	int chooseSeedBoxLength = 10;//ì”¨ì•— ì„ íƒ ë°•ìŠ¤ì˜ ê°€ë¡œ ìœ„ì¹˜ 
+	int[] daysRemaining = new int[18]; //ë†ì‘ë¬¼ì´ ìë¼ê¸°ê¹Œì§€ ë‚¨ì€ ì¼ìˆ˜ 
 	
-	//³¯Â¥
-	int day = 0;
-	int finalday = 7; // ¸¶Áö¸·³¯
+	//ë‚ ì§œ
+	static int day = 0;
+	int finalday = 7; // ë§ˆì§€ë§‰ë‚ 
+	
+	//ë¯¸ë‹ˆê²Œì„
+	int compartmentHorizontalLength = 110;
+	int compartmentInterval = 55;
+	int playerDiceNumber = 0;
+	int playerSeat = 0;
+	int bettingAmount = 0;
 	
 	private void initialize() {
 
@@ -152,28 +177,28 @@ public class Farming {
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 
-		//³ó»ç È­¸é
+		//ë†ì‚¬ í™”ë©´
 		farmingScene.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(farmingScene);
 		farmingScene.setLayout(null);
-
+		
 		playerImage.setHorizontalAlignment(SwingConstants.CENTER);
 		playerImage.setIcon(new ImageIcon("./images/rabbit.png"));
 		playerImage.setBounds(365, 338, 70, 80);
 		farmingScene.add(playerImage);
 		
-		EnergyText.setText("³²Àº ¿¡³ÊÁö : 100");
-		EnergyText.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : 100");
+		EnergyText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		EnergyText.setBounds(650, -35, 150, 150);
 		farmingScene.add(EnergyText);
 		
-		daysText.setText("0ÀÏÂ÷");
-		daysText.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		daysText.setText("0ì¼ì°¨");
+		daysText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		daysText.setBounds(650, -35, 100, 100);
 		farmingScene.add(daysText);
 		
-		moneyText.setText("µ· : 0");
-		moneyText.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		moneyText.setText("ëˆ : 0");
+		moneyText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		moneyText.setBounds(10, -35, 100, 100);
 		farmingScene.add(moneyText);
 		
@@ -192,14 +217,14 @@ public class Farming {
 		sparrowImage.setBounds(-100, -100, 100, 50);
 		farmingScene.add(sparrowImage);
 		
-		//ÀÎº¥Åä¸® Ã¢
+		//ì¸ë²¤í† ë¦¬ ì°½
 		inventoryWindow.setIcon(new ImageIcon("./images/inventoryBackGround.png"));
 		inventoryWindow.setBounds(130, 50, 500, 360);
 		inventoryWindow.setLayout(null);
 		inventoryWindow.setVisible(false);
 		farmingScene.add(inventoryWindow);
 		
-		//ÀÎº¥Åä¸® Ä­, °³¼ötext À§Ä¡ ÃÊ±âÈ­
+		//ì¸ë²¤í† ë¦¬ ì¹¸, ê°œìˆ˜text ìœ„ì¹˜ ì´ˆê¸°í™”
 		for (int i = 0; i < inventoryCompartment.length; i++) {
 			inventoryWindow.add(numberOfItemsText[i] = new JLabel());
 			inventoryWindow.add(inventoryCompartment[i] = new JLabel());
@@ -236,7 +261,7 @@ public class Farming {
 			numberOfItemsText[i].setText("X 0");
 		}
 		
-		//ÀÎº¥Åä¸® Ä­¿¡ µé¾î°¡´Â ÀÌ¹ÌÁö¿Í °³¼ö ÃÊ±âÈ­
+		//ì¸ë²¤í† ë¦¬ ì¹¸ì— ë“¤ì–´ê°€ëŠ” ì´ë¯¸ì§€ì™€ ê°œìˆ˜ ì´ˆê¸°í™”
 		inventoryCompartment[0].setIcon(new ImageIcon("./images/PumkinSeed_inventory.png"));
 		inventoryCompartment[1].setIcon(new ImageIcon("./images/OnionSeed_inventory.png"));
 		inventoryCompartment[2].setIcon(new ImageIcon("./images/CabbageSeed_inventory.png"));
@@ -254,26 +279,26 @@ public class Farming {
 		numberOfItemsText[14].setText("");
 		numberOfItemsText[15].setText("");
 		
-		//ÀÎº¥Åä¸® ¼³¸í ÃÊ±âÈ­
+		//ì¸ë²¤í† ë¦¬ ì„¤ëª… ì´ˆê¸°í™”
 		for (int i = 0; i < inventoryDescriptionText.length; i++) {
 			inventoryWindow.add(inventoryDescriptionText[i] = new JLabel());
 			
 			inventoryDescriptionText[i].setBounds(10, inventoryDescriptionlength, 50, 50);
 			inventoryDescriptionlength = inventoryDescriptionlength + 85;
 		}
-		inventoryDescriptionText[0].setText("¾¾¾Ñ");
-		inventoryDescriptionText[1].setText("³óÀÛ¹°");
-		inventoryDescriptionText[2].setText("Æ÷¼Ç");
-		inventoryDescriptionText[3].setText("±× ¿Ü");
+		inventoryDescriptionText[0].setText("ì”¨ì•—");
+		inventoryDescriptionText[1].setText("ë†ì‘ë¬¼");
+		inventoryDescriptionText[2].setText("í¬ì…˜");
+		inventoryDescriptionText[3].setText("ê·¸ ì™¸");
 		
-		//¾¾¾Ñ ½É±â Ã¢
+		//ì”¨ì•— ì‹¬ê¸° ì°½
 		seedPlantingWindow.setBackground(Color.WHITE);
 		seedPlantingWindow.setBounds(150, 100, 500, 300);
 		seedPlantingWindow.setLayout(null);
 		seedPlantingWindow.setVisible(false);
 		farmingScene.add(seedPlantingWindow);
 		
-		//¾¾¾Ñ ½É±â Ã¢ ¾È¿¡ÀÖ´Â ¾¾¾ÑÀÇ ÀÌ¹ÌÁö¿Í ¾¾¾ÑÀÇ ¼³¸íÀ» ÃÊ±âÈ­
+		//ì”¨ì•— ì‹¬ê¸° ì°½ ì•ˆì—ìˆëŠ” ì”¨ì•—ì˜ ì´ë¯¸ì§€ì™€ ì”¨ì•—ì˜ ì„¤ëª…ì„ ì´ˆê¸°í™”
 		for (int i = 0; i < chooseSeedImage.length; i++) {
 			
 			seedPlantingWindow.add(chooseSeedImage[i] = new JButton());
@@ -292,26 +317,26 @@ public class Farming {
 		chooseSeedImage[2].setIcon(new ImageIcon("./images/chooseCabbageSeedExplanation.png"));
 		chooseSeedImage[3].setIcon(new ImageIcon("./images/chooseCarrotSeedExplanation.png"));
 		
-		//È£¹ÚÀ» ¼±ÅÃÇßÀ» ¶§ 
+		//í˜¸ë°•ì„ ì„ íƒí–ˆì„ ë•Œ 
 		chooseSeedImage[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} if(player.amountPumpkinSeed == 0){
-					JOptionPane.showMessageDialog(null, "È£¹Ú¾¾°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "í˜¸ë°•ì”¨ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}else {
-					//¼±ÅÃÇÑ ¹çÀÇ Á¤º¸°¡ È£¹ÚÀ¸·Î ¹Ù²ï´Ù
+					//ì„ íƒí•œ ë°­ì˜ ì •ë³´ê°€ í˜¸ë°•ìœ¼ë¡œ ë°”ë€ë‹¤
 					plantsImage[numOfField].setIcon(new ImageIcon("./images/PumkinFieldImage.png"));
-					plantsNametext[numOfField].setText("ÀÌ¸§ : È£¹Ú");
-					timeLeftText[numOfField].setText("³²Àº ÀÏ ¼ö : 4ÀÏ");
+					plantsNametext[numOfField].setText("ì´ë¦„ : í˜¸ë°•");
+					timeLeftText[numOfField].setText("ë‚¨ì€ ì¼ ìˆ˜ : 4ì¼");
 
 					player.amountPumpkinSeed--;
 					daysRemaining[numOfField] = 4;
 					player.energy = player.energy - 5;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
 			}
 		});
@@ -320,20 +345,20 @@ public class Farming {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} if(player.amountOnionSeed == 0){
-					JOptionPane.showMessageDialog(null, "¾çÆÄ¾¾°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì–‘íŒŒì”¨ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
 					plantsImage[numOfField].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
-					plantsNametext[numOfField].setText("ÀÌ¸§ : ¾çÆÄ");
-					timeLeftText[numOfField].setText("³²Àº ÀÏ ¼ö : 2ÀÏ");
+					plantsNametext[numOfField].setText("ì´ë¦„ : ì–‘íŒŒ");
+					timeLeftText[numOfField].setText("ë‚¨ì€ ì¼ ìˆ˜ : 2ì¼");
 
 					player.amountOnionSeed--;
 					daysRemaining[numOfField] = 2;
 					player.energy = player.energy - 5;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
 			}
 		});
@@ -342,20 +367,20 @@ public class Farming {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}if(player.amountCabbageSeed == 0){
-					JOptionPane.showMessageDialog(null, "¾ç¹èÃß¾¾°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì–‘ë°°ì¶”ì”¨ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
 					plantsImage[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
-					plantsNametext[numOfField].setText("ÀÌ¸§ : ¾ç¹èÃß");
-					timeLeftText[numOfField].setText("³²Àº ÀÏ ¼ö : 3ÀÏ");
+					plantsNametext[numOfField].setText("ì´ë¦„ : ì–‘ë°°ì¶”");
+					timeLeftText[numOfField].setText("ë‚¨ì€ ì¼ ìˆ˜ : 3ì¼");
 
 					player.amountCabbageSeed--;
 					daysRemaining[numOfField] = 3;
 					player.energy = player.energy - 5;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
 			}
 		});
@@ -364,25 +389,25 @@ public class Farming {
 			public void actionPerformed(ActionEvent e) {
 
 				if (player.energy <= 5) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}if(player.amountCarrotSeed == 0){
-					JOptionPane.showMessageDialog(null, "´ç±Ù¾¾°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë‹¹ê·¼ì”¨ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}  else {
 					plantsImage[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
-					plantsNametext[numOfField].setText("ÀÌ¸§ : ´ç±Ù");
-					timeLeftText[numOfField].setText("³²Àº ÀÏ ¼ö : 2ÀÏ");
+					plantsNametext[numOfField].setText("ì´ë¦„ : ë‹¹ê·¼");
+					timeLeftText[numOfField].setText("ë‚¨ì€ ì¼ ìˆ˜ : 2ì¼");
 
 					player.amountCarrotSeed--;
 					daysRemaining[numOfField] = 2;
 					player.energy = player.energy - 5;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
 			}
 		});
 		
-		//¼±ÅÃÇÑ ¹çÀÌ ºó ¹çÀÌ¶ó¸é ¾¾¾ÑÀÌ ½É°ÜÁø ¹çÀ¸·Î ¹Ù²Û´Ù.
+		//ì„ íƒí•œ ë°­ì´ ë¹ˆ ë°­ì´ë¼ë©´ ì”¨ì•—ì´ ì‹¬ê²¨ì§„ ë°­ìœ¼ë¡œ ë°”ê¾¼ë‹¤.
 		for (int i = 0; i < chooseSeedImage.length; i++) {
 			chooseSeedImage[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -397,7 +422,7 @@ public class Farming {
 						}
 					}
 					
-					//¾¾¾ÑÀ» ¼±ÅÃÇÒ¶§ º¸ÀÌÁö ¾Ê°Ô ÇØ ³õ¾Ò´ø °ÍÀ» ´Ù½Ã º¸ÀÌ°Ô Çß´Ù
+					//ì”¨ì•—ì„ ì„ íƒí• ë•Œ ë³´ì´ì§€ ì•Šê²Œ í•´ ë†“ì•˜ë˜ ê²ƒì„ ë‹¤ì‹œ ë³´ì´ê²Œ í–ˆë‹¤
 					if (fieldPhase.equals("basic farm")) {
 						for (int i = 12; i < fieldImages.length; i++) {
 							fieldImages[i].setEnabled(true);
@@ -419,13 +444,11 @@ public class Farming {
 			});
 		}
 		
-		chooseSeedCanelButton.setText("Ãë¼ÒÇÏ±â");
+		chooseSeedCanelButton.setText("ì·¨ì†Œí•˜ê¸°");
 		chooseSeedCanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				playerImage.setVisible(true);
-				seedPlantingWindow.setVisible(false);				
-
+	
 				if (fieldPhase.equals("basic farm")) {
 					for (int i = 12; i < fieldImages.length; i++) {
 						fieldImages[i].setEnabled(true);
@@ -441,20 +464,22 @@ public class Farming {
 						fieldImages[i].setEnabled(true);
 					}
 				}
+				playerImage.setVisible(true);
+				seedPlantingWindow.setVisible(false);
 			}
 		});
 		chooseSeedCanelButton.setBounds(200, 270, 120, 20);
 		seedPlantingWindow.add(chooseSeedCanelButton);
 		
 		
-		//¾¾¾Ñ »óÅÂ Ã¢
+		//ì”¨ì•— ìƒíƒœ ì°½
 		plantStateWindow.setBackground(Color.WHITE);
 		plantStateWindow.setBounds(150, 100, 500, 300);
 		plantStateWindow.setLayout(null);
 		plantStateWindow.setVisible(false);
 		farmingScene.add(plantStateWindow);
 
-		//³óÀÛ¹°ÀÇ ÀÌ¸§, ³²Àº ÀÏ ¼ö, ÀÚ¶ó´Âµ¥ ÇÊ¿äÇÑ ¹°ÀÇ ¾ç text¸¦ ÃÊ±âÈ­
+		//ë†ì‘ë¬¼ì˜ ì´ë¦„, ë‚¨ì€ ì¼ ìˆ˜, ìë¼ëŠ”ë° í•„ìš”í•œ ë¬¼ì˜ ì–‘ textë¥¼ ì´ˆê¸°í™”
 		for (int i = 0; i < fieldImages.length; i++) {
 			
 			plantStateWindow.add(plantsImage[i] = new JLabel());
@@ -464,16 +489,16 @@ public class Farming {
 			
 			plantsImage[i].setBounds(30,60, 80, 80);
 			
-			plantsNametext[i].setText("ÀÌ¸§ : ");
-			plantsNametext[i].setFont(new Font("±¼¸²", Font.BOLD, 15));
+			plantsNametext[i].setText("ì´ë¦„ : ");
+			plantsNametext[i].setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 			plantsNametext[i].setBounds(150, 0, 150, 150);
 			
-			timeLeftText[i].setText("³²Àº ÀÏ ¼ö : ");
-			timeLeftText[i].setFont(new Font("±¼¸²", Font.BOLD, 15));
+			timeLeftText[i].setText("ë‚¨ì€ ì¼ ìˆ˜ : ");
+			timeLeftText[i].setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 			timeLeftText[i].setBounds(150, 30, 150, 150);
 
-			amountOfWater[i].setText("¹°ÀÇ ¾ç : ºÎÁ·");
-			amountOfWater[i].setFont(new Font("±¼¸²", Font.BOLD, 15));
+			amountOfWater[i].setText("ë¬¼ì˜ ì–‘ : ë¶€ì¡±");
+			amountOfWater[i].setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 			amountOfWater[i].setBounds(150, 60, 150, 150);
 			
 			plantsImage[i].setVisible(false);
@@ -482,31 +507,31 @@ public class Farming {
 			amountOfWater[i].setVisible(false);
 		}
 		
-		waterThePlantsButton.setText("¹°ÁÖ±â");
+		waterThePlantsButton.setText("ë¬¼ì£¼ê¸°");
 		waterThePlantsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(player.energy <= 3) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 
-					// ¾¾¾Ñ¸¸ »Ñ·ÁÁø »óÅÂ¶ó¸é
+					// ì”¨ì•—ë§Œ ë¿Œë ¤ì§„ ìƒíƒœë¼ë©´
 					if (statusOfField.get(numOfField).equals("seeded field")) {
 						statusOfField.set(numOfField, "Proper field");
-						amountOfWater[numOfField].setText("¹°ÀÇ ¾ç : Àû´ç");
+						amountOfWater[numOfField].setText("ë¬¼ì˜ ì–‘ : ì ë‹¹");
 					}
-					// ¹°ºÎÁ·»óÅÂ¶ó¸é
+					// ë¬¼ë¶€ì¡±ìƒíƒœë¼ë©´
 					if (statusOfField.get(numOfField).equals("need Water field")) {
 						emergencyMarkingImages[numOfField].setVisible(false);
 						statusOfField.set(numOfField, "seeded field");
-						amountOfWater[numOfField].setText("¹°ÀÇ ¾ç : ºÎÁ·");
+						amountOfWater[numOfField].setText("ë¬¼ì˜ ì–‘ : ë¶€ì¡±");
 					}
 
 					player.energy = player.energy - 3;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
 				
-				//¾¾¾Ñ »óÅÂÃ¢À» ¼±ÅÃÇÒ¶§ º¸ÀÌÁö ¾Ê°Ô ÇØ ³õ¾Ò´ø °ÍÀ» ´Ù½Ã º¸ÀÌ°Ô Çß´Ù
+				//ì”¨ì•— ìƒíƒœì°½ì„ ì„ íƒí• ë•Œ ë³´ì´ì§€ ì•Šê²Œ í•´ ë†“ì•˜ë˜ ê²ƒì„ ë‹¤ì‹œ ë³´ì´ê²Œ í–ˆë‹¤
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
@@ -532,11 +557,11 @@ public class Farming {
 				}
 			}
 		});
-		waterThePlantsButton.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		waterThePlantsButton.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		waterThePlantsButton.setBounds(15, 180, 120, 80);
 		plantStateWindow.add(waterThePlantsButton);
 		
-		rapidGrowthButton.setText("±Ş¼Ó¼ºÀå");
+		rapidGrowthButton.setText("ê¸‰ì†ì„±ì¥");
 		rapidGrowthButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -547,25 +572,26 @@ public class Farming {
 							|| statusOfField.get(numOfField).equals("need Water field")
 							|| statusOfField.get(numOfField).equals("Proper field")) {
 						
-						//±Ş¼Ó¼ºÇÒ ¹çÀÌ ½âÀº ¹çÀÌ³ª ºó ¹çÀÌ ¾Æ´Ï¶ö¸é ÇØ´ç ¹çÀ» ¼ºÀå½ÃÅ²´Ù.
+						//ê¸‰ì†ì„±í•  ë°­ì´ ì©ì€ ë°­ì´ë‚˜ ë¹ˆ ë°­ì´ ì•„ë‹ˆë„ë©´ í•´ë‹¹ ë°­ì„ ì„±ì¥ì‹œí‚¨ë‹¤.
 						statusOfField.set(numOfField, "fullGrown field");
 						
-						if (plantsNametext[numOfField].getText().equals("ÀÌ¸§ : È£¹Ú")) {
+						if (plantsNametext[numOfField].getText().equals("ì´ë¦„ : í˜¸ë°•")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/PumKinFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ¾çÆÄ")) {
+						} else if (plantsNametext[numOfField].getText().equals("ì´ë¦„ : ì–‘íŒŒ")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ´ç±Ù")) {
+						} else if (plantsNametext[numOfField].getText().equals("ì´ë¦„ : ë‹¹ê·¼")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
 
-						} else if (plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ¾ç¹èÃß")) {
+						} else if (plantsNametext[numOfField].getText().equals("ì´ë¦„ : ì–‘ë°°ì¶”")) {
 							fieldImages[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
 
 						}
 					}
+					emergencyMarkingImages[numOfField].setVisible(false);
 				}else {
-					JOptionPane.showMessageDialog(null, "»ÀÀÇ °³¼ö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë¼ˆì˜ ê°œìˆ˜ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
@@ -592,43 +618,44 @@ public class Farming {
 				}
 			}
 		});
-		rapidGrowthButton.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		rapidGrowthButton.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		rapidGrowthButton.setBounds(190, 180, 120, 80);
 		plantStateWindow.add(rapidGrowthButton);
 		
-		harvestingButton.setText("¼öÈ®ÇÏ±â");
+		harvestingButton.setText("ìˆ˜í™•í•˜ê¸°");
 		harvestingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(player.energy <= 7) {
-					JOptionPane.showMessageDialog(null, "¿¡³ÊÁö°¡ ¸ğÀÚ¶ø´Ï´Ù", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì—ë„ˆì§€ê°€ ëª¨ìëë‹ˆë‹¤", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					
-					//´Ù ÀÚ¶õ ³óÀÛ¹°À» ¼öÈ®ÇÑ´Ù¸é ÇØ´ç ³óÀÛ¹°À» ¾ò´Â´Ù.
+					//ë‹¤ ìë€ ë†ì‘ë¬¼ì„ ìˆ˜í™•í•œë‹¤ë©´ í•´ë‹¹ ë†ì‘ë¬¼ì„ ì–»ëŠ”ë‹¤.
 					if(statusOfField.get(numOfField).equals("fullGrown field")) {
 						
-						if(plantsNametext[numOfField].getText().equals("ÀÌ¸§ : È£¹Ú")) {
+						if(plantsNametext[numOfField].getText().equals("ì´ë¦„ : í˜¸ë°•")) {
 							player.amountPumpkin++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ¾çÆÄ")) {
+						}else if(plantsNametext[numOfField].getText().equals("ì´ë¦„ : ì–‘íŒŒ")) {
 							player.amountOnion++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ¾ç¹èÃß")) {
+						}else if(plantsNametext[numOfField].getText().equals("ì´ë¦„ : ì–‘ë°°ì¶”")) {
 							player.amountCabbage++;
 							
-						}else if(plantsNametext[numOfField].getText().equals("ÀÌ¸§ : ´ç±Ù")) {
+						}else if(plantsNametext[numOfField].getText().equals("ì´ë¦„ : ë‹¹ê·¼")) {
 							player.amountCarrot++;
 						}
 					}
-					//´Ù ÀÚ¶óÁö ¾ÊÀº ³óÀÛ¹°À» ¼öÈ®ÇÑ´Ù¸é ³óÀÛ¹°Àº ¾òÀ» ¼ö ¾øÀ¸¸ç ºó¶¥À¸·Î µÇµ¹¾Æ°£´Ù
+					//ë‹¤ ìë¼ì§€ ì•Šì€ ë†ì‘ë¬¼ì„ ìˆ˜í™•í•œë‹¤ë©´ ë†ì‘ë¬¼ì€ ì–»ì„ ìˆ˜ ì—†ìœ¼ë©° ë¹ˆë•…ìœ¼ë¡œ ë˜ëŒì•„ê°„ë‹¤
 					statusOfField.set(numOfField, "empty Field");
 					fieldImages[numOfField].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
+					emergencyMarkingImages[numOfField].setVisible(false);
 
 					player.energy  = player.energy - 7;
-					EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+					EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 				}
-
-				plantStateWindow.setVisible(false);
+				
+				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
 				
 				plantsImage[numOfField].setVisible(false);
@@ -653,21 +680,21 @@ public class Farming {
 				}
 			}
 		});
-		harvestingButton.setFont(new Font("±¼¸²", Font.BOLD, 15));
+		harvestingButton.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
 		harvestingButton.setBounds(370, 180, 120, 80);
 		plantStateWindow.add(harvestingButton);
 		
-		statusCheckCanelButton.setText("Ãë¼ÒÇÏ±â");
+		statusCheckCanelButton.setText("ì·¨ì†Œí•˜ê¸°");
 		statusCheckCanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				plantStateWindow.setVisible(false);	
 				playerImage.setVisible(true);
-
+				
 				plantsImage[numOfField].setVisible(false);
 				plantsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
-				amountOfWater[numOfField].setVisible(false);
+				amountOfWater[numOfField].setVisible(false);			
 
 				if (fieldPhase.equals("basic farm")) {
 					for (int i = 12; i < fieldImages.length; i++) {
@@ -689,7 +716,7 @@ public class Farming {
 		statusCheckCanelButton.setBounds(190, 270, 120, 20);
 		plantStateWindow.add(statusCheckCanelButton);
 		
-		//¹ç
+		//ë°­
 		for (int i = 0; i < fieldImages.length; i++) {
 			
 			farmingScene.add(emergencyMarkingImages[i] = new JLabel());
@@ -725,21 +752,21 @@ public class Farming {
 			RotCrops rotCrops = new RotCrops(i);
 			rotCrops.start();
 		
-		}
-		//¹çÀÇ ´Ü°è - "basic farm"
+		}////////////////////////////////////////////////////////////////////////////////////////////////////
+		//ë°­ì˜ ë‹¨ê³„ - "basic farm"
 		fieldPhase = "basic farm";
 		for(int i = 0; i < 12; i++) {
 			fieldImages[i].setEnabled(false);
 			//fieldImages[i].setVisible(false);
 		}
-		
-		//¹çÀÇ ´Ü°è - first upgraded farm 
+
+		//ë°­ì˜ ë‹¨ê³„ - first upgraded farm 
 		//fieldPhase = "first upgraded farm";
 		//for(int i = 6; i < 12; i++) {
 		//	fieldImages[i].setEnabled(true);
 		//}
-		
-		//¹çÀÇ ´Ü°è - second upgraded farm 
+
+		//ë°­ì˜ ë‹¨ê³„ - second upgraded farm 
 		//fieldPhase = "second upgraded farm";
 		//for(int i = 0; i < 6; i++) {
 		//	fieldImages[i].setEnabled(true);
@@ -750,14 +777,14 @@ public class Farming {
 		gameSuccess.setLayout(null);
 		gameSuccess.setVisible(false);
 		
-		successText.setText("´ç½ÅÀº ÇÁ·Î ³óºÎ°¡ µÇ¾ú½À´Ï´Ù");
-		successText.setFont(new Font("±¼¸²", Font.BOLD, 50));
+		successText.setText("ë‹¹ì‹ ì€ í”„ë¡œ ë†ë¶€ê°€ ë˜ì—ˆìŠµë‹ˆë‹¤");
+		successText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 50));
 		successText.setHorizontalAlignment(SwingConstants.CENTER);
 		successText.setBounds(0, 0, 800, 300);
 		gameSuccess.add(successText);
 		
-		successmoneyEarned.setText("´ç½ÅÀÌ ¹ø µ· : ");
-		successmoneyEarned.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		successmoneyEarned.setText("ë‹¹ì‹ ì´ ë²ˆ ëˆ : ");
+		successmoneyEarned.setFont(new Font("êµ´ë¦¼", Font.BOLD, 30));
 		successmoneyEarned.setHorizontalAlignment(SwingConstants.CENTER);
 		successmoneyEarned.setBounds(0, 200, 800, 300);
 		gameSuccess.add(successmoneyEarned);
@@ -767,21 +794,266 @@ public class Farming {
 		gameFail.setLayout(null);
 		gameFail.setVisible(false);
 		
-		failText.setText("´ç½ÅÀº ³óºÎ¿¡ ¼ÒÁúÀÌ ¾ø±º¿ä..");
-		failText.setFont(new Font("±¼¸²", Font.BOLD, 50));
+		failText.setText("ë‹¹ì‹ ì€ ë†ë¶€ì— ì†Œì§ˆì´ ì—†êµ°ìš”..");
+		failText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 50));
 		failText.setHorizontalAlignment(SwingConstants.CENTER);
 		failText.setBounds(0, 0, 800, 300);
 		gameFail.add(failText);
 		
-		failmoneyEarned.setText("´ç½ÅÀÌ ¹ø µ· : ");
-		failmoneyEarned.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		failmoneyEarned.setText("ë‹¹ì‹ ì´ ë²ˆ ëˆ : ");
+		failmoneyEarned.setFont(new Font("êµ´ë¦¼", Font.BOLD, 30));
 		failmoneyEarned.setHorizontalAlignment(SwingConstants.CENTER);
 		failmoneyEarned.setBounds(0, 200, 800, 300);
 		gameFail.add(failmoneyEarned);
 		
-		//¸¶¿ì½º·Î ÁıÀÌ³ª ¹çÀ» Å¬¸¯ÇßÀ» ¶§ ÇÃ·¹ÀÌ¾î°¡ ÀÚµ¿À¸·Î ÁıÀÌ³ª ¹çÀ¸·Î ÀÌµ¿ÇÑ´Ù.
-		//¿À·ù°¡ ÀÖ¾î º¸·ùÇß´Ù.
-		/*
+		//ë¯¸ë‹ˆê²Œì„
+		minigameChooseScene.setBounds(0, 0, 796, 572);
+		frame.getContentPane().add(minigameChooseScene);
+		minigameChooseScene.setLayout(null);
+		minigameChooseScene.setVisible(false);
+		
+		diceGameButton.setText("ì£¼ì‚¬ìœ„ê²Œì„");
+		diceGameButton.setFont(new Font("êµ´ë¦¼", Font.BOLD, 30));
+		diceGameButton.setBounds(30, 150, 200, 100);
+		minigameChooseScene.add(diceGameButton);
+		
+		gameDescriptionImage.setIcon(new ImageIcon("./images/DiceGameDescriptionImage.png"));
+		gameDescriptionImage.setBounds(250, 100, 500, 400);
+		minigameChooseScene.add(gameDescriptionImage);
+		
+		amountBetText.setText("ë°°íŒ…í•  ê¸ˆì•¡ ");
+		amountBetText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 20));
+		amountBetText.setBounds(50, 250, 200, 100);
+		minigameChooseScene.add(amountBetText);
+		
+		amountBetField = new JTextField();
+		amountBetField.setBounds(10, 335, 200, 36);
+		minigameChooseScene.add(amountBetField);
+		
+		startButton.setText("ê²Œì„ ì‹œì‘");
+		startButton.setBounds(60, 400, 100, 50);
+		startButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					bettingAmount = Integer.parseInt(amountBetField.getText());
+					
+					if(bettingAmount <= player.money) {
+						
+						player.money = player.money - bettingAmount;
+						minigameChooseScene.setVisible(false);
+						diceGameScene.setVisible(true);
+						
+						bettingAmountText.setText("ë² íŒ…í•œ ê¸ˆì•¡ : " + bettingAmount + "ì›");
+						rollOfDiceButton.setEnabled(true);
+						stopButton.setEnabled(true);
+						
+						playerSeat = 0;
+
+						for (int i = 0; i < gameCompartment.length; i++) {
+							
+							// ê²Œì„ íŒ ì…‹íŒ…
+							if ((i + 1) % 6 == 0) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/failCompartment.png"));
+							}
+							if ((i + 1) == 5) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/x1.2Compartment.png"));
+							} else if ((i + 1) == 10) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/x1.4Compartment.png"));
+							} else if ((i + 1) == 15) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/x1.6Compartment.png"));
+							} else if ((i + 1) == 20) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/x1.8Compartment.png"));
+							} else if ((i + 1) == 25) {
+								gameCompartment[i].setIcon(new ImageIcon("./images/x2.0Compartment.png"));
+							}
+						}
+						gameCompartment[0].setIcon(new ImageIcon("./images/playerBelongsCompartment.png"));
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "ì†Œì§€í•œ ê¸ˆì•¡ë³´ë‹¤ ë§ì€ ëˆì„ ê±¸ì—ˆìŠµë‹ˆë‹¤!!", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				} catch (NumberFormatException f) {
+					JOptionPane.showMessageDialog(null, "ìˆ«ìë§Œ ì ì–´ì£¼ì„¸ìš”", "!!!!", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		minigameChooseScene.add(startButton);
+		
+		diceGameScene.setBounds(0, 0, 796, 572);
+		frame.getContentPane().add(diceGameScene);
+		diceGameScene.setLayout(null);
+		diceGameScene.setVisible(false);
+		
+		
+		for (int i = 0; i < gameCompartment.length; i++) {
+			diceGameScene.add(gameCompartment[i] = new JLabel());
+
+			if (i < 10) {
+				gameCompartment[i].setBounds(compartmentHorizontalLength, 50, 50, 50);
+				
+			}else if (i >= 10 && i < 20) {
+				gameCompartment[i].setBounds(compartmentHorizontalLength, 120, 50, 50);
+				
+			}else if (i >= 20 && i < 30) {
+				gameCompartment[i].setBounds(compartmentHorizontalLength, 190, 50, 50);
+				
+			}
+			
+			compartmentHorizontalLength = compartmentInterval + compartmentHorizontalLength;
+			
+			gameCompartment[i].setIcon(new ImageIcon("./images/emptyCompartment.png"));
+			gameCompartment[0].setIcon(new ImageIcon("./images/playerBelongsCompartment.png"));
+			
+			//6ì˜ ë°°ìˆ˜ì— í•´ë‹¹í•˜ëŠ” ì¹¸ì— ë“¤ì–´ê°€ë©´ ê²Œì„ ì˜¤ë²„ëœë‹¤
+			if((i + 1) % 6 == 0) {
+					gameCompartment[i].setIcon(new ImageIcon("./images/failCompartment.png"));	
+			}
+			
+			if((i + 1) % 10 == 0) {
+				compartmentHorizontalLength = 110;
+			}
+			
+			if((i + 1) == 5) {
+				gameCompartment[i].setIcon(new ImageIcon("./images/x1.2Compartment.png"));
+			}else if((i + 1) == 10) {
+				gameCompartment[i].setIcon(new ImageIcon("./images/x1.4Compartment.png"));
+			}else if((i + 1) == 15) {
+				gameCompartment[i].setIcon(new ImageIcon("./images/x1.6Compartment.png"));
+			}else if((i + 1) == 20) {
+				gameCompartment[i].setIcon(new ImageIcon("./images/x1.8Compartment.png"));
+			}else if((i + 1) == 25) {
+				gameCompartment[i].setIcon(new ImageIcon("./images/x2.0Compartment.png"));
+			}
+		}
+	
+		departureText.setText("ì‹œì‘ ->");
+		departureText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
+		departureText.setBounds(50, 40, 80, 80);
+		diceGameScene.add(departureText);
+		
+		diceNumgerText.setText("ì£¼ì‚¬ìœ„ ìˆ˜ : 0");
+		diceNumgerText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
+		diceNumgerText.setBounds(330, 300, 150, 60);
+		diceGameScene.add(diceNumgerText);
+		
+		bettingAmountText.setText("ë² íŒ…í•œ ê¸ˆì•¡ : 0ì›");
+		bettingAmountText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
+		bettingAmountText.setBounds(100, 370, 150, 60);
+		diceGameScene.add(bettingAmountText);
+		
+		finalAmountText.setText("ìµœì¢… ê¸ˆì•¡ : 0ì›");
+		finalAmountText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 15));
+		finalAmountText.setBounds(550, 370, 150, 60);
+		diceGameScene.add(finalAmountText);
+		
+		gameResultsText.setText("");
+		gameResultsText.setHorizontalAlignment(SwingConstants.CENTER);
+		gameResultsText.setFont(new Font("êµ´ë¦¼", Font.BOLD, 30));
+		gameResultsText.setBounds(0, 400, 800, 100);
+		diceGameScene.add(gameResultsText);
+
+		
+		rollOfDiceButton.setText("ì£¼ì‚¬ìœ„ ëŒë¦¬ê¸°");
+		rollOfDiceButton.setBounds(100, 300, 110, 60);
+		rollOfDiceButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				// ëœë¤ìœ¼ë¡œ ë‚˜ì˜¨ ìˆ˜ê°€ ì£¼ì‚¬ìœ„ì˜ ìˆ˜ê°€ ëœë‹¤.
+				playerDiceNumber = random.nextInt(6) + 1;
+				diceNumgerText.setText("ì£¼ì‚¬ìœ„ ìˆ˜ : " + playerDiceNumber);
+
+				//í”Œë ˆì´ì–´ê°€ ì†í–ˆë˜ ìë¦¬ì˜ ì´ë¯¸ì§€ë¥¼ ì—†ì•¤ë‹¤ (ìƒˆë¡œìš´ ìë¦¬ë¡œ Âã‚±ç˜¦ ìœ„í•´)
+				for (int i = 0; i < gameCompartment.length; i++) {
+					if (gameCompartment[i].getIcon().toString().equals("./images/playerBelongsCompartment.png")) {
+
+						if ((i + 1) == 5) {
+							gameCompartment[i].setIcon(new ImageIcon("./images/x1.2Compartment.png"));
+						} else if ((i + 1) == 10) {
+							gameCompartment[i].setIcon(new ImageIcon("./images/x1.4Compartment.png"));
+						} else if ((i + 1) == 15) {
+							gameCompartment[i].setIcon(new ImageIcon("./images/x1.6Compartment.png"));
+						} else if ((i + 1) == 20) {
+							gameCompartment[i].setIcon(new ImageIcon("./images/x1.8Compartment.png"));
+						} else if ((i + 1) == 25) {
+							gameCompartment[i].setIcon(new ImageIcon("./images/x2.0Compartment.png"));
+						} else {
+							gameCompartment[i].setIcon(new ImageIcon("./images/emptyCompartment.png"));
+						}
+					}
+				}
+				// ì£¼ì‚¬ìœ„ ìˆ˜ ë§Œí¼ í”Œë ˆì´ì–´ì˜ ë§ì´ ì›€ì§ì¸ë‹¤
+				playerSeat = playerSeat + playerDiceNumber;
+				//í”Œë˜ì´ì–´ì˜ ìë¦¬ê°€ ìµœëŒ€ ìë¦¬ì¸ 30ì„ ë„˜ì–´ê°„ë‹¤ë©´ ìë¦¬ë¥¼ ì§€ì •í•´ì¤€ë‹¤
+				if(playerSeat >= 30) {
+					playerSeat = 29;
+				}
+				gameCompartment[playerSeat].setIcon(new ImageIcon("./images/playerBelongsCompartment.png"));
+
+				// ë§Œì•½ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ê°€ 6ì˜ ë°°ìˆ˜ë¼ë©´ ê²Œì„ ì˜¤ë²„í•œë‹¤
+				if ((playerSeat + 1) % 6 == 0) {
+					rollOfDiceButton.setEnabled(false);
+					stopButton.setEnabled(false);
+					gameResultsText.setText("ê²€ì€ ì¹¸ì— ë“¤ì–´ê°€ ê²Œì„ì˜¤ë²„!!");
+				}
+			}
+		});
+		diceGameScene.add(rollOfDiceButton);
+		
+		stopButton.setText("Stop");
+		stopButton.setBounds(550, 300, 110, 60);
+		stopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if((playerSeat + 1) <= 5) {
+					bettingAmount = (int) (bettingAmount * 1.0);
+					gameResultsText.setText("!!!! 1.0ë°° !!!!!");
+					
+				}else if((playerSeat + 1) >= 5 && (playerSeat + 1) < 10) {
+					bettingAmount = (int) (bettingAmount * 1.2);
+					gameResultsText.setText("!!!! 1.2ë°° !!!!!");
+					
+				}else if((playerSeat + 1) >= 10 && (playerSeat + 1) < 15) {
+					bettingAmount = (int) (bettingAmount * 1.4);
+					gameResultsText.setText("!!!! 1.4ë°° !!!!!");
+					
+				}else if((playerSeat + 1) >= 15 && (playerSeat + 1) < 20) {
+					bettingAmount = (int) (bettingAmount * 1.6);
+					gameResultsText.setText("!!!! 1.6ë°° !!!!!");
+					
+				}else if((playerSeat + 1) >= 20 && (playerSeat + 1) < 25) {
+					bettingAmount = (int) (bettingAmount * 1.8);
+					gameResultsText.setText("!!!! 1.8ë°° !!!!!");
+					
+				}else if((playerSeat + 1) >= 25) {
+					bettingAmount = (int) (bettingAmount * 2.0);
+					gameResultsText.setText("!!!! 2.0ë°° !!!!!");
+				}
+				
+				finalAmountText.setText("ìµœì¢… ê¸ˆì•¡ : " + bettingAmount + "ì›");
+				player.money = player.money + bettingAmount;
+				rollOfDiceButton.setEnabled(false);
+				stopButton.setEnabled(false);
+			}
+		});
+		diceGameScene.add(stopButton);
+		
+		diceExitButton.setText("ë‚˜ê°€ê¸°");
+		diceExitButton.setBounds(550, 470, 110, 60);
+		diceExitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				diceGameScene.setVisible(false);
+				farmingScene.setVisible(true);
+				
+				frame.requestFocus();
+			}
+		});
+		diceGameScene.add(diceExitButton);
+		
+		//ë§ˆìš°ìŠ¤ë¡œ ì§‘ì´ë‚˜ ë°­ì„ í´ë¦­í–ˆì„ ë•Œ í”Œë ˆì´ì–´ê°€ ìë™ìœ¼ë¡œ ì§‘ì´ë‚˜ ë°­ìœ¼ë¡œ ì´ë™í•œë‹¤.
+		//ì˜¤ë¥˜ê°€ ìˆì–´ ë³´ë¥˜í–ˆë‹¤.
+/*		
 		for (int i = 0; i < fieldImages.length; i++) {
 			fieldImages[i].addMouseListener(new MouseAdapter() {
 		            @Override
@@ -807,21 +1079,27 @@ public class Farming {
             }          
         });
 */
+		//ë˜ì „ í™”ë©´
+		dungeonScene.setBounds(0,0,800,600);
+		frame.getContentPane().add(dungeonScene);
+		dungeonScene.setLayout(null);
 		
 		sparrowObstruction.start();
 		appearanceOfAnimals.start();
 		frame.addKeyListener(new key());
 		frame.setFocusable(true);
+		
+
 	}
 
 	class key implements KeyListener {
 
-		// ÁÂÆÇÀÇ ¾î¶² Å°·Î ¹®ÀÚ°¡ ´­·ÈÀ»¶§ ½ÇÇà
+		// ì¢ŒíŒì˜ ì–´ë–¤ í‚¤ë¡œ ë¬¸ìê°€ ëˆŒë ¸ì„ë•Œ ì‹¤í–‰
 		@Override
 		public void keyTyped(KeyEvent e) {
 		}
 
-		// Å°º¸µåÀÇ Å°°¡ ´­·ÈÀ»¶§ ½ÇÇà
+		// í‚¤ë³´ë“œì˜ í‚¤ê°€ ëˆŒë ¸ì„ë•Œ ì‹¤í–‰
 		@Override
 		public void keyPressed(KeyEvent e) {
 
@@ -829,7 +1107,7 @@ public class Farming {
 
 			switch (keyCode) {
 
-			//ÇÃ·¹ÀÌ¾î ÀÌµ¿
+			//í”Œë ˆì´ì–´ ì´ë™
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_W:
 				if (playerImage.getY() >= upperWall) {
@@ -864,11 +1142,11 @@ public class Farming {
 				//System.out.println(playerImage.getX());
 				//System.out.println(playerImage.getY());
 				
-				//¹ç¾È(¹ç ¾Õ)¿¡¼­ ½ºÆäÀÌ½º¹Ù¸¦ ÇÒ °æ¿ì ¾¾¾Ñ ¼±ÅÃÃ¢¶Ç´Â  ½Ä¹°»óÅÂÃ¢ º¼ ¼ö ÀÖ´Ù.
-				//»óÁ¡, Áı¾È(¾Õ)¿¡¼­ ½ºÆäÀÌ½º ¹Ù¸¦ ÇÒ °æ¿ì »óÁ¡¿¡ µé¾î°¡°Å³ª ÇÏ·ç¸¦ Áö³ª°¡°Ô ÇÒ ¼ö ÀÖ´Ù.
+				//ë°­ì•ˆ(ë°­ ì•)ì—ì„œ ìŠ¤í˜ì´ìŠ¤ë°”ë¥¼ í•  ê²½ìš° ì”¨ì•— ì„ íƒì°½ë˜ëŠ”  ì‹ë¬¼ìƒíƒœì°½ ë³¼ ìˆ˜ ìˆë‹¤.
+				//ìƒì , ì§‘ì•ˆ(ì•)ì—ì„œ ìŠ¤í˜ì´ìŠ¤ ë°”ë¥¼ í•  ê²½ìš° ìƒì ì— ë“¤ì–´ê°€ê±°ë‚˜ í•˜ë£¨ë¥¼ ì§€ë‚˜ê°€ê²Œ í•  ìˆ˜ ìˆë‹¤.
 
-				//¹ç ¾È¿¡¼­ ½ºÆäÀÌ½º¹Ù¸¦ ÇßÀ» ¶§
-					// ¹çÀÇ Ã¹¹øÂ° ÁÙ
+				//ë°­ ì•ˆì—ì„œ ìŠ¤í˜ì´ìŠ¤ë°”ë¥¼ í–ˆì„ ë•Œ
+					// ë°­ì˜ ì²«ë²ˆì§¸ ì¤„
 					if (playerImage.getY() <= 54) {
 
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
@@ -896,10 +1174,10 @@ public class Farming {
 							information();
 
 						}
-						// ¹çÀÇ µÎ¹øÂ° ÁÙ
+						// ë°­ì˜ ë‘ë²ˆì§¸ ì¤„
 					} else if (playerImage.getY() >= 68 && playerImage.getY() <= 143) {
 
-						// Ã¹¹øÂ° Ä­
+						// ì²«ë²ˆì§¸ ì¹¸
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
 							numOfField = 6;
 							information();
@@ -925,7 +1203,7 @@ public class Farming {
 							information();
 
 						}
-						//3¹øÂ° ÁÙ
+						//3ë²ˆì§¸ ì¤„
 					} else if (playerImage.getY() >= 160 && playerImage.getY() <= 235) {
 
 						if (playerImage.getX() >= 70 && playerImage.getX() <= 120) {
@@ -955,9 +1233,8 @@ public class Farming {
 						}
 
 					}
-				
 					
-					//¹çÀÇ ¾Õ¿¡¼­ ½ºÆäÀÌ½º¹Ù¸¦ ´­·¶À» ¶§
+					//ë°­ì˜ ì•ì—ì„œ ìŠ¤í˜ì´ìŠ¤ë°”ë¥¼ ëˆŒë €ì„ ë•Œ
 					for (int i = 0; i < fieldImages.length; i++) {
 					if(playerImage.getX() == fieldImages[i].getX() && playerImage.getY() == fieldImages[i].getY() + 10) {
 						information();
@@ -965,55 +1242,55 @@ public class Farming {
 				}
 				
 				
-					//Áı¾È¿¡¼­ ½ºÆäÀÌ½º¹Ù¸¦ ´­·¶À» ¶§
+					//ì§‘ì•ˆì—ì„œ ìŠ¤í˜ì´ìŠ¤ë°”ë¥¼ ëˆŒë €ì„ ë•Œ
 				if (playerImage.getY() >= 330 && playerImage.getY() <= 475) {
 					if (playerImage.getX() >= 600 && playerImage.getX() <= 720) {
 
-						//ÇÏ·ç°¡ Áö³ª°£´Ù
-						JOptionPane.showMessageDialog(null, "ÇÏ·ç°¡ Áö³ª°©´Ï´Ù", " ", JOptionPane.INFORMATION_MESSAGE);
+						//í•˜ë£¨ê°€ ì§€ë‚˜ê°„ë‹¤
+						JOptionPane.showMessageDialog(null, "í•˜ë£¨ê°€ ì§€ë‚˜ê°‘ë‹ˆë‹¤", " ", JOptionPane.INFORMATION_MESSAGE);
 						player.energy = 100;
-						EnergyText.setText("³²Àº ¿¡³ÊÁö : " + player.energy);
+						EnergyText.setText("ë‚¨ì€ ì—ë„ˆì§€ : " + player.energy);
 						day++;
-						daysText.setText(day + "ÀÏÂ÷");
+						daysText.setText(day + "ì¼ì°¨");
 
-						//¸¶Áö¸· ³¯ÀÌ¶ó¸é °ÔÀÓÀ» °á°ú¸¦ º¸¿©ÁØ´Ù
+						//ë§ˆì§€ë§‰ ë‚ ì´ë¼ë©´ ê²Œì„ì„ ê²°ê³¼ë¥¼ ë³´ì—¬ì¤€ë‹¤
 						if (day == finalday) {
 
 							if(player.money > 70000) {
-								//System.out.println("°ÔÀÓ ½Â¸®");
+								//System.out.println("ê²Œì„ ìŠ¹ë¦¬");
 								farmingScene.setVisible(false);
 								gameSuccess.setVisible(true);
-								successmoneyEarned.setText("´ç½ÅÀÌ ¹ø µ· : " + player.money);
+								successmoneyEarned.setText("ë‹¹ì‹ ì´ ë²ˆ ëˆ : " + player.money);
 								
 							}else {
-								//System.out.println("°ÔÀÓ ÆĞ¹è");
+								//System.out.println("ê²Œì„ íŒ¨ë°°");
 								farmingScene.setVisible(false);
 								gameFail.setVisible(true);
-								failmoneyEarned.setText("´ç½ÅÀÌ ¹ø µ· : " + player.money);
+								failmoneyEarned.setText("ë‹¹ì‹ ì´ ë²ˆ ëˆ : " + player.money);
 							}
 							
 						} else {
 							for (int i = 0; i < fieldImages.length; i++) {
 
-								// ¹çÀÇ »óÅÂ°¡ Àû´çÇÑ »óÅÂ¶ó¸é
+								// ë°­ì˜ ìƒíƒœê°€ ì ë‹¹í•œ ìƒíƒœë¼ë©´
 								if (statusOfField.get(i).equals("Proper field")) {
 									daysRemaining[i]--;
-									timeLeftText[i].setText("³²Àº ÀÏ ¼ö : " + daysRemaining[i]);
+									timeLeftText[i].setText("ë‚¨ì€ ì¼ ìˆ˜ : " + daysRemaining[i]);
 
-									// ³²Àº ÀÏ¼ö¿¡ µû¶ó ÀÌ¹ÌÁö ±³Ã¼
+									// ë‚¨ì€ ì¼ìˆ˜ì— ë”°ë¼ ì´ë¯¸ì§€ êµì²´
 									if (daysRemaining[i] == 0) {
 										statusOfField.set(i, "fullGrown field");
 
-										if (plantsNametext[i].getText().equals("ÀÌ¸§ : È£¹Ú")) {
+										if (plantsNametext[i].getText().equals("ì´ë¦„ : í˜¸ë°•")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/PumKinFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("ÀÌ¸§ : ¾çÆÄ")) {
+										} else if (plantsNametext[i].getText().equals("ì´ë¦„ : ì–‘íŒŒ")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/OnionFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("ÀÌ¸§ : ´ç±Ù")) {
+										} else if (plantsNametext[i].getText().equals("ì´ë¦„ : ë‹¹ê·¼")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
 
-										} else if (plantsNametext[i].getText().equals("ÀÌ¸§ : ¾ç¹èÃß")) {
+										} else if (plantsNametext[i].getText().equals("ì´ë¦„ : ì–‘ë°°ì¶”")) {
 											fieldImages[i].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
 
 										}
@@ -1028,18 +1305,18 @@ public class Farming {
 
 									}
 
-									// ÇÏ·ç°¡ Áö³­ ÈÄ ÀÏ¼ö°¡ ³²Àº ½Ä¹°Àº ¹°À» Ãß°¡·Î Áà¾ßÇÏµµ·Ï ³óÀÛ¹°ÀÇ »óÅÂ¸¦ ¹Ù²ãÁÖ¾ú´Ù
+									// í•˜ë£¨ê°€ ì§€ë‚œ í›„ ì¼ìˆ˜ê°€ ë‚¨ì€ ì‹ë¬¼ì€ ë¬¼ì„ ì¶”ê°€ë¡œ ì¤˜ì•¼í•˜ë„ë¡ ë†ì‘ë¬¼ì˜ ìƒíƒœë¥¼ ë°”ê¿”ì£¼ì—ˆë‹¤
 									if (daysRemaining[i] >= 1) {
 
 										statusOfField.set(i, "seeded field");
-										amountOfWater[i].setText("¹°ÀÇ ¾ç : ºÎÁ·");
+										amountOfWater[i].setText("ë¬¼ì˜ ì–‘ : ë¶€ì¡±");
 									}
 
-									// ¹çÀÌ ¹°ÀÌ ºÎÁ·ÇÑ »óÅÂ·Î ÇÏ·ç°¡ Áö³ª°Ô µÇ¸é
+									// ë°­ì´ ë¬¼ì´ ë¶€ì¡±í•œ ìƒíƒœë¡œ í•˜ë£¨ê°€ ì§€ë‚˜ê²Œ ë˜ë©´
 								} else if (statusOfField.get(i).equals("seeded field")
 										|| statusOfField.get(i).equals("need Water field")) {
 
-									// ½âÀº ¹çÀÌ µÈ´Ù
+									// ì©ì€ ë°­ì´ ëœë‹¤
 									statusOfField.set(i, "rotten field");
 									fieldImages[i].setIcon(new ImageIcon("./images/rottenFieldImage.png"));
 									emergencyMarkingImages[i].setVisible(false);
@@ -1049,18 +1326,21 @@ public class Farming {
 					}
 				}
 				
-				//»óÁ¡ ¾È¿¡¼­ ½ºÆäÀÌ½º ¹Ù¸¦ ´­·¶À» ¶§
+				//ìƒì  ì•ˆì—ì„œ ìŠ¤í˜ì´ìŠ¤ ë°”ë¥¼ ëˆŒë €ì„ ë•Œ
 				if (playerImage.getY() >= 328 && playerImage.getY() <= 473) {
 					if (playerImage.getX() >= 0 && playerImage.getX() <= 120) {
-						System.out.println("»óÁ¡À¸·Î µé¾î°©´Ï´Ù");
-						moneyText.setText("µ· : " + player.money);
+						System.out.println("ìƒì ìœ¼ë¡œ ë“¤ì–´ê°‘ë‹ˆë‹¤");
+						//moneyText.setText("ëˆ : " + player.money);
+						
+						minigameChooseScene.setVisible(true);
+						farmingScene.setVisible(false);
 					}
 				}
 				break;
 				
 			case KeyEvent.VK_E:
 				
-				//ÀÎº¥Åä¸® º¸±â
+				//ì¸ë²¤í† ë¦¬ ë³´ê¸°
 				
 				if (inventoryWindow.isVisible() == true) {
 					inventoryWindow.setVisible(false);
@@ -1075,6 +1355,10 @@ public class Farming {
 					numberOfItemsText[5].setText("X " + player.amountOnion);
 					numberOfItemsText[6].setText("X " + player.amountCabbage);
 					numberOfItemsText[7].setText("X " + player.amountCarrot);
+					numberOfItemsText[8].setText("X " + Player.amountPotionHp_30);
+					numberOfItemsText[9].setText("X " + Player.amountPotionHp_50);
+					numberOfItemsText[12].setText("X " + Player.amountRandomMushroom);
+					numberOfItemsText[13].setText("X " + Player.amountBone);
 					
 					
 					inventoryWindow.setVisible(true);
@@ -1085,18 +1369,18 @@ public class Farming {
 			}
 		}
 
-		// Å°º¸µåÀÇ Å°°¡ ´­·È´Ù ¶§¾úÀ»¶§ ½ÇÇà
+		// í‚¤ë³´ë“œì˜ í‚¤ê°€ ëˆŒë ¸ë‹¤ ë•Œì—ˆì„ë•Œ ì‹¤í–‰
 		@Override
 		public void keyReleased(KeyEvent e) {
 		}
 	}
 	
 	public void information() {
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 		if (fieldPhase.equals("basic farm")) {
 			if (numOfField >= 12) {
 
-				// ºñ¾îÀÖ´Â ¶¥ÀÌ¶ó¸é ¾¾¾Ñ½É±âÃ¢À» º¸¿©ÁØ´Ù
+				// ë¹„ì–´ìˆëŠ” ë•…ì´ë¼ë©´ ì”¨ì•—ì‹¬ê¸°ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 				if (statusOfField.get(numOfField).equals("empty Field")) {
 					seedPlantingWindow.setVisible(true);
 
@@ -1105,7 +1389,7 @@ public class Farming {
 					}
 					playerImage.setVisible(false);
 
-					// ¾¾¾ÑÀÌ ½É°ÜÀÖ´Â ¹çÀÌ¶ó¸é ³óÀÛ¹°»óÅÂ Ã¢À» º¸¿©ÁØ´Ù
+					// ì”¨ì•—ì´ ì‹¬ê²¨ìˆëŠ” ë°­ì´ë¼ë©´ ë†ì‘ë¬¼ìƒíƒœ ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 				} else {
 					plantStateWindow.setVisible(true);
 
@@ -1114,9 +1398,9 @@ public class Farming {
 					timeLeftText[numOfField].setVisible(true);
 					amountOfWater[numOfField].setVisible(true);
 
-					// ¸¸¾à ½âÀº ¶¥ÀÌ¶ó¸é
+					// ë§Œì•½ ì©ì€ ë•…ì´ë¼ë©´
 					if (statusOfField.get(numOfField).equals("rotten field")) {
-						// ¹°ÁÖ±â¹öÆ°°ú, ±Ş¼Ó¼ºÀå¹öÆ°À» ´©¸£Áö ¸øÇÏ°Ô ÇÑ´Ù
+						// ë¬¼ì£¼ê¸°ë²„íŠ¼ê³¼, ê¸‰ì†ì„±ì¥ë²„íŠ¼ì„ ëˆ„ë¥´ì§€ ëª»í•˜ê²Œ í•œë‹¤
 						waterThePlantsButton.setEnabled(false);
 						rapidGrowthButton.setEnabled(false);
 					} else {
@@ -1130,11 +1414,10 @@ public class Farming {
 					playerImage.setVisible(false);
 				}
 			}
-
 		} else if (fieldPhase.equals("first upgraded farm")) {
 
 			if (numOfField >= 6) {
-				// ºñ¾îÀÖ´Â ¶¥ÀÌ¶ó¸é ¾¾¾Ñ½É±âÃ¢À» º¸¿©ÁØ´Ù
+				// ë¹„ì–´ìˆëŠ” ë•…ì´ë¼ë©´ ì”¨ì•—ì‹¬ê¸°ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 				if (statusOfField.get(numOfField).equals("empty Field")) {
 					seedPlantingWindow.setVisible(true);
 
@@ -1143,7 +1426,7 @@ public class Farming {
 					}
 					playerImage.setVisible(false);
 
-					// ¾¾¾ÑÀÌ ½É°ÜÀÖ´Â ¹çÀÌ¶ó¸é ³óÀÛ¹°»óÅÂ Ã¢À» º¸¿©ÁØ´Ù
+					// ì”¨ì•—ì´ ì‹¬ê²¨ìˆëŠ” ë°­ì´ë¼ë©´ ë†ì‘ë¬¼ìƒíƒœ ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 				} else {
 					plantStateWindow.setVisible(true);
 
@@ -1152,9 +1435,9 @@ public class Farming {
 					timeLeftText[numOfField].setVisible(true);
 					amountOfWater[numOfField].setVisible(true);
 
-					// ¸¸¾à ½âÀº ¶¥ÀÌ¶ó¸é
+					// ë§Œì•½ ì©ì€ ë•…ì´ë¼ë©´
 					if (statusOfField.get(numOfField).equals("rotten field")) {
-						// ¹°ÁÖ±â¹öÆ°°ú, ±Ş¼Ó¼ºÀå¹öÆ°À» ´©¸£Áö ¸øÇÏ°Ô ÇÑ´Ù
+						// ë¬¼ì£¼ê¸°ë²„íŠ¼ê³¼, ê¸‰ì†ì„±ì¥ë²„íŠ¼ì„ ëˆ„ë¥´ì§€ ëª»í•˜ê²Œ í•œë‹¤
 						waterThePlantsButton.setEnabled(false);
 						rapidGrowthButton.setEnabled(false);
 					} else {
@@ -1168,10 +1451,9 @@ public class Farming {
 					playerImage.setVisible(false);
 				}
 			}
-
 		} else if (fieldPhase.equals("second upgraded farm")) {
 
-			// ºñ¾îÀÖ´Â ¶¥ÀÌ¶ó¸é ¾¾¾Ñ½É±âÃ¢À» º¸¿©ÁØ´Ù
+			// ë¹„ì–´ìˆëŠ” ë•…ì´ë¼ë©´ ì”¨ì•—ì‹¬ê¸°ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 			if (statusOfField.get(numOfField).equals("empty Field")) {
 				seedPlantingWindow.setVisible(true);
 
@@ -1180,7 +1462,7 @@ public class Farming {
 				}
 				playerImage.setVisible(false);
 
-				// ¾¾¾ÑÀÌ ½É°ÜÀÖ´Â ¹çÀÌ¶ó¸é ³óÀÛ¹°»óÅÂ Ã¢À» º¸¿©ÁØ´Ù
+				// ì”¨ì•—ì´ ì‹¬ê²¨ìˆëŠ” ë°­ì´ë¼ë©´ ë†ì‘ë¬¼ìƒíƒœ ì°½ì„ ë³´ì—¬ì¤€ë‹¤
 			} else {
 				plantStateWindow.setVisible(true);
 
@@ -1189,9 +1471,9 @@ public class Farming {
 				timeLeftText[numOfField].setVisible(true);
 				amountOfWater[numOfField].setVisible(true);
 
-				// ¸¸¾à ½âÀº ¶¥ÀÌ¶ó¸é
+				// ë§Œì•½ ì©ì€ ë•…ì´ë¼ë©´
 				if (statusOfField.get(numOfField).equals("rotten field")) {
-					// ¹°ÁÖ±â¹öÆ°°ú, ±Ş¼Ó¼ºÀå¹öÆ°À» ´©¸£Áö ¸øÇÏ°Ô ÇÑ´Ù
+					// ë¬¼ì£¼ê¸°ë²„íŠ¼ê³¼, ê¸‰ì†ì„±ì¥ë²„íŠ¼ì„ ëˆ„ë¥´ì§€ ëª»í•˜ê²Œ í•œë‹¤
 					waterThePlantsButton.setEnabled(false);
 					rapidGrowthButton.setEnabled(false);
 				} else {
@@ -1204,7 +1486,6 @@ public class Farming {
 				}
 				playerImage.setVisible(false);
 			}
-
 		}
 	}
 

@@ -2,45 +2,104 @@ package Farm;
 
 import java.util.Random;
 
+import javax.swing.JPanel;
+
 public class AppearanceOfAnimals extends Thread{
 
 	Random random = new Random();
+	static Random randomWildAnimalSelect = new Random();
 	
 	int minTime = 10000;
-	int maxTime = 15000;
-	int randomTime = 0; //µ¿¹°ÀÌ ÃâÇöÇÏ±â±îÁö ³²Àº ½Ã°£ 
-	boolean running = true;
+	int maxTime = 30000;
+	static int randomWildAnimal;
+	static boolean running = true;
 	
+	public static void randomMushroomSelect() {
+		randomWildAnimal = randomWildAnimalSelect.nextInt(2);
+	}
 	@Override
 	public synchronized void run() {
 		while (running) {
 			try {
+				int randomTime = random.nextInt(maxTime - minTime + 1) + minTime; //ëžœë¤ì‹œê°„ ì„¤ì •
+				Thread.sleep(randomTime); //ëžœë¤ì‹œê°„ì´ íë¥¸ í›„ 
+				System.out.println(running);
+				System.out.println(randomTime);
+				
+				// ë§Œì•½ í”Œë ˆì´ì–´ ìœ„ì¹˜ê°€ ìƒì ì´ë¼ë©´
+				if (Farming.playerImage.getY() >= 328 && Farming.playerImage.getY() <= 473
+						&& Farming.playerImage.getX() >= 0 && Farming.playerImage.getX() <= 120) {
+						System.out.println("í˜„ìž¬ ìœ„ì¹˜ëŠ” ìƒì ìž…ë‹ˆë‹¤");
 
-				randomTime = random.nextInt(maxTime - minTime + 1) + minTime; //·£´ý½Ã°£ ¼³Á¤
-				Thread.sleep(randomTime); //·£´ý½Ã°£ÀÌ Èå¸¥ ÈÄ 
+					// ë§Œì•½ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ê°€ ì§‘ì´ë¼ë©´
+				} else if (Farming.playerImage.getY() >= 330 && Farming.playerImage.getY() <= 475
+						&& Farming.playerImage.getX() >= 600 && Farming.playerImage.getX() <= 720) {
+						System.out.println("í˜„ìž¬ ìœ„ì¹˜ëŠ” ì§‘ìž…ë‹ˆë‹¤");
+						
+					// ë§Œì•½ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ê°€ ë°­ì´ë¼ë©´
+				} else if (Farming.playerImage.getY() >= -20 && Farming.playerImage.getY() <= 235
+						&& Farming.playerImage.getX() >= 65 && Farming.playerImage.getX() <= 620) {
+						System.out.println("í˜„ìž¬ ìœ„ì¹˜ëŠ” ë°­ìž…ë‹ˆë‹¤");
 
-				// ¸¸¾à ÇÃ·¹ÀÌ¾î À§Ä¡°¡ »óÁ¡ÀÌ¶ó¸é
-				if (Farming.playerImage.getY() >= 328 && Farming.playerImage.getY() <= 473) {
-					if (Farming.playerImage.getX() >= 0 && Farming.playerImage.getX() <= 120) {
-						//System.out.println("ÇöÀç À§Ä¡´Â »óÁ¡ÀÔ´Ï´Ù");
-
-					}
-					// ¸¸¾à ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡°¡ ÁýÀÌ¶ó¸é
-				} else if (Farming.playerImage.getY() >= 330 && Farming.playerImage.getY() <= 475) {
-					if (Farming.playerImage.getX() >= 600 && Farming.playerImage.getX() <= 720) {
-						//System.out.println("ÇöÀç À§Ä¡´Â ÁýÀÔ´Ï´Ù");
-
-					}
-					// ¸¸¾à ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡°¡ ¹çÀÌ¶ó¸é
-				} else if (Farming.playerImage.getY() >= -20 && Farming.playerImage.getY() <= 235) {
-					if (Farming.playerImage.getX() >= 65 && Farming.playerImage.getX() <= 620) {
-						//System.out.println("ÇöÀç À§Ä¡´Â ¹çÀÔ´Ï´Ù");
-
-					}
-					// »óÁ¡, Áý, ¹çÀÌ ¾Æ´Ñ ±× ¿ÜÀÇ À§Ä¡ÀÏ ¶§ ¸ó½ºÅÍ°¡ ³ªÅ¸³­´Ù
+					// ìƒì , ì§‘, ë°­ì´ ì•„ë‹Œ ê·¸ ì™¸ì˜ ìœ„ì¹˜ì¼ ë•Œ ëª¬ìŠ¤í„°ê°€ ë‚˜íƒ€ë‚œë‹¤
 				} else {
-					// ¸ó½ºÅÍ°¡ ³ªÅ¸³­´Ù.
-					System.out.println("!!! ¸ó½ºÅÍ¿Í ¸¸³µ´Ù !!!");
+					System.out.println("í˜„ìž¬ ìœ„ì¹˜ëŠ” ë˜ì „ê°ˆ ìˆ˜ ìžˆëŠ” ê³³ ìž…ë‹ˆë‹¤");
+					//randomMushroomSelect();
+					//System.out.println(randomWildAnimal);
+					//System.out.println(running);
+					randomMushroomSelect();
+					
+					if(randomWildAnimal == 0) {
+						
+						JPanel dungeonWildWolf = new DungeonWildWolf();
+						dungeonWildWolf.setVisible(true);
+						Farming.dungeonScene.add(dungeonWildWolf);
+						Farming.dungeonScene.setVisible(true);
+						Farming.farmingScene.setVisible(false);
+						//getContentPane().add(dungeonWildWolf);
+						Player.hp = 100;
+						//dungeonWildWolf.setVisible(true);
+						//Farming.farmingScene.setVisible(false);
+						//btnNewButton.setVisible(false);
+						//running = true;
+						//System.out.println(running);
+						System.out.println("!!! ëª¬ìŠ¤í„°ì™€ ë§Œë‚¬ë‹¤ !!!");
+						
+					}else if(randomWildAnimal == 1) {
+						running = false;
+						JPanel dungeonWildBear = new DungeonWildBear();
+						dungeonWildBear.setVisible(true);
+						Farming.dungeonScene.add(dungeonWildBear);
+						Farming.dungeonScene.setVisible(true);
+						Farming.farmingScene.setVisible(false);
+						//getContentPane().add(dungeonWildWolf);
+						Player.hp = 100;
+						//dungeonWildWolf.setVisible(true);
+						//Farming.farmingScene.setVisible(false);
+						//btnNewButton.setVisible(false);
+						//running = true;
+						System.out.println("!!! ëª¬ìŠ¤í„°ì™€ ë§Œë‚¬ë‹¤ !!!");
+						//running = true;
+						//System.out.println(running);
+					}else if(randomWildAnimal == 2) {
+						running = false;
+						JPanel dungeonWildSnake = new DungeonWildSnake();
+						dungeonWildSnake.setVisible(true);
+						Farming.dungeonScene.add(dungeonWildSnake);
+						Farming.dungeonScene.setVisible(true);
+						Farming.farmingScene.setVisible(false);
+						//getContentPane().add(dungeonWildWolf);
+						Player.hp = 100;
+						//dungeonWildWolf.setVisible(true);
+						//Farming.farmingScene.setVisible(false);
+						//btnNewButton.setVisible(false);
+						//running = true;
+						System.out.println("!!! ëª¬ìŠ¤í„°ì™€ ë§Œë‚¬ë‹¤ !!!");
+						//running = true;
+						//System.out.println(running);
+					}
+					running = false;
+					// ëª¬ìŠ¤í„°ê°€ ë‚˜íƒ€ë‚œë‹¤.
 				}
 
 			} catch (InterruptedException e) {

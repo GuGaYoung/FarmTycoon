@@ -1,3 +1,4 @@
+package Farm;
 
 public class WildAnimal	{
 	
