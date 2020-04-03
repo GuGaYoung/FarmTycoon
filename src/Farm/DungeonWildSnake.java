@@ -62,8 +62,6 @@ public class DungeonWildSnake extends JPanel {
 		wildSnakeImage.setHorizontalAlignment(SwingConstants.CENTER);
 		wildSnakeImage.setIcon(new ImageIcon("./images/wildsnake240x150.png"));
 		wildSnakeImage.setBounds(292, 0, 224, 150);
-		//wildSnakeImage.setIcon(new ImageIcon("./images/wildSnake.png"));
-		//wildSnakeImage.setBounds(292, -30, 224, 170);
 		add(wildSnakeImage);
 		
 		JLabel lifeBarImage = new JLabel();

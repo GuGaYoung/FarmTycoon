@@ -96,7 +96,7 @@ public class DungeonWildBear extends JPanel {
 				try {
 					// boolean isStop = true;
 					do {
-						Thread.sleep(1500);
+						Thread.sleep(2000);
 						wildBearAttack();
 						// System.out.println("공격중");
 					} while (Player.hp > 0 && wildBear.hp > 0);
