@@ -300,7 +300,7 @@ public class DungeonWildBear extends JPanel {
 				}
 			}
 		});
-		usePotionHpOf30_Button.setBounds(92, 10, 68, 37);
+		usePotionHpOf30_Button.setBounds(120, 10, 130, 37);
 		itemPanel.add(usePotionHpOf30_Button);
 
 		JButton usePotionHpOf50_Button = new JButton("체력50%UP");
@@ -324,7 +324,7 @@ public class DungeonWildBear extends JPanel {
 				}
 			}
 		});
-		usePotionHpOf50_Button.setBounds(172, 10, 68, 37);
+		usePotionHpOf50_Button.setBounds(260, 10, 130, 37);
 		itemPanel.add(usePotionHpOf50_Button);
 
 		useItemButton.setBounds(317, 465, 168, 47);
