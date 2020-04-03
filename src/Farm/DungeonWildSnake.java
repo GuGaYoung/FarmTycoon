@@ -60,9 +60,15 @@ public class DungeonWildSnake extends JPanel {
 
 		JLabel wildSnakeImage = new JLabel();
 		wildSnakeImage.setHorizontalAlignment(SwingConstants.CENTER);
-		wildSnakeImage.setIcon(new ImageIcon("./images/wildSnake.png"));
-		wildSnakeImage.setBounds(292, -30, 224, 170);
+		wildSnakeImage.setIcon(new ImageIcon("./images/wildsnake240x150.png"));
+		wildSnakeImage.setBounds(292, 0, 224, 150);
 		add(wildSnakeImage);
+		
+		JLabel lifeBarImage = new JLabel();
+		lifeBarImage.setHorizontalAlignment(SwingConstants.CENTER);
+		lifeBarImage.setIcon(new ImageIcon("./images/lifebar(100).png"));
+		lifeBarImage.setBounds(310, 165, 180, 20);
+		add(lifeBarImage);
 
 		JScrollPane scrollBar = new JScrollPane();
 		scrollBar.setBounds(68, 201, 662, 186);
@@ -86,7 +92,7 @@ public class DungeonWildSnake extends JPanel {
 				try {
 					// boolean isStop = true;
 					do {
-						Thread.sleep(1000);
+						Thread.sleep(1500);
 						wildSnakeAttack();
 						// System.out.println("공격중");
 					} while (Player.hp > 0 && wildSnake.hp > 0);
@@ -99,7 +105,7 @@ public class DungeonWildSnake extends JPanel {
 				{
 					if (wildSnake.hp > 0) {
 						Player.hp = Player.hp - wildSnake.power;
-						textArea.append("야생뱀이 공격하였습니다! (플레이어의 남은 피: " + Player.hp + ")\n");
+						textArea.append("야생뱀이 공격하였습니다! [플레이어의 남은 피 (" + Player.hp + "/100)]\n");
 						scrollBar.getVerticalScrollBar().setValue(scrollBar.getVerticalScrollBar().getMaximum());
 
 						// 게임에 지면 다음날로 바뀌고, 플레이어의 체력이 50으로 시작한다.
@@ -139,7 +145,36 @@ public class DungeonWildSnake extends JPanel {
 						wildSnake.hp = wildSnake.hp - Player.attackPower;
 
 						if (wildSnake.hp > 0) {
-							textArea.append("(남은 야생뱀의 체력은 " + wildSnake.hp + " 입니다!) \n");
+							if(wildSnake.hp>=90) {
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(90).png"));
+							}else if(wildSnake.hp>=80){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(80).png"));
+							}
+							else if(wildSnake.hp>=70){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(70).png"));
+							}
+							else if(wildSnake.hp>=60){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(60).png"));
+							}
+							else if(wildSnake.hp>=50){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(50).png"));
+							}
+							else if(wildSnake.hp>=40){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(40).png"));
+							}
+							else if(wildSnake.hp>=30){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(30).png"));
+							}
+							else if(wildSnake.hp>=20){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(20).png"));
+							}
+							else if(wildSnake.hp>=10){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(10).png"));
+							}
+							else{
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(0).png"));
+							} 
+							textArea.append("[야생뱀의 남은 피 (" + wildSnake.hp + " /100)] \n");
 						} else if (wildSnake.hp <= 0) {
 							textArea.append("야생 뱀이 죽었습니다! \n");
 

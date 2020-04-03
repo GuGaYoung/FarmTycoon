@@ -49,9 +49,6 @@ public class DungeonWildWolf extends JPanel {
 	}
 
 	public DungeonWildWolf() {
-		// System.out.println("오늘은 " + Main.day + "일입니다. 플레이어 체력은 " + Main.energy +
-		// "입니다.");
-		// System.out.println("늑대 체력"+wildBearHp);
 		setLayout(null);
 		setBounds(0, 0, 800, 600);
 		setBackground(Color.black);
@@ -60,9 +57,15 @@ public class DungeonWildWolf extends JPanel {
 
 		JLabel wildWolfImage = new JLabel();
 		wildWolfImage.setHorizontalAlignment(SwingConstants.CENTER);
-		wildWolfImage.setIcon(new ImageIcon("./images/wildWolf.png"));
-		wildWolfImage.setBounds(292, 10, 224, 170);
+		wildWolfImage.setIcon(new ImageIcon("./images/wildwolf240x150.png"));
+		wildWolfImage.setBounds(292, 0, 224, 150);
 		add(wildWolfImage);
+		
+		JLabel lifeBarImage = new JLabel();
+		lifeBarImage.setHorizontalAlignment(SwingConstants.CENTER);
+		lifeBarImage.setIcon(new ImageIcon("./images/lifebar(100).png"));
+		lifeBarImage.setBounds(310, 165, 180, 20);
+		add(lifeBarImage);
 
 		JScrollPane scrollBar = new JScrollPane();
 		scrollBar.setBounds(68, 201, 662, 186);
@@ -99,7 +102,7 @@ public class DungeonWildWolf extends JPanel {
 				{
 					if (wildWolf.hp > 0) {
 						Player.hp = Player.hp - wildWolf.power;
-						textArea.append("야생늑대가 공격하였습니다! (플레이어의 남은 피: " + Player.hp + ")\n");
+						textArea.append("야생늑대가 공격하였습니다! [플레이어의 남은 피 (" + Player.hp + "/100)]\n");
 						scrollBar.getVerticalScrollBar().setValue(scrollBar.getVerticalScrollBar().getMaximum());
 
 						// 게임에 지면 다음날로 바뀌고, 플레이어의 체력이 50으로 시작한다.
@@ -138,7 +141,36 @@ public class DungeonWildWolf extends JPanel {
 						wildWolf.hp = wildWolf.hp - Player.attackPower;
 
 						if (wildWolf.hp > 0) {
-							textArea.append("(남은 야생늑대의 체력은 " + wildWolf.hp + " 입니다!) \n");
+							if(wildWolf.hp>=90) {
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(90).png"));
+							}else if(wildWolf.hp>=80){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(80).png"));
+							}
+							else if(wildWolf.hp>=70){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(70).png"));
+							}
+							else if(wildWolf.hp>=60){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(60).png"));
+							}
+							else if(wildWolf.hp>=50){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(50).png"));
+							}
+							else if(wildWolf.hp>=40){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(40).png"));
+							}
+							else if(wildWolf.hp>=30){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(30).png"));
+							}
+							else if(wildWolf.hp>=20){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(20).png"));
+							}
+							else if(wildWolf.hp>=10){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(10).png"));
+							}
+							else{
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(0).png"));
+							} 
+							textArea.append("[야생늑대의 남은 피 ( " + wildWolf.hp + " /100)] \n");
 						} else if (wildWolf.hp <= 0) {
 							textArea.append("야생 늑대가 죽었습니다! \n");
 
