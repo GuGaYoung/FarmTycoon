@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -1034,6 +1033,7 @@ public class Farming {
 				
 				finalAmountText.setText("최종 금액 : " + bettingAmount + "원");
 				player.money = player.money + bettingAmount;
+				moneyText.setText("돈 : " + player.money);
 				rollOfDiceButton.setEnabled(false);
 				stopButton.setEnabled(false);
 			}
