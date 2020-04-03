@@ -46,6 +46,7 @@ public class Farming {
 	Player player = new Player();
 	SparrowObstruction sparrowObstruction = new SparrowObstruction(); //참새 방해 쓰레드 
 	AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals(); //동물 출현 쓰레드
+	GameInformation gameInformation = new GameInformation();//게임 안내 쓰레드
 	
 	static JPanel farmingScene = new JPanel();
 	static JPanel dungeonScene = new JPanel() ;
@@ -78,6 +79,7 @@ public class Farming {
 	static JLabel EnergyText = new JLabel();
 	static JLabel daysText = new JLabel();
 	static JLabel moneyText = new JLabel();
+	static JLabel gameInformationText = new JLabel();
 	JLabel successText = new JLabel();
 	JLabel failText = new JLabel();
 	JLabel successmoneyEarned = new JLabel(); //이겼을 때 남은 돈이 얼마인지 나타내주는 text
@@ -201,6 +203,12 @@ public class Farming {
 		moneyText.setFont(new Font("굴림", Font.BOLD, 15));
 		moneyText.setBounds(10, -35, 100, 100);
 		farmingScene.add(moneyText);
+		
+		gameInformationText.setText("기본 제공 아이템은 씨앗 각 2~3개씩, 뼈가루 2개, 포션 4개, 랜덤 버섯 2개");
+		gameInformationText.setHorizontalAlignment(SwingConstants.CENTER);
+		gameInformationText.setFont(new Font("굴림", Font.BOLD, 13));
+		gameInformationText.setBounds(180, 450, 430, 100);
+		farmingScene.add(gameInformationText);
 		
 		houseImage.setHorizontalAlignment(SwingConstants.CENTER);
 		houseImage.setIcon(new ImageIcon("./images/houseImage.png"));
@@ -761,25 +769,7 @@ public class Farming {
 			RotCrops rotCrops = new RotCrops(i);
 			rotCrops.start();
 		
-		}///////////////////////////////////////////////////////////////////////////////
-		//밭의 단계 - "basic farm"
-		fieldPhase = "basic farm";
-		for(int i = 0; i < 12; i++) {
-			fieldImages[i].setEnabled(false);
-			//fieldImages[i].setVisible(false);
 		}
-
-		/*//밭의 단계 - first upgraded farm 
-		fieldPhase = "first upgraded farm";
-		for(int i = 6; i < 12; i++) {
-			fieldImages[i].setEnabled(true);
-		}*/
-
-		//밭의 단계 - second upgraded farm 
-		//fieldPhase = "second upgraded farm";
-		//for(int i = 0; i < 6; i++) {
-		//	fieldImages[i].setEnabled(true);
-		//}
 		
 		gameSuccess.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(gameSuccess);
@@ -1070,6 +1060,7 @@ public class Farming {
 		
 		sparrowObstruction.start();
 		appearanceOfAnimals.start();
+		gameInformation.start();
 		frame.addKeyListener(new key());
 		frame.setFocusable(true);
 

@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 public class SparrowObstruction extends Thread{
 	//참새가 방해하는 클래스 - 땅이 넓을수록 (많이 씨앗을 심어놓을 수록 참새가 나올 확률이 높아진다)
 	
+	//Farming Farming = new Farming();
 	Random random = new Random();
 	
 	int randomField = 0;
