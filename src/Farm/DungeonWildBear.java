@@ -54,9 +54,7 @@ public class DungeonWildBear extends JPanel {
 	}
 
 	public DungeonWildBear() {
-		// System.out.println("오늘은 " + Main.day + "일입니다. 플레이어 체력은 " + Main.energy +
-		// "입니다.");
-		// System.out.println("곰 체력"+wildBearHp);
+
 		setLayout(null);
 		setBounds(0, 0, 800, 600);
 		setBackground(Color.black);
@@ -65,9 +63,16 @@ public class DungeonWildBear extends JPanel {
 
 		JLabel wildBearImage = new JLabel();
 		wildBearImage.setHorizontalAlignment(SwingConstants.CENTER);
-		wildBearImage.setIcon(new ImageIcon("./images/wildBear.png"));
-		wildBearImage.setBounds(292, 10, 224, 170);
+		//wildBearImage.setIcon(new ImageIcon("./images/wildBear.png"));
+		wildBearImage.setIcon(new ImageIcon("./images/wildbear240x150.png"));
+		wildBearImage.setBounds(292, 0, 224, 150);
 		add(wildBearImage);
+		
+		JLabel lifeBarImage = new JLabel();
+		lifeBarImage.setHorizontalAlignment(SwingConstants.CENTER);
+		lifeBarImage.setIcon(new ImageIcon("./images/lifebar(100).png"));
+		lifeBarImage.setBounds(310, 165, 180, 20);
+		add(lifeBarImage);
 
 		JScrollPane scrollBar = new JScrollPane();
 		scrollBar.setBounds(68, 201, 662, 186);
@@ -91,7 +96,7 @@ public class DungeonWildBear extends JPanel {
 				try {
 					// boolean isStop = true;
 					do {
-						Thread.sleep(1000);
+						Thread.sleep(1500);
 						wildBearAttack();
 						// System.out.println("공격중");
 					} while (Player.hp > 0 && wildBear.hp > 0);
@@ -104,7 +109,7 @@ public class DungeonWildBear extends JPanel {
 				{
 					if (wildBear.hp > 0) {
 						Player.hp = Player.hp - wildBear.power;
-						textArea.append("야생곰이 공격하였습니다! (플레이어의 남은 피: " + Player.hp + ")\n");
+						textArea.append("야생곰이 공격하였습니다! [플레이어의 남은 피 (" + Player.hp + "/100)]\n");
 						scrollBar.getVerticalScrollBar().setValue(scrollBar.getVerticalScrollBar().getMaximum());
 
 						// 게임에 지면 다음날로 바뀌고, 플레이어의 체력이 50으로 시작한다.
@@ -144,7 +149,37 @@ public class DungeonWildBear extends JPanel {
 						wildBear.hp = wildBear.hp - Player.attackPower;
 
 						if (wildBear.hp > 0) {
-							textArea.append("(남은 야생곰의 체력은 " + wildBear.hp + " 입니다!) \n");
+							
+							if(wildBear.hp>=90) {
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(90).png"));
+							}else if(wildBear.hp>=80){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(80).png"));
+							}
+							else if(wildBear.hp>=70){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(70).png"));
+							}
+							else if(wildBear.hp>=60){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(60).png"));
+							}
+							else if(wildBear.hp>=50){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(50).png"));
+							}
+							else if(wildBear.hp>=40){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(40).png"));
+							}
+							else if(wildBear.hp>=30){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(30).png"));
+							}
+							else if(wildBear.hp>=20){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(20).png"));
+							}
+							else if(wildBear.hp>=10){
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(10).png"));
+							}
+							else{
+								lifeBarImage.setIcon(new ImageIcon("./images/lifebar(0).png"));
+							} 
+							textArea.append("[야생곰의 남은 피 (" + wildBear.hp +" /100)]\n");
 						} else if (wildBear.hp <= 0) {
 							textArea.append("야생 곰이 죽었습니다! \n");
 
@@ -365,6 +400,6 @@ public class DungeonWildBear extends JPanel {
 
 		runAwayButton.setBounds(562, 465, 168, 47);
 		add(runAwayButton);
-
+		
 	}
 }
