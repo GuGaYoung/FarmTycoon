@@ -16,7 +16,7 @@ public class AppearanceOfAnimals extends Thread{
 	
 	public static void randomMushroomSelect() {
 		//randomWildAnimal = randomWildAnimalSelect.nextInt(3);
-		randomWildAnimal = 1;
+		randomWildAnimal = 2;
 	}
 	@Override
 	public synchronized void run() {
