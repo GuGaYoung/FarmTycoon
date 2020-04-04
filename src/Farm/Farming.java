@@ -73,6 +73,7 @@ public class Farming {
 	static JLabel[] fieldImages = new JLabel[18];
 	static JLabel[] waterShortageImage = new JLabel[18]; //물 부족 표시 이미지
 	static JLabel[] waterShortageText = new JLabel[18];
+	static JLabel[] rottenFieldText = new JLabel[18];
 	static JLabel playerImage = new JLabel();
 	static JLabel houseImage = new JLabel();
 	JLabel storeImage = new JLabel();
@@ -672,7 +673,8 @@ public class Farming {
 				cropsImage[numOfField].setVisible(false);
 				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
-				amountOfWater[numOfField].setVisible(false);			
+				amountOfWater[numOfField].setVisible(false);
+				rottenFieldText[numOfField].setVisible(false);
 
 				if (fieldPhase.equals("basic farm")) {
 					for (int i = 12; i < fieldImages.length; i++) {
@@ -732,6 +734,8 @@ public class Farming {
 			
 			farmingScene.add(waterShortageImage[i] = new JLabel());
 			farmingScene.add(waterShortageText[i] = new JLabel());
+			farmingScene.add(rottenFieldText[i] = new JLabel());
+			
 			farmingScene.add(fieldImages[i] = new JLabel());
 			
 			fieldImages[i].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
@@ -765,12 +769,23 @@ public class Farming {
 			waterShortageText[i].setFont(new Font("굴림", Font.BOLD, 12));
 			waterShortageText[i].setVisible(false);
 			
+			rottenFieldText[i].setBounds(fieldImages[i].getX() + 20, fieldImages[i].getY(), 50, 30);
+			rottenFieldText[i].setText("썩음!");
+			rottenFieldText[i].setFont(new Font("굴림", Font.BOLD, 15));
+			rottenFieldText[i].setVisible(false);
+			
 			statusOfField.add("empty Field");
 			RotCrops rotCrops = new RotCrops(i);
 			rotCrops.start();
 		
 		}
-		
+		// 밭의 단계 - "basic farm"
+		fieldPhase = "basic farm";
+		for (int i = 0; i < 12; i++) {
+			fieldImages[i].setEnabled(false);
+			// fieldImages[i].setVisible(false);
+		}
+
 		gameSuccess.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(gameSuccess);
 		gameSuccess.setLayout(null);
@@ -1282,6 +1297,7 @@ public class Farming {
 									// 썩은 밭이 된다
 									statusOfField.set(i, "rotten field");
 									fieldImages[i].setIcon(new ImageIcon("./images/rottenFieldImage.png"));
+									rottenFieldText[i].setVisible(true);
 									waterShortageImage[i].setVisible(false);
 									waterShortageText[i].setVisible(false);
 								}

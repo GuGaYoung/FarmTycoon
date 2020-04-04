@@ -29,6 +29,7 @@ public class SparrowObstruction extends Thread{
 					Farming.fieldImages[randomField].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
 					Farming.waterShortageImage[randomField].setVisible(false);
 					Farming.waterShortageText[randomField].setVisible(false);
+					Farming.rottenFieldText[randomField].setVisible(false);
 					
 					//참새가 나타난 1초 후 참새는 다시 날라간다
 					Thread.sleep(1000);

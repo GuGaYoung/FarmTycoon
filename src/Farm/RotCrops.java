@@ -48,6 +48,7 @@ public class RotCrops extends Thread{
 						Farming.waterShortageImage[numOfField].setVisible(false);
 						Farming.waterShortageText[numOfField].setVisible(false);
 						Farming.fieldImages[numOfField].setIcon(new ImageIcon("./images/rottenFieldImage.png"));
+						Farming.rottenFieldText[numOfField].setVisible(true);
 						Farming.statusOfField.set(numOfField, "rotten field");
 					}
 					
