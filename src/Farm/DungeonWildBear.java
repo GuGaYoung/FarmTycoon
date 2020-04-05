@@ -1,6 +1,7 @@
 package Farm;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +19,9 @@ import javax.swing.SwingConstants;
 
 public class DungeonWildBear extends JPanel {
 
-	public static Object textArea;
+	private JPanel dungeonWildBear;
+	
+	//public static Object textArea;
 	// private JPanel contentPane;
 	private JButton dungeonEx;
 	private JButton useItemButton;
@@ -116,17 +119,17 @@ public class DungeonWildBear extends JPanel {
 						if (Player.hp <= 0) {
 							Farming.day++;
 							Player.energy = 50;
-							// System.out.println("오늘은 " + Main.day + "일입니다. 플레이어 체력은 " + Main.energy +
-							// "입니다.");
 							Farming.daysText.setText(Farming.day + "일차");
 							Farming.EnergyText.setText("남은 에너지 : " + Player.energy);
 
 							textArea.selectAll();
 							textArea.replaceSelection("");
 							setVisible(false);
+							
 							Farming.farmingScene.setVisible(true);
-							JOptionPane.showMessageDialog(null, "야생곰한테 당하고 말았습니다.", "SYSTEM",
+							JOptionPane.showMessageDialog(Farming.farmingScene, "야생곰한테 당하고 말았습니다.", "SYSTEM",
 									JOptionPane.INFORMATION_MESSAGE);
+							
 							AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 							appearanceOfAnimals.start();
 							AppearanceOfAnimals.running = true;
@@ -193,12 +196,12 @@ public class DungeonWildBear extends JPanel {
 								textArea.replaceSelection("");
 								setVisible(false);
 
-								System.out.println("복불복버섯 받은 후 갯수: " + Player.amountRandomMushroom);
+								//System.out.println("복불복버섯 받은 후 갯수: " + Player.amountRandomMushroom);
 
 								Farming.farmingScene.setVisible(true);
-								// AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "복불복버섯을 받았습니다", "SYSTEM",
+								JOptionPane.showMessageDialog(Farming.farmingScene, "복불복버섯을 받았습니다.", "SYSTEM",
 										JOptionPane.INFORMATION_MESSAGE);
+								
 								AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 								appearanceOfAnimals.start();
 								AppearanceOfAnimals.running = true;
@@ -213,29 +216,27 @@ public class DungeonWildBear extends JPanel {
 
 								Farming.farmingScene.setVisible(true);
 								Farming.moneyText.setText("돈 : " + Player.money);
-								// AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "돈을 받았습니다", "SYSTEM",
+								JOptionPane.showMessageDialog(Farming.farmingScene, "돈을 받았습니다", "SYSTEM",
 										JOptionPane.INFORMATION_MESSAGE);
+								
 								AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 								appearanceOfAnimals.start();
 								AppearanceOfAnimals.running = true;
 							}
 							// 뼛가루 받음
 							else if (randomItem >= 2) {
-								// textArea.append("SYSTEM: 뼛가루를 받았습니다! \n");
 								Player.amountBone = Player.amountBone + 3;
 								textArea.selectAll();
 								textArea.replaceSelection("");
 								setVisible(false);
 
 								Farming.farmingScene.setVisible(true);
-								// AppearanceOfAnimals.running = true;
-								JOptionPane.showMessageDialog(null, "뼛가루를 받았습니다", "SYSTEM",
+								JOptionPane.showMessageDialog(Farming.farmingScene, "뼛가루를 받았습니다", "SYSTEM",
 										JOptionPane.INFORMATION_MESSAGE);
+								
 								AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 								appearanceOfAnimals.start();
 								AppearanceOfAnimals.running = true;
-								// System.out.println("뼛가루 받은 후 갯수: " +numOfBone);
 							}
 						}
 
@@ -254,8 +255,6 @@ public class DungeonWildBear extends JPanel {
 			}
 		});
 
-		// JButton useRandomMushroomButton = new JButton(new
-		// ImageIcon("img/btLogin.png"));
 		JButton useRandomMushroomButton = new JButton("복불복버섯");
 		useRandomMushroomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -272,9 +271,11 @@ public class DungeonWildBear extends JPanel {
 
 							if (randomMushroom == 0) {
 								Player.hp = Player.hp + 100;
+								
 								if (Player.hp > 100) {
 									Player.hp = 100;
 								}
+								
 								textArea.append("복불복버섯의 효과로 플레이어의 피 증가! 체력:" + Player.hp + "\n");
 								itemPanel.setVisible(false);
 							}
@@ -291,16 +292,15 @@ public class DungeonWildBear extends JPanel {
 									textArea.selectAll();
 									textArea.replaceSelection("");
 									setVisible(false);
+									
 									Farming.farmingScene.setVisible(true);
-									// AppearanceOfAnimals.running = true;
-									JOptionPane.showMessageDialog(null, "복불복버섯의 효과로 죽고말았어요.", "SYSTEM",
+									JOptionPane.showMessageDialog(Farming.farmingScene, "복불복버섯의 효과로 죽고말았어요.", "SYSTEM",
 											JOptionPane.INFORMATION_MESSAGE);
+									
 									AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 									appearanceOfAnimals.start();
 									AppearanceOfAnimals.running = true;
-									// }catch(Exception ie) {
-									// ie.printStackTrace();
-									// }
+
 								}
 							}
 						} else {
@@ -310,7 +310,6 @@ public class DungeonWildBear extends JPanel {
 				}
 			}
 		});
-		// btnNewButton.setFont(new Font("굴림체", Font.PLAIN, 7));
 		useRandomMushroomButton.setBounds(12, 10, 100, 37);
 		itemPanel.add(useRandomMushroomButton);
 
@@ -318,15 +317,20 @@ public class DungeonWildBear extends JPanel {
 		usePotionHpOf30_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Player.hp > 0) {
+					
 					if (wildBear.hp > 0) {
+						
 						if (Player.amountPotionHp_30 > 0) {
 							Player.amountPotionHp_30--;
 							Player.hp = Player.hp + 30;
+							
 							if (Player.hp > 100) {
 								Player.hp = 100;
 							}
+							
 							textArea.append("체력 30% 추가 포션을 사용했습니다!. 체력 UP+30! \n");
 							itemPanel.setVisible(false);
+							
 						} else {
 							textArea.append("체력 30% 추가 포션이 없어서 사용할 수 없습니다. \n");
 							itemPanel.setVisible(false);
@@ -342,15 +346,20 @@ public class DungeonWildBear extends JPanel {
 		usePotionHpOf50_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Player.hp > 0) {
+					
 					if (wildBear.hp > 0) {
+						
 						if (Player.amountPotionHp_50 > 0) {
 							Player.amountPotionHp_50--;
 							Player.hp = Player.hp + 50;
+							
 							if (Player.hp > 100) {
 								Player.hp = 100;
 							}
+							
 							textArea.append("체력 50% 추가 포션을 사용했습니다!. 체력 UP+50! \n");
 							itemPanel.setVisible(false);
+							
 						} else {
 							textArea.append("체력 50% 추가 포션이 없어서 사용할 수 없습니다. \n");
 							itemPanel.setVisible(false);
@@ -370,26 +379,25 @@ public class DungeonWildBear extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (Player.hp > 0) {
+					
 					if (wildBear.hp > 0) {
 						randomRun();
 
 						if (numOfRun == 0) {
-							// wildBear.hp = wildBear.hp-wildBear.hp ;
 							wildBear.hp = 0;
-							System.out.println("도망갈때 곰 체력: " + wildBear.hp);
+							//System.out.println("도망갈때 곰 체력: " + wildBear.hp);
 							textArea.selectAll();
 							textArea.replaceSelection("");
 							setVisible(false);
+							
 							Farming.farmingScene.setVisible(true);
-
-							// System.out.println(AppearanceOfAnimals.running);
-							JOptionPane.showMessageDialog(null, "도망쳤습니다!", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(Farming.farmingScene, "도망쳤습니다!", "SYSTEM", JOptionPane.INFORMATION_MESSAGE);
+							
 							AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals();
 							appearanceOfAnimals.start();
 							AppearanceOfAnimals.running = true;
-							System.out.println(AppearanceOfAnimals.running);
-							// Player.hp = 100;
-							// wildBear.hp = 100;
+							//System.out.println(AppearanceOfAnimals.running);
+							
 						} else {
 							textArea.append("도망가기에 실패하였습니다! \n");
 						}
