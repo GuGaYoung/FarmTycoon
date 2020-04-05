@@ -511,68 +511,7 @@ public class Farming {
 				}
 			}
 		});
-		/*
-		// 선택한 밭이 빈 밭이라면 씨앗이 심겨진 밭으로 바꾼다.
-		for (int i = 0; i < chooseSeedImage.length; i++) {
-			chooseSeedImage[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-							// 플레이어의 에너지가 5이상이고 씨앗이 충분히 있다면 씨앗이 심긴 밭으로 설정
-							if (Player.energy >= 5) {
-								if (chooseSeed == "Pumkin") {
-									if (isCabbageSeedEnough == true) {
-										if (statusOfField.get(numOfField).equals("empty Field")) {
-											fieldImages[numOfField]
-													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
-											statusOfField.set(numOfField, "seeded field");
-										}
-									}
-								} else if (chooseSeed == "Carrot") {
-									if (isCarrotSeedEnough == true) {
-										if (statusOfField.get(numOfField).equals("empty Field")) {
-											fieldImages[numOfField]
-													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
-											statusOfField.set(numOfField, "seeded field");
-										}
-									}
-								} else if (chooseSeed == "Onion") {
-									if (isOnionSeedEnough == true) {
-										if (statusOfField.get(numOfField).equals("empty Field")) {
-											fieldImages[numOfField]
-													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
-											statusOfField.set(numOfField, "seeded field");
-										}
-									}
-								} else if (chooseSeed == "Pumkin") {
-									if (isPumpkinSeedEnough == true) {
-										if (statusOfField.get(numOfField).equals("empty Field")) {
-											fieldImages[numOfField]
-													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
-											statusOfField.set(numOfField, "seeded field");
-										}
-									}
-								}
-							}
-					
-					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
-					if (fieldPhase.equals("basic farm")) {
-						for (int i = 12; i < fieldImages.length; i++) {
-							fieldImages[i].setEnabled(true);
-						}
-					} else if (fieldPhase.equals("first upgraded farm")) {
-						for (int i = 6; i < fieldImages.length; i++) {
-							fieldImages[i].setEnabled(true);
-						}
-					} else if (fieldPhase.equals("second upgraded farm")) {
-						for (int i = 0; i < fieldImages.length; i++) {
-							fieldImages[i].setEnabled(true);
-						}
-					}
-					playerImage.setVisible(true);
-					seedPlantingWindow.setVisible(false);
-				}
-			});
-		}
-		*/
+		
 		chooseSeedCancelButton.setText("취소하기");
 		chooseSeedCancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
