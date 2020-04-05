@@ -789,7 +789,7 @@ public class Farming {
 					fieldImages[numOfField].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
 					waterShortageImage[numOfField].setVisible(false);
 					waterShortageText[numOfField].setVisible(false);
-					
+
 					Player.energy  = Player.energy - 7;
 					EnergyText.setText("남은 에너지 : " + Player.energy);
 				}
@@ -1174,8 +1174,10 @@ public class Farming {
 				}
 				
 				finalAmountText.setText("최종 금액 : " + bettingAmount + "원");
+
 				Player.money = Player.money + bettingAmount;
 				moneyText.setText("돈 : " + Player.money);
+
 				rollOfDiceButton.setEnabled(false);
 				stopButton.setEnabled(false);
 			}
