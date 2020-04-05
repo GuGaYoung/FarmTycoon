@@ -181,7 +181,7 @@ public class Market extends JFrame {
 				final JLabel buyingPriceLabel = new JLabel();
 				buyingPriceLabel.setText("총 구입금액은 : " + buyingPrice + " 원 입니다.");
 				buyingPriceLabel.setHorizontalAlignment(JLabel.CENTER);
-				buyingPriceLabel.setBounds(80, 330, 300, 200);
+				buyingPriceLabel.setBounds(80, 250, 300, 200);
 				buyShopPanel.add(buyingPriceLabel);
 
 				JLabel seedsLabel = new JLabel();
@@ -869,7 +869,7 @@ public class Market extends JFrame {
 							dispose();
 						} else {
 							dispose();
-							JOptionPane.showMessageDialog(null, "돈이 부족합니다.", "SYSTEM", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(shopPanel, "돈이 부족합니다.", "SYSTEM", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
