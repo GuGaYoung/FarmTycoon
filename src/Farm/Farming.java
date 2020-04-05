@@ -157,8 +157,7 @@ public class Farming {
 	//씨앗 선택
 	int chooseSeedBoxLength = 10;//씨앗 선택 박스의 가로 위치 
 	int[] daysRemaining = new int[18]; //농작물이 자라기까지 남은 일수 
-	boolean isSeedEnough = true;
-	
+
 	//날짜
 	static int day = 0;
 	int finalday = 7; // 마지막날
@@ -333,8 +332,7 @@ public class Farming {
 				if (Player.energy <= 5) {
 					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				} if(Player.amountPumpkinSeed == 0){
-					isSeedEnough = false;
+				}else if(Player.amountPumpkinSeed == 0){
 					JOptionPane.showMessageDialog(frame, "호박씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				}else {
@@ -343,11 +341,35 @@ public class Farming {
 					cropsNametext[numOfField].setText("이름 : 호박");
 					timeLeftText[numOfField].setText("남은 일 수 : 4일");
 
-					isSeedEnough = true;
 					Player.amountPumpkinSeed--;
 					daysRemaining[numOfField] = 4;
 					Player.energy = Player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + Player.energy);
+					
+					
+					if (statusOfField.get(numOfField).equals("empty Field")) {
+						fieldImages[numOfField]
+								.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+						statusOfField.set(numOfField, "seeded field");
+					}
+					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
+					if (fieldPhase.equals("basic farm")) {
+						for (int i = 12; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("first upgraded farm")) {
+						for (int i = 6; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("second upgraded farm")) {
+						for (int i = 0; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+					}
+					playerImage.setVisible(true);
+					seedPlantingWindow.setVisible(false);
 				}
 			}
 		});
@@ -358,8 +380,7 @@ public class Farming {
 				if (Player.energy <= 5) {
 					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				} if(Player.amountOnionSeed == 0){
-					isSeedEnough = false;
+				}else if(Player.amountOnionSeed == 0){
 					JOptionPane.showMessageDialog(frame, "양파씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -367,11 +388,35 @@ public class Farming {
 					cropsNametext[numOfField].setText("이름 : 양파");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
-					isSeedEnough = true;
 					Player.amountOnionSeed--;
 					daysRemaining[numOfField] = 2;
 					Player.energy = Player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + Player.energy);
+					
+					
+					if (statusOfField.get(numOfField).equals("empty Field")) {
+						fieldImages[numOfField]
+								.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+						statusOfField.set(numOfField, "seeded field");
+					}
+					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
+					if (fieldPhase.equals("basic farm")) {
+						for (int i = 12; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("first upgraded farm")) {
+						for (int i = 6; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("second upgraded farm")) {
+						for (int i = 0; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+					}
+					playerImage.setVisible(true);
+					seedPlantingWindow.setVisible(false);
 				}
 			}
 		});
@@ -381,21 +426,43 @@ public class Farming {
 
 				if (Player.energy <= 5) {
 					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
-					
-				}if(Player.amountCabbageSeed == 0){
-					isSeedEnough = false;
+
+				} else if (Player.amountCabbageSeed == 0) {
 					JOptionPane.showMessageDialog(frame, "양배추씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
-					
+
 				} else {
 					cropsImage[numOfField].setIcon(new ImageIcon("./images/CabbageFieldImage.png"));
 					cropsNametext[numOfField].setText("이름 : 양배추");
 					timeLeftText[numOfField].setText("남은 일 수 : 3일");
 
-					isSeedEnough = true;
 					Player.amountCabbageSeed--;
 					daysRemaining[numOfField] = 3;
 					Player.energy = Player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + Player.energy);
+					
+					if (statusOfField.get(numOfField).equals("empty Field")) {
+						fieldImages[numOfField]
+								.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+						statusOfField.set(numOfField, "seeded field");
+					}
+					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
+					if (fieldPhase.equals("basic farm")) {
+						for (int i = 12; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("first upgraded farm")) {
+						for (int i = 6; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("second upgraded farm")) {
+						for (int i = 0; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+					}
+					playerImage.setVisible(true);
+					seedPlantingWindow.setVisible(false);
 				}
 			}
 		});
@@ -406,43 +473,90 @@ public class Farming {
 				if (Player.energy <= 5) {
 					JOptionPane.showMessageDialog(frame, "에너지가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				}if(Player.amountCarrotSeed == 0){
-					isSeedEnough = false;
+				}else if(Player.amountCarrotSeed == 0){
 					JOptionPane.showMessageDialog(frame, "당근씨가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 					
-				}  else {
+				} else {
 					cropsImage[numOfField].setIcon(new ImageIcon("./images/CarrotFieldImage.png"));
 					cropsNametext[numOfField].setText("이름 : 당근");
 					timeLeftText[numOfField].setText("남은 일 수 : 2일");
 
-					isSeedEnough = true;
 					Player.amountCarrotSeed--;
 					daysRemaining[numOfField] = 2;
 					Player.energy = Player.energy - 5;
 					EnergyText.setText("남은 에너지 : " + Player.energy);
+					
+					if (statusOfField.get(numOfField).equals("empty Field")) {
+						fieldImages[numOfField].setIcon(new ImageIcon("./images/seedFieldImage.png"));
+						statusOfField.set(numOfField, "seeded field");
+					}
+					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
+					if (fieldPhase.equals("basic farm")) {
+						for (int i = 12; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("first upgraded farm")) {
+						for (int i = 6; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+
+					} else if (fieldPhase.equals("second upgraded farm")) {
+						for (int i = 0; i < fieldImages.length; i++) {
+							fieldImages[i].setEnabled(true);
+						}
+					}
+					playerImage.setVisible(true);
+					seedPlantingWindow.setVisible(false);
 				}
 			}
 		});
-		
-		//선택한 밭이 빈 밭이라면 씨앗이 심겨진 밭으로 바꾼다.
+		/*
+		// 선택한 밭이 빈 밭이라면 씨앗이 심겨진 밭으로 바꾼다.
 		for (int i = 0; i < chooseSeedImage.length; i++) {
 			chooseSeedImage[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					for (int i = 0; i < chooseSeedImage.length; i++) {
-						if (e.getSource() == chooseSeedImage[i]) {
-
-							//플레이어의 에너지가 5이상이고 씨앗이 충분히 있다면 씨앗이 심긴 밭으로 설정
+							// 플레이어의 에너지가 5이상이고 씨앗이 충분히 있다면 씨앗이 심긴 밭으로 설정
 							if (Player.energy >= 5) {
-								if (isSeedEnough == true) {
-									if (statusOfField.get(numOfField).equals("empty Field")) {
-										fieldImages[numOfField].setIcon(new ImageIcon("./images/seedFieldImage.png"));
-										statusOfField.set(numOfField, "seeded field");
+								if (chooseSeed == "Pumkin") {
+									if (isCabbageSeedEnough == true) {
+
+										if (statusOfField.get(numOfField).equals("empty Field")) {
+											fieldImages[numOfField]
+													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+											statusOfField.set(numOfField, "seeded field");
+										}
+									}
+								} else if (chooseSeed == "Carrot") {
+									if (isCarrotSeedEnough == true) {
+
+										if (statusOfField.get(numOfField).equals("empty Field")) {
+											fieldImages[numOfField]
+													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+											statusOfField.set(numOfField, "seeded field");
+										}
+									}
+								} else if (chooseSeed == "Onion") {
+									if (isOnionSeedEnough == true) {
+
+										if (statusOfField.get(numOfField).equals("empty Field")) {
+											fieldImages[numOfField]
+													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+											statusOfField.set(numOfField, "seeded field");
+										}
+									}
+								} else if (chooseSeed == "Pumkin") {
+									if (isPumpkinSeedEnough == true) {
+
+										if (statusOfField.get(numOfField).equals("empty Field")) {
+											fieldImages[numOfField]
+													.setIcon(new ImageIcon("./images/seedFieldImage.png"));
+											statusOfField.set(numOfField, "seeded field");
+										}
 									}
 								}
 							}
-						}
-					}
 					
 					//씨앗을 선택할때 비활성화 해 놓았던 것(밭과 플레이어)을 다시 보이게 했다
 					if (fieldPhase.equals("basic farm")) {
@@ -465,7 +579,7 @@ public class Farming {
 				}
 			});
 		}
-		
+		*/
 		chooseSeedCancelButton.setText("취소하기");
 		chooseSeedCancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
