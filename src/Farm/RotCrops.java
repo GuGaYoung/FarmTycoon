@@ -34,7 +34,8 @@ public class RotCrops extends Thread{
 					
 					if(Farming.statusOfField.get(numOfField).equals("seeded field")) {
 						
-						Farming.emergencyMarkingImages[numOfField].setVisible(true);
+						Farming.waterShortageImage[numOfField].setVisible(true);
+						Farming.waterShortageText[numOfField].setVisible(true);
 						Farming.statusOfField.set(numOfField, "need Water field");
 						Farming.amountOfWater[numOfField].setText("물의 양 : 매우부족");
 					}
@@ -44,8 +45,10 @@ public class RotCrops extends Thread{
 					Thread.sleep(randomRotTime);
 					
 					if(Farming.statusOfField.get(numOfField).equals("need Water field")) {
-						Farming.emergencyMarkingImages[numOfField].setVisible(false);
+						Farming.waterShortageImage[numOfField].setVisible(false);
+						Farming.waterShortageText[numOfField].setVisible(false);
 						Farming.fieldImages[numOfField].setIcon(new ImageIcon("./images/rottenFieldImage.png"));
+						Farming.rottenFieldText[numOfField].setVisible(true);
 						Farming.statusOfField.set(numOfField, "rotten field");
 					}
 					

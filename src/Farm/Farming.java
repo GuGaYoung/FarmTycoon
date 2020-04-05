@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,6 +46,7 @@ public class Farming {
 	Player player = new Player();
 	SparrowObstruction sparrowObstruction = new SparrowObstruction(); //참새 방해 쓰레드 
 	AppearanceOfAnimals appearanceOfAnimals = new AppearanceOfAnimals(); //동물 출현 쓰레드
+	GameInformation gameInformation = new GameInformation();//게임 안내 쓰레드
 	
 	static JPanel farmingScene = new JPanel();
 	static JPanel dungeonScene = new JPanel() ;
@@ -71,13 +71,16 @@ public class Farming {
 	JPanel cropStateWindow = new JPanel();
 	
 	static JLabel[] fieldImages = new JLabel[18];
-	static JLabel[] emergencyMarkingImages = new JLabel[18]; //물이 부족하다는 긴급표시 image
+	static JLabel[] waterShortageImage = new JLabel[18]; //물 부족 표시 이미지
+	static JLabel[] waterShortageText = new JLabel[18];
+	static JLabel[] rottenFieldText = new JLabel[18];
 	static JLabel playerImage = new JLabel();
 	static JLabel houseImage = new JLabel();
 	JLabel storeImage = new JLabel();
 	static JLabel EnergyText = new JLabel();
 	static JLabel daysText = new JLabel();
 	static JLabel moneyText = new JLabel();
+	static JLabel gameInformationText = new JLabel();
 	JLabel successText = new JLabel();
 	JLabel failText = new JLabel();
 	JLabel successmoneyEarned = new JLabel(); //이겼을 때 남은 돈이 얼마인지 나타내주는 text
@@ -201,6 +204,12 @@ public class Farming {
 		moneyText.setFont(new Font("굴림", Font.BOLD, 15));
 		moneyText.setBounds(10, -35, 100, 100);
 		farmingScene.add(moneyText);
+		
+		gameInformationText.setText("기본 제공 아이템은 씨앗 각 2~3개씩, 뼈가루 2개, 포션 4개, 랜덤 버섯 2개");
+		gameInformationText.setHorizontalAlignment(SwingConstants.CENTER);
+		gameInformationText.setFont(new Font("굴림", Font.BOLD, 13));
+		gameInformationText.setBounds(180, 450, 430, 100);
+		farmingScene.add(gameInformationText);
 		
 		houseImage.setHorizontalAlignment(SwingConstants.CENTER);
 		houseImage.setIcon(new ImageIcon("./images/houseImage.png"));
@@ -522,7 +531,8 @@ public class Farming {
 					}
 					// 물부족상태라면
 					if (statusOfField.get(numOfField).equals("need Water field")) {
-						emergencyMarkingImages[numOfField].setVisible(false);
+						waterShortageImage[numOfField].setVisible(false);
+						waterShortageText[numOfField].setVisible(false);
 						statusOfField.set(numOfField, "seeded field");
 						amountOfWater[numOfField].setText("물의 양 : 부족");
 					}
@@ -589,7 +599,8 @@ public class Farming {
 
 						}
 					}
-					emergencyMarkingImages[numOfField].setVisible(false);
+					waterShortageText[numOfField].setVisible(false);
+					waterShortageImage[numOfField].setVisible(false);
 				}else {
 					JOptionPane.showMessageDialog(frame, "뼈의 개수가 모자랍니다", "!!!!", JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -649,8 +660,9 @@ public class Farming {
 					//다 자라지 않은 농작물을 수확한다면 농작물은 얻을 수 없으며 빈땅으로 되돌아간다
 					statusOfField.set(numOfField, "empty Field");
 					fieldImages[numOfField].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
-					emergencyMarkingImages[numOfField].setVisible(false);
-
+					waterShortageImage[numOfField].setVisible(false);
+					waterShortageText[numOfField].setVisible(false);
+					
 					player.energy  = player.energy - 7;
 					EnergyText.setText("남은 에너지 : " + player.energy);
 				}
@@ -661,7 +673,8 @@ public class Farming {
 				cropsImage[numOfField].setVisible(false);
 				cropsNametext[numOfField].setVisible(false);
 				timeLeftText[numOfField].setVisible(false);
-				amountOfWater[numOfField].setVisible(false);			
+				amountOfWater[numOfField].setVisible(false);
+				rottenFieldText[numOfField].setVisible(false);
 
 				if (fieldPhase.equals("basic farm")) {
 					for (int i = 12; i < fieldImages.length; i++) {
@@ -719,7 +732,10 @@ public class Farming {
 		//밭
 		for (int i = 0; i < fieldImages.length; i++) {
 			
-			farmingScene.add(emergencyMarkingImages[i] = new JLabel());
+			farmingScene.add(waterShortageImage[i] = new JLabel());
+			farmingScene.add(waterShortageText[i] = new JLabel());
+			farmingScene.add(rottenFieldText[i] = new JLabel());
+			
 			farmingScene.add(fieldImages[i] = new JLabel());
 			
 			fieldImages[i].setIcon(new ImageIcon("./images/basicsFieldImage.png"));
@@ -744,34 +760,32 @@ public class Farming {
 				fieldHorizontalLength = 90;
 			}
 			
-			emergencyMarkingImages[i].setBounds(fieldImages[i].getX() + 25, fieldImages[i].getY() + 25, 20, 20);
-			emergencyMarkingImages[i].setIcon(new ImageIcon("./images/EmergencyMarking.png"));
-			emergencyMarkingImages[i].setVisible(false);
+			waterShortageImage[i].setBounds(fieldImages[i].getX() + 25, fieldImages[i].getY() + 25, 20, 20);
+			waterShortageImage[i].setIcon(new ImageIcon("./images/EmergencyMarking.png"));
+			waterShortageImage[i].setVisible(false);
+			
+			waterShortageText[i].setBounds(fieldImages[i].getX() + 15, fieldImages[i].getY(), 50, 30);
+			waterShortageText[i].setText("물 부족!!");
+			waterShortageText[i].setFont(new Font("굴림", Font.BOLD, 12));
+			waterShortageText[i].setVisible(false);
+			
+			rottenFieldText[i].setBounds(fieldImages[i].getX() + 20, fieldImages[i].getY(), 50, 30);
+			rottenFieldText[i].setText("썩음!");
+			rottenFieldText[i].setFont(new Font("굴림", Font.BOLD, 15));
+			rottenFieldText[i].setVisible(false);
 			
 			statusOfField.add("empty Field");
 			RotCrops rotCrops = new RotCrops(i);
 			rotCrops.start();
 		
-		}///////////////////////////////////////////////////////////////////////////////
-		//밭의 단계 - "basic farm"
+		}
+		// 밭의 단계 - "basic farm"
 		fieldPhase = "basic farm";
-		for(int i = 0; i < 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			fieldImages[i].setEnabled(false);
-			//fieldImages[i].setVisible(false);
+			// fieldImages[i].setVisible(false);
 		}
 
-		/*//밭의 단계 - first upgraded farm 
-		fieldPhase = "first upgraded farm";
-		for(int i = 6; i < 12; i++) {
-			fieldImages[i].setEnabled(true);
-		}*/
-
-		//밭의 단계 - second upgraded farm 
-		//fieldPhase = "second upgraded farm";
-		//for(int i = 0; i < 6; i++) {
-		//	fieldImages[i].setEnabled(true);
-		//}
-		
 		gameSuccess.setBounds(0, 0, 800, 600);
 		frame.getContentPane().add(gameSuccess);
 		gameSuccess.setLayout(null);
@@ -1034,6 +1048,7 @@ public class Farming {
 				
 				finalAmountText.setText("최종 금액 : " + bettingAmount + "원");
 				player.money = player.money + bettingAmount;
+				moneyText.setText("돈 : " + player.money);
 				rollOfDiceButton.setEnabled(false);
 				stopButton.setEnabled(false);
 			}
@@ -1060,6 +1075,7 @@ public class Farming {
 		
 		sparrowObstruction.start();
 		appearanceOfAnimals.start();
+		gameInformation.start();
 		frame.addKeyListener(new key());
 		frame.setFocusable(true);
 
@@ -1281,7 +1297,9 @@ public class Farming {
 									// 썩은 밭이 된다
 									statusOfField.set(i, "rotten field");
 									fieldImages[i].setIcon(new ImageIcon("./images/rottenFieldImage.png"));
-									emergencyMarkingImages[i].setVisible(false);
+									rottenFieldText[i].setVisible(true);
+									waterShortageImage[i].setVisible(false);
+									waterShortageText[i].setVisible(false);
 								}
 							}
 						}
