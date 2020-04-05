@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Player {
 
-	public int speed = 5;
+	public static int speed = 5;
 	public static int energy = 100;
 	public static int money = 0;
 	
